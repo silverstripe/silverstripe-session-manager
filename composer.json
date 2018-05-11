@@ -6,6 +6,11 @@
 		"silverstripe/framework": "^4",
 		"ua-parser/uap-php": "^3.5"
 	},
+    "autoload": {
+        "psr-4": {
+            "Kinglozzer\\SessionManager\\": "src/"
+        }
+    },
 	"extra": {
 		"expose": [
 			"client/dist"
