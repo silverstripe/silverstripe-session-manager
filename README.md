@@ -27,7 +27,7 @@ Non-persisted login sessions (those where the user hasn’t ticked “remember m
 
 ```yml
 Kinglozzer\SessionManager\Model\LoginSession:
-  default_session_lifetime: 3600 # Default value: 1 hour in minutes
+  default_session_lifetime: 3600 # Default value: 1 hour in seconds
 ```
 
 Note that if the user’s session expires before this timeout (e.g. a short `session.gc_maxlifetime` PHP ini setting), they **will** still be logged out. There will just be an extra session shown in the list of active sessions, even though no one can access it.
