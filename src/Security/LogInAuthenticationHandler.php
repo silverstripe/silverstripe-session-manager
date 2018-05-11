@@ -14,7 +14,7 @@ use SilverStripe\Security\Security;
 
 /**
  * This is separate to LogOutAuthenticationHandler so that it can be registered with
- * Injector and called *after* the other AuthenticationHandler::logOut() implementations
+ * Injector and called *after* the other AuthenticationHandler::logIn() implementations
  */
 class LogInAuthenticationHandler implements AuthenticationHandler
 {

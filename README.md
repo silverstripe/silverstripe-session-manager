@@ -56,7 +56,7 @@ SilverStripe\Core\Injector\Injector:
         GarbageCollectionMiddleware: null
 ```
 
-## To-to
+## To-do
 
 - Privacy warning (storing IP/User-Agent - GDPR)
 - More manual testing
