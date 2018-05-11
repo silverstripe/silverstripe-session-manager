@@ -52,14 +52,14 @@ class LoginSession extends DataObject
      */
     private static $default_session_lifetime = 3600;
 
-    public function canCreate($member = null)
+    public function canCreate($member = null, $context = [])
     {
         if (!$member) {
             $member = Security::getCurrentUser();
         }
 
         // Allow extensions to overrule permissions
-        $extended = $this->extendedCan(__FUNCTION__, $member);
+        $extended = $this->extendedCan(__FUNCTION__, $member, $context);
         if ($extended !== null) {
             return $extended;
         }
