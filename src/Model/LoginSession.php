@@ -6,7 +6,9 @@ use SilverStripe\Control\HTTPRequest;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\ORM\FieldType\DBDatetime;
 use SilverStripe\Security\Member;
+use SilverStripe\Security\Permission;
 use SilverStripe\Security\RememberLoginHash;
+use SilverStripe\Security\Security;
 use UAParser\Parser;
 
 class LoginSession extends DataObject
@@ -49,6 +51,74 @@ class LoginSession extends DataObject
      * @var int
      */
     private static $default_session_lifetime = 3600;
+
+    public function canCreate($member = null)
+    {
+        if (!$member) {
+            $member = Security::getCurrentUser();
+        }
+
+        // Allow extensions to overrule permissions
+        $extended = $this->extendedCan(__FUNCTION__, $member);
+        if ($extended !== null) {
+            return $extended;
+        }
+
+        // Must be logged in to act on login sessions
+        if (!$member) {
+            return false;
+        }
+
+        // Any user with access to SecurityAdmin can create a session
+        // @todo Does this even make sense? When would you non-programatically create a session?
+        return Permission::checkMember($member, 'CMS_ACCESS_SecurityAdmin');
+    }
+
+    public function canView($member = null)
+    {
+        return $this->handlePermission(__FUNCTION__, $member);
+    }
+
+    public function canEdit($member = null)
+    {
+        return $this->handlePermission(__FUNCTION__, $member);
+    }
+
+    public function canDelete($member = null)
+    {
+        return $this->handlePermission(__FUNCTION__, $member);
+    }
+
+    /**
+     * @param string $fn Permission method being called - one of canView/canEdit/canDelete
+     * @param mixed $member
+     * @return bool
+     */
+    public function handlePermission($fn, $member)
+    {
+        if (!$member) {
+            $member = Security::getCurrentUser();
+        }
+
+        // Allow extensions to overrule permissions
+        $extended = $this->extendedCan($fn, $member);
+        if ($extended !== null) {
+            return $extended;
+        }
+
+        // Must be logged in to act on login sessions
+        if (!$member) {
+            return false;
+        }
+
+        // Members can manage their own sessions
+        if ($this->ID == $member->ID) {
+            return true;
+        }
+
+        // Access to SecurityAdmin implies session management permissions
+        return Permission::checkMember($member, 'CMS_ACCESS_SecurityAdmin');
+    }
 
     /**
      * @param Member $member
