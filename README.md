@@ -32,11 +32,32 @@ Kinglozzer\SessionManager\Model\LoginSession:
 
 Note that if the user’s session expires before this timeout (e.g. a short `session.gc_maxlifetime` PHP ini setting), they **will** still be logged out. There will just be an extra session shown in the list of active sessions, even though no one can access it.
 
+### Garbage collection
+
+By default, this module will trigger garbage collection of expired sessions once in every 50 requests (approximately, using `mt_rand()`). It’s advised to disable this method of garbage collection and instead set up a cron task which points to `dev/tasks/LoginSessionGarbageCollectionTask`.
+
+The default garbage collection probability can be adjusted by changing the `GarbageCollectionMiddleware.probability` config setting:
+
+```yml
+Kinglozzer\SessionManager\Control\GarbageCollectionMiddleware:
+  probability: 100 # Triggers garbage collection for 1 in every ~100 requests
+```
+
+The default garbage collection can be disabled by disabling `GarbageCollectionMiddleware`:
+
+```yml
+---
+After: '#session-manager-middleware'
+---
+SilverStripe\Core\Injector\Injector:
+  SilverStripe\Control\Director:
+    properties:
+      Middlewares:
+        GarbageCollectionMiddleware: null
+```
+
 ## To-to
 
 - Privacy warning (storing IP/User-Agent - GDPR)
 - More manual testing
 - Unit test coverage
-- Handle removing the “current” session better
-- Garbage collection of expired, non-persisted sessions
-- Garbage collection of sessions where associated RememberLoginHash has expired

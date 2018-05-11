@@ -36,4 +36,5 @@ SilverStripe\Core\Injector\Injector:
   SilverStripe\Control\Director:
     properties:
       Middlewares:
+        GarbageCollectionMiddleware: '%$Kinglozzer\SessionManager\Control\GarbageCollectionMiddleware'
         LoginSessionMiddleware: '%$Kinglozzer\SessionManager\Control\LoginSessionMiddleware'
