@@ -6,7 +6,46 @@ Allow users to manage and revoke access to multiple login sessions across device
 
 ![CMS view](images/cms.png)
 
-## Secure defaults
+## How it works
+
+The module introduces a new database record type: `LoginSession`. 
+On first login, it creates a new record of this type, recording the IP and User-Agent,
+and associates it with the user (via `LogInAuthenticationHandler`).
+The record identifier is stored in the PHP session, so it can be retrieved on subsequent requests.
+
+On each request, a middleware (`LoginSessionMiddleware`) checks if the current
+PHP session is pointing to a valid `LoginSession` record.
+If a valid record is found, it will update the `LastAccessed` date.
+Otherwise, it will force a logout, destroying the PHP session.
+
+A periodic process (`GarbageCollectionService`) cleans up expired `LoginSession` records.
+Due to the way PHP sessions operate, it can not expire those sessions as well.
+The PHP sessions will be invalidated on next request through `LoginSessionMiddleware`,
+unless they expire independently beforehand (through PHP's own session expiry logic).
+
+Silverstripe allows persisting login state via a "remember me" feature.
+These `RememberLoginHash` records have their own expiry date.
+This module associates them to `LoginSession` records,
+and ensures their expiry is consistent with the new session behaviour
+(see "Configuration" below for details).
+
+The `LoginSession` tracks the IP address and user agent making the requests
+in order to make different sessions easier to identify in the user interface.
+It does not use changes to this metadata to invalidate sessions.
+
+## Compatibility
+
+The module should work independently of the storage mechanism used for PHP sessions (file-based sticky sessions, file-based sessions on a shared filesystem, [silverstripe/dynamodb](https://github.com/silverstripe/silverstripe-dynamodb), [silverstripe/hybridsessions](https://github.com/silverstripe/silverstripe-hybridsessions)).
+
+## Caveats
+
+ * Every request with a logged-in user causes a database write (updating `LoginSession`), potentially affecting performance
+ * Restoring a database from an older snapshot will invalidate current sessions.
+ * PHP sessions can become out of sync with `LoginSession` objects. Both can exist beyond their expiry date.
+   This is not an issue in practice since the association between the two is checked on each session-based request
+   (through `LoginSessionMiddleware`).
+
+## Configuration
 
 ### Logout across devices
 
