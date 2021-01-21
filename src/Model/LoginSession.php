@@ -43,6 +43,10 @@ class LoginSession extends DataObject
         'FriendlyUserAgent' => 'User Agent'
     ];
 
+    private static $searchable_fields = [
+        'IPAddress',
+    ];
+
     /**
      * The length of time a session can be inactive for before it is discarded and the
      * user is logged out
@@ -162,6 +166,10 @@ class LoginSession extends DataObject
      */
     public function getFriendlyUserAgent()
     {
+        if (!$this->UserAgent) {
+            return '';
+        }
+
         $parser = Parser::create();
         $result = $parser->parse($this->UserAgent);
 
