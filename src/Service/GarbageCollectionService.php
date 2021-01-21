@@ -1,10 +1,10 @@
 <?php
 
-namespace Kinglozzer\SessionManager\Service;
+namespace SilverStripe\SessionManager\Service;
 
-use Kinglozzer\SessionManager\Model\LoginSession;
 use SilverStripe\Core\Config\Config;
 use SilverStripe\Security\RememberLoginHash;
+use SilverStripe\SessionManager\Model\LoginSession;
 
 class GarbageCollectionService
 {

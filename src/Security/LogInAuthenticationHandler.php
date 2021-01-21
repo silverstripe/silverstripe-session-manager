@@ -1,16 +1,13 @@
 <?php
 
-namespace Kinglozzer\SessionManager\Security;
+namespace SilverStripe\SessionManager\Security;
 
-use Kinglozzer\SessionManager\Model\LoginSession;
 use SilverStripe\Control\HTTPRequest;
-use SilverStripe\Core\Injector\Injector;
 use SilverStripe\ORM\FieldType\DBDatetime;
 use SilverStripe\Security\AuthenticationHandler;
-use SilverStripe\Security\IdentityStore;
 use SilverStripe\Security\Member;
 use SilverStripe\Security\RememberLoginHash;
-use SilverStripe\Security\Security;
+use SilverStripe\SessionManager\Model\LoginSession;
 
 /**
  * This is separate to LogOutAuthenticationHandler so that it can be registered with

@@ -1,16 +1,15 @@
 <?php
 
-namespace Kinglozzer\SessionManager\Extensions;
+namespace SilverStripe\SessionManager\Extensions;
 
-use Kinglozzer\SessionManager\Forms\GridFieldRevokeLoginSessionAction;
-use Kinglozzer\SessionManager\Model\LoginSession;
 use SilverStripe\Control\Session;
 use SilverStripe\Core\Extension;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\GridField\GridField;
 use SilverStripe\Forms\GridField\GridFieldConfig_Base;
-use SilverStripe\Forms\GridField\GridFieldDeleteAction;
 use SilverStripe\ORM\FieldType\DBDatetime;
+use SilverStripe\SessionManager\Forms\GridFieldRevokeLoginSessionAction;
+use SilverStripe\SessionManager\Model\LoginSession;
 
 class MemberExtension extends Extension
 {

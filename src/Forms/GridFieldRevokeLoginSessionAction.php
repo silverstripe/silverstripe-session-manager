@@ -1,8 +1,7 @@
 <?php
 
-namespace Kinglozzer\SessionManager\Forms;
+namespace SilverStripe\SessionManager\Forms;
 
-use Kinglozzer\SessionManager\Security\LogInAuthenticationHandler;
 use SilverStripe\Control\HTTPRequest;
 use SilverStripe\Core\Injector\Injectable;
 use SilverStripe\Core\Injector\Injector;
@@ -11,6 +10,7 @@ use SilverStripe\Forms\GridField\GridField_ActionProvider;
 use SilverStripe\Forms\GridField\GridField_ColumnProvider;
 use SilverStripe\Forms\GridField\GridField_FormAction;
 use SilverStripe\ORM\ValidationException;
+use SilverStripe\SessionManager\Security\LogInAuthenticationHandler;
 use SilverStripe\View\Requirements;
 
 class GridFieldRevokeLoginSessionAction implements GridField_ColumnProvider, GridField_ActionProvider
@@ -48,7 +48,7 @@ class GridFieldRevokeLoginSessionAction implements GridField_ColumnProvider, Gri
 
     public function getColumnContent($gridField, $record, $columnName)
     {
-        Requirements::javascript('kinglozzer/silverstripe-session-manager:client/dist/js/GridFieldRevokeLoginSessionAction.js');
+        Requirements::javascript('silverstripe/silverstripe-session-manager:client/dist/js/GridFieldRevokeLoginSessionAction.js');
 
         if (!$record->canDelete()) {
             return null;

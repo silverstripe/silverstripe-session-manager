@@ -1,6 +1,6 @@
 <?php
 
-namespace Kinglozzer\SessionManager\Model;
+namespace SilverStripe\SessionManager\Model;
 
 use SilverStripe\Control\HTTPRequest;
 use SilverStripe\ORM\DataObject;

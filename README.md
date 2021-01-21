@@ -1,4 +1,4 @@
-# SilverStripe Session Manager
+# Silverstripe CMS Session Manager
 
 Allow users to manage and revoke access to multiple login sessions across devices.
 
@@ -8,7 +8,7 @@ Allow users to manage and revoke access to multiple login sessions across device
 
 ## How it works
 
-The module introduces a new database record type: `LoginSession`. 
+The module introduces a new database record type: `LoginSession`.
 On first login, it creates a new record of this type, recording the IP and User-Agent,
 and associates it with the user (via `LogInAuthenticationHandler`).
 The record identifier is stored in the PHP session, so it can be retrieved on subsequent requests.
@@ -36,6 +36,8 @@ It does not use changes to this metadata to invalidate sessions.
 ## Compatibility
 
 The module should work independently of the storage mechanism used for PHP sessions (file-based sticky sessions, file-based sessions on a shared filesystem, [silverstripe/dynamodb](https://github.com/silverstripe/silverstripe-dynamodb), [silverstripe/hybridsessions](https://github.com/silverstripe/silverstripe-hybridsessions)).
+
+It is also compatible with the [Silverstripe MFA module suite](https://github.com/silverstripe/silverstripe-mfa).
 
 ## Caveats
 
@@ -65,7 +67,7 @@ SilverStripe\Security\RememberLoginHash:
 Non-persisted login sessions (those where the user hasn’t ticked “remember me”) should expire after a period of inactivity, so that they’re removed from the list of active sessions even if the user closes their browser without completing the “log out” action. The length of time before expiry matches the `SilverStripe\Control\Session.timeout` value if one is set, otherwise falling back to a default of one hour. This default can be changed via the following config setting:
 
 ```yml
-Kinglozzer\SessionManager\Model\LoginSession:
+SilverStripe\SessionManager\Model\LoginSession:
   default_session_lifetime: 3600 # Default value: 1 hour in seconds
 ```
 
@@ -78,7 +80,7 @@ By default, this module will trigger garbage collection of expired sessions once
 The default garbage collection probability can be adjusted by changing the `GarbageCollectionMiddleware.probability` config setting:
 
 ```yml
-Kinglozzer\SessionManager\Control\GarbageCollectionMiddleware:
+SilverStripe\SessionManager\Control\GarbageCollectionMiddleware:
   probability: 100 # Triggers garbage collection for 1 in every ~100 requests
 ```
 

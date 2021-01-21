@@ -1,6 +1,27 @@
 {
-	"name": "kinglozzer/silverstripe-session-manager",
+	"name": "silverstripe/silverstripe-session-manager",
+    "description": "Allow users to manage and revoke access to multiple login sessions across devices.",
 	"type": "silverstripe-vendormodule",
+    "license": "BSD-3-Clause",
+    "homepage": "https://github.com/silverstripe/silverstripe-session-manager",
+    "keywords": [
+        "silverstripe",
+        "session"
+    ],
+    "authors": [
+        {
+            "name": "Loz Calver",
+            "homepage": "https://github.com/kinglozzer"
+        },
+        {
+            "name": "Silverstripe Ltd.",
+            "homepage": "http://silverstripe.com"
+        },
+        {
+            "name": "The SilverStripe Community",
+            "homepage": "http://silverstripe.org"
+        }
+    ],
 	"require": {
 		"silverstripe/admin": "^1",
 		"silverstripe/framework": "^4",
@@ -8,7 +29,7 @@
 	},
     "autoload": {
         "psr-4": {
-            "Kinglozzer\\SessionManager\\": "src/"
+            "SilverStripe\\SessionManager\\": "src/"
         }
     },
 	"extra": {
