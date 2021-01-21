@@ -1,8 +1,10 @@
 <?php
 
-use Kinglozzer\SessionManager\Service\GarbageCollectionService;
+namespace SilverStripe\Tasks;
+
 use SilverStripe\Core\Injector\Injector;
 use SilverStripe\Dev\BuildTask;
+use SilverStripe\SessionManager\Service\GarbageCollectionService;
 
 class GarbageCollectionTask extends BuildTask
 {

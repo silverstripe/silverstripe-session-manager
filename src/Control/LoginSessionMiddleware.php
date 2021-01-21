@@ -1,9 +1,7 @@
 <?php
 
-namespace Kinglozzer\SessionManager\Control;
+namespace SilverStripe\SessionManager\Control;
 
-use Kinglozzer\SessionManager\Model\LoginSession;
-use Kinglozzer\SessionManager\Security\LogInAuthenticationHandler;
 use SilverStripe\Control\HTTPRequest;
 use SilverStripe\Control\Middleware\HTTPMiddleware;
 use SilverStripe\Core\Injector\Injector;
@@ -11,6 +9,8 @@ use SilverStripe\ORM\Connect\DatabaseException;
 use SilverStripe\ORM\FieldType\DBDatetime;
 use SilverStripe\Security\IdentityStore;
 use SilverStripe\Security\Security;
+use SilverStripe\SessionManager\Model\LoginSession;
+use SilverStripe\SessionManager\Security\LogInAuthenticationHandler;
 
 class LoginSessionMiddleware implements HTTPMiddleware
 {

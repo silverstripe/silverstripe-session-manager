@@ -1,13 +1,13 @@
 <?php
 
-namespace Kinglozzer\SessionManager\Control;
+namespace SilverStripe\SessionManager\Control;
 
-use Kinglozzer\SessionManager\Service\GarbageCollectionService;
 use SilverStripe\Control\HTTPRequest;
 use SilverStripe\Control\Middleware\HTTPMiddleware;
 use SilverStripe\Core\Config\Configurable;
 use SilverStripe\Core\Injector\Injector;
 use SilverStripe\ORM\Connect\DatabaseException;
+use SilverStripe\SessionManager\Service\GarbageCollectionService;
 
 class GarbageCollectionMiddleware implements HTTPMiddleware
 {

@@ -3,22 +3,22 @@ Name: session-manager
 ---
 SilverStripe\Security\Member:
   extensions:
-    - 'Kinglozzer\SessionManager\Extensions\MemberExtension'
+    - 'SilverStripe\SessionManager\Extensions\MemberExtension'
 SilverStripe\Security\RememberLoginHash:
   extensions:
-    - 'Kinglozzer\SessionManager\Extensions\RememberLoginHashExtension'
+    - 'SilverStripe\SessionManager\Extensions\RememberLoginHashExtension'
 ---
 Name: session-manager-log-in-handler
 After: '#coreauthentication'
 ---
 SilverStripe\Core\Injector\Injector:
-  Kinglozzer\SessionManager\Security\LogInAuthenticationHandler:
+  SilverStripe\SessionManager\Security\LogInAuthenticationHandler:
     properties:
       SessionVariable: activeLoginSession
   SilverStripe\Security\AuthenticationHandler:
     properties:
       Handlers:
-        LoginSessionLogIn: '%$Kinglozzer\SessionManager\Security\LogInAuthenticationHandler'
+        LoginSessionLogIn: '%$SilverStripe\SessionManager\Security\LogInAuthenticationHandler'
 ---
 Name: session-manager-log-out-handler
 Before: '#coreauthentication'
@@ -27,7 +27,7 @@ SilverStripe\Core\Injector\Injector:
   SilverStripe\Security\AuthenticationHandler:
     properties:
       Handlers:
-        LoginSessionLogOut: '%$Kinglozzer\SessionManager\Security\LogOutAuthenticationHandler'
+        LoginSessionLogOut: '%$SilverStripe\SessionManager\Security\LogOutAuthenticationHandler'
 ---
 Name: session-manager-middleware
 After: '#coresecurity'
@@ -36,5 +36,5 @@ SilverStripe\Core\Injector\Injector:
   SilverStripe\Control\Director:
     properties:
       Middlewares:
-        GarbageCollectionMiddleware: '%$Kinglozzer\SessionManager\Control\GarbageCollectionMiddleware'
-        LoginSessionMiddleware: '%$Kinglozzer\SessionManager\Control\LoginSessionMiddleware'
+        GarbageCollectionMiddleware: '%$SilverStripe\SessionManager\Control\GarbageCollectionMiddleware'
+        LoginSessionMiddleware: '%$SilverStripe\SessionManager\Control\LoginSessionMiddleware'

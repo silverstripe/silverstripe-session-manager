@@ -1,6 +1,6 @@
 <?php
 
-namespace Kinglozzer\SessionManager\Model;
+namespace SilverStripe\SessionManager\Model;
 
 use SilverStripe\Control\HTTPRequest;
 use SilverStripe\ORM\DataObject;
@@ -41,6 +41,10 @@ class LoginSession extends DataObject
         'LastAccessed' => 'Last Accessed',
         'Created' => 'Signed In',
         'FriendlyUserAgent' => 'User Agent'
+    ];
+
+    private static $searchable_fields = [
+        'IPAddress',
     ];
 
     /**
@@ -162,6 +166,10 @@ class LoginSession extends DataObject
      */
     public function getFriendlyUserAgent()
     {
+        if (!$this->UserAgent) {
+            return '';
+        }
+
         $parser = Parser::create();
         $result = $parser->parse($this->UserAgent);
 

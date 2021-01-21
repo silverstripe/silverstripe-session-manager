@@ -1,12 +1,12 @@
 <?php
 
-namespace Kinglozzer\SessionManager\Extensions;
+namespace SilverStripe\SessionManager\Extensions;
 
-use Kinglozzer\SessionManager\Model\LoginSession;
-use Kinglozzer\SessionManager\Security\LogInAuthenticationHandler;
 use SilverStripe\Control\HTTPRequest;
 use SilverStripe\Core\Extension;
 use SilverStripe\Core\Injector\Injector;
+use SilverStripe\SessionManager\Model\LoginSession;
+use SilverStripe\SessionManager\Security\LogInAuthenticationHandler;
 
 class RememberLoginHashExtension extends Extension
 {
