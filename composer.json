@@ -1,5 +1,5 @@
 {
-	"name": "silverstripe/silverstripe-session-manager",
+	"name": "silverstripe/session-manager",
     "description": "Allow users to manage and revoke access to multiple login sessions across devices.",
 	"type": "silverstripe-vendormodule",
     "license": "BSD-3-Clause",
@@ -25,7 +25,8 @@
 	"require": {
 		"silverstripe/admin": "^1",
 		"silverstripe/framework": "^4",
-		"ua-parser/uap-php": "^3.5"
+		"ua-parser/uap-php": "^3.5",
+        "silverstripe/crontask": "^2.0"
 	},
     "autoload": {
         "psr-4": {

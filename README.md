@@ -75,27 +75,11 @@ Note that if the user’s session expires before this timeout (e.g. a short `ses
 
 ### Garbage collection
 
-By default, this module will trigger garbage collection of expired sessions once in every 50 requests (approximately, using `mt_rand()`). It’s advised to disable this method of garbage collection and instead set up a cron task which points to `dev/tasks/LoginSessionGarbageCollectionTask`.
+By default, this module will trigger garbage collection of expired sessions once every 5 minutes through a cron task.
 
-The default garbage collection probability can be adjusted by changing the `GarbageCollectionMiddleware.probability` config setting:
+In order to get the garbage collection to run automatically, you will need to configure cron if you haven't already, please see [SilverStripe CronTask Server Configuration](https://github.com/silverstripe/silverstripe-crontask#server-configuration) for instructions on how to do this.
 
-```yml
-SilverStripe\SessionManager\Control\GarbageCollectionMiddleware:
-  probability: 100 # Triggers garbage collection for 1 in every ~100 requests
-```
-
-The default garbage collection can be disabled by disabling `GarbageCollectionMiddleware`:
-
-```yml
----
-After: '#session-manager-middleware'
----
-SilverStripe\Core\Injector\Injector:
-  SilverStripe\Control\Director:
-    properties:
-      Middlewares:
-        GarbageCollectionMiddleware: null
-```
+Alternatively, you can trigger the garbage collection manually through the `LoginSessionGarbageCollectionTask` task.
 
 ## To-do
 
