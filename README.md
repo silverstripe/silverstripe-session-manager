@@ -75,11 +75,17 @@ Note that if the user’s session expires before this timeout (e.g. a short `ses
 
 ### Garbage collection
 
-By default, this module will trigger garbage collection of expired sessions once every 5 minutes through a cron task.
+Expired sessions need to be cleaned up periodically to avoid bloating the database. There are two methods available to manage this:
 
-In order to get the garbage collection to run automatically, you will need to configure cron if you haven't already, please see [SilverStripe CronTask Server Configuration](https://github.com/silverstripe/silverstripe-crontask#server-configuration) for instructions on how to do this.
+#### Via `silverstripe/crontask` (recommended)
+If you have the `silverstripe/crontask` module installed and configured, garbage collection will run automatically every 5 minutes via `GarbageCollectionCronTask`, and no further action is required.
 
-Alternatively, you can trigger the garbage collection manually through the `LoginSessionGarbageCollectionTask` task.
+#### Via `LoginSessionGarbageCollectionTask`
+Alternatively, you can create a system cron entry to run the `LoginSessionGarbageCollectionTask` directly on a regular cadence:
+
+```
+`*/5 * * * * /path/to/webroot/vendor/bin/sake dev/tasks/LoginSessionGarbageCollectionTask
+```
 
 ## To-do
 

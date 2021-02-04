@@ -8,6 +8,10 @@ use SilverStripe\Dev\BuildTask;
 use SilverStripe\SessionManager\Service\GarbageCollectionService;
 use SilverStripe\CronTask\Interfaces\CronTask;
 
+if (!class_exists(CronTask::class)) {
+    return;
+}
+
 class GarbageCollectionCronTask implements CronTask
 {
     /**
