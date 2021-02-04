@@ -1,6 +1,6 @@
 <?php
 
-namespace SilverStripe\Tasks;
+namespace SilverStripe\SessionManager\Tasks;
 
 use SilverStripe\Control\HTTPRequest;
 use SilverStripe\Core\Injector\Injector;
@@ -8,7 +8,7 @@ use SilverStripe\Dev\BuildTask;
 use SilverStripe\SessionManager\Service\GarbageCollectionService;
 use SilverStripe\CronTask\Interfaces\CronTask;
 
-if (!class_exists(CronTask::class)) {
+if (!interface_exists(CronTask::class)) {
     return;
 }
 
