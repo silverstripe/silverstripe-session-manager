@@ -29,7 +29,8 @@
 	},
     "autoload": {
         "psr-4": {
-            "SilverStripe\\SessionManager\\": "src/"
+            "SilverStripe\\SessionManager\\": "src/",
+            "SilverStripe\\SessionManager\\Tests\\": "tests/php/"
         }
     },
 	"extra": {

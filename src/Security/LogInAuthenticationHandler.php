@@ -2,6 +2,7 @@
 
 namespace SilverStripe\SessionManager\Security;
 
+use SilverStripe\Control\Controller;
 use SilverStripe\Control\HTTPRequest;
 use SilverStripe\ORM\FieldType\DBDatetime;
 use SilverStripe\Security\AuthenticationHandler;
@@ -63,6 +64,10 @@ class LogInAuthenticationHandler implements AuthenticationHandler
 
     public function logIn(Member $member, $persistent = false, HTTPRequest $request = null)
     {
+        if ($request == null) {
+            $request = Controller::curr()->request;
+        }
+
         $loginSession = LoginSession::find($member, $request);
         if (!$loginSession) {
             $loginSession = LoginSession::generate($member, $persistent, $request);
