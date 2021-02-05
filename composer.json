@@ -1,5 +1,5 @@
 {
-	"name": "silverstripe/session-manager",
+    "name": "silverstripe/session-manager",
     "description": "Allow users to manage and revoke access to multiple login sessions across devices.",
 	"type": "silverstripe-vendormodule",
     "license": "BSD-3-Clause",
