@@ -147,7 +147,7 @@ class LoginSession extends DataObject
      * @param HTTPRequest $request
      * @return static
      */
-    public static function generate(Member $member, $persistent = false, HTTPRequest $request)
+    public static function generate(Member $member, bool $persistent, HTTPRequest $request)
     {
         $session = static::create()->update([
             'LastAccessed' => DBDatetime::now()->Rfc2822(),

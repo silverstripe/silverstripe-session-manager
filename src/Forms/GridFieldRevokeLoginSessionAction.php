@@ -48,7 +48,8 @@ class GridFieldRevokeLoginSessionAction implements GridField_ColumnProvider, Gri
 
     public function getColumnContent($gridField, $record, $columnName)
     {
-        Requirements::javascript('silverstripe/silverstripe-session-manager:client/dist/js/GridFieldRevokeLoginSessionAction.js');
+        $str = 'silverstripe/silverstripe-session-manager:client/dist/js/GridFieldRevokeLoginSessionAction.js';
+        Requirements::javascript($str);
 
         if (!$record->canDelete()) {
             return null;
