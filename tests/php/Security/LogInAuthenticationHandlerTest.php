@@ -12,7 +12,6 @@ use SilverStripe\SessionManager\Control\LoginSessionMiddleware;
 use SilverStripe\SessionManager\Model\LoginSession;
 use SilverStripe\SessionManager\Security\LogInAuthenticationHandler;
 
-
 class LogInAuthenticationHandlerTest extends SapphireTest
 {
     protected $usesDatabase = true;

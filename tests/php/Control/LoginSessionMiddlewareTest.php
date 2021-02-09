@@ -12,7 +12,6 @@ use SilverStripe\Security\Security;
 use SilverStripe\SessionManager\Control\LoginSessionMiddleware;
 use SilverStripe\SessionManager\Model\LoginSession;
 
-
 class LoginSessionMiddlewareTest extends SapphireTest
 {
     use HttpRequestMockBuilder;
@@ -27,13 +26,7 @@ class LoginSessionMiddlewareTest extends SapphireTest
         Security::setCurrentUser(null);
 
         $session = new Session(['activeLoginSession' => 1]);
-        $request = $this->buildRequestMock(
-            '/'
-            , []
-            , []
-            , null,
-            $session
-        );
+        $request = $this->buildRequestMock('/', [], [], null, $session);
         $request->method('getIP')->willReturn('192.168.0.1');
 
         $middleware = new LoginSessionMiddleware(new Url('no-match'));
@@ -81,13 +74,7 @@ class LoginSessionMiddlewareTest extends SapphireTest
     public function testMiddlewareSessionRevoked()
     {
         $session = new Session(['activeLoginSession' => 1]);
-        $request = $this->buildRequestMock(
-            '/'
-            , []
-            , []
-            , null,
-            $session
-        );
+        $request = $this->buildRequestMock('/', [], [], null, $session);
         $request->method('getIP')->willReturn('192.168.0.1');
 
         // Log in as member1
@@ -115,13 +102,7 @@ class LoginSessionMiddlewareTest extends SapphireTest
     public function testMiddlewareSessionWrongMember()
     {
         $session = new Session(['activeLoginSession' => 1]);
-        $request = $this->buildRequestMock(
-            '/'
-            , []
-            , []
-            , null,
-            $session
-        );
+        $request = $this->buildRequestMock('/', [], [], null, $session);
         $request->method('getIP')->willReturn('192.168.0.1');
 
         // Log in as member2

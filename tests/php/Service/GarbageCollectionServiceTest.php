@@ -17,7 +17,6 @@ use SilverStripe\SessionManager\Extensions\RememberLoginHashExtension;
 use SilverStripe\SessionManager\Model\LoginSession;
 use SilverStripe\SessionManager\Service\GarbageCollectionService;
 
-
 class GarbageCollectionServiceTest extends SapphireTest
 {
     protected $usesDatabase = true;

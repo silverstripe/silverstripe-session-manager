@@ -13,7 +13,6 @@ use SilverStripe\SessionManager\Control\LoginSessionMiddleware;
 use SilverStripe\SessionManager\Model\LoginSession;
 use SilverStripe\SessionManager\Security\LogOutAuthenticationHandler;
 
-
 class LogOutAuthenticationHandlerTest extends SapphireTest
 {
     use HttpRequestMockBuilder;
@@ -25,13 +24,7 @@ class LogOutAuthenticationHandlerTest extends SapphireTest
     public function testLogout()
     {
         $session = new Session(['activeLoginSession' => 1]);
-        $request = $this->buildRequestMock(
-            '/'
-            , []
-            , []
-            , null,
-            $session
-        );
+        $request = $this->buildRequestMock('/', [], [], null, $session);
         $request->method('getIP')->willReturn('192.168.0.1');
 
         $member1 = $this->objFromFixture(Member::class, 'member1');
