@@ -1,0 +1,4 @@
+SilverStripe\Security\Member:
+  member1:
+    FirstName: 'Andre'
+    Email: 'andre@example.org'
