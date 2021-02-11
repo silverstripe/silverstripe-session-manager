@@ -53,7 +53,7 @@ class LoginSessionMiddlewareTest extends SapphireTest
             }
         );
 
-        $loginSession = LoginSession::get()->byID(1);
+        $loginSession = $member1->LoginSessions()->first();
         $this->assertEquals(
             $loginSession->LastAccessed,
             '2003-02-15 12:00:00',
@@ -81,7 +81,7 @@ class LoginSessionMiddlewareTest extends SapphireTest
         $member1 = $this->objFromFixture(Member::class, 'member1');
         Security::setCurrentUser($member1);
 
-        $loginSession = LoginSession::get()->byID(1);
+        $loginSession = $member1->LoginSessions()->first();
         $loginSession->delete();
 
         $middleware = new LoginSessionMiddleware(new Url('no-match'));
