@@ -25,6 +25,13 @@ class LogInAuthenticationHandlerTest extends SapphireTest
 
         $member1 = $this->objFromFixture(Member::class, 'member1');
         $loginAuthenticationHandler = new LogInAuthenticationHandler();
+
+        $loginSession = $member1->LoginSessions()->first();
+        $this->assertNull(
+            $loginSession,
+            "Login session is does not exist before login"
+        );
+
         $loginAuthenticationHandler->logIn(
             $member1,
             false,
