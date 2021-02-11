@@ -31,7 +31,7 @@ class LogInAuthenticationHandlerTest extends SapphireTest
             null
         );
 
-        $loginSession = LoginSession::get()->byID(1);
+        $loginSession = $member1->LoginSessions()->first();
         $this->assertNotNull(
             $loginSession,
             "Login session is generated on login"

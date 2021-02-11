@@ -33,7 +33,7 @@ class LogOutAuthenticationHandlerTest extends SapphireTest
         $logOutAuthenticationHandler = new LogOutAuthenticationHandler();
         $logOutAuthenticationHandler->logOut($request);
 
-        $loginSession = LoginSession::get()->byID(1);
+        $loginSession = $member1->LoginSessions()->first();
         $this->assertNull(
             $loginSession,
             "Login session is deleted on logout"
