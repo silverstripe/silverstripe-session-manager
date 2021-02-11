@@ -23,7 +23,8 @@ class LogOutAuthenticationHandlerTest extends SapphireTest
 
     public function testLogout()
     {
-        $session = new Session(['activeLoginSession' => 1]);
+        $sessionID = $this->idFromFixture(LoginSession::class, '1');
+        $session = new Session(['activeLoginSession' => $sessionID]);
         $request = $this->buildRequestMock('/', [], [], null, $session);
         $request->method('getIP')->willReturn('192.168.0.1');
 

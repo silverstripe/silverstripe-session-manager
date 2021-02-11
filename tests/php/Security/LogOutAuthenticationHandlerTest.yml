@@ -5,7 +5,6 @@ SilverStripe\Security\Member:
 
 SilverStripe\SessionManager\Model\LoginSession:
   1:
-    ID: 1
     LastAccessed: '2003-02-15 10:00:00'
     IPAddress: '192.168.0.1'
     Member: =>SilverStripe\Security\Member.member1

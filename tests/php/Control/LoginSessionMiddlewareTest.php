@@ -25,7 +25,8 @@ class LoginSessionMiddlewareTest extends SapphireTest
         // log out
         Security::setCurrentUser(null);
 
-        $session = new Session(['activeLoginSession' => 1]);
+        $sessionID = $this->idFromFixture(LoginSession::class, '1');
+        $session = new Session(['activeLoginSession' => $sessionID]);
         $request = $this->buildRequestMock('/', [], [], null, $session);
         $request->method('getIP')->willReturn('192.168.0.1');
 
@@ -73,7 +74,8 @@ class LoginSessionMiddlewareTest extends SapphireTest
 
     public function testMiddlewareSessionRevoked()
     {
-        $session = new Session(['activeLoginSession' => 1]);
+        $sessionID = $this->idFromFixture(LoginSession::class, '1');
+        $session = new Session(['activeLoginSession' => $sessionID]);
         $request = $this->buildRequestMock('/', [], [], null, $session);
         $request->method('getIP')->willReturn('192.168.0.1');
 
@@ -101,7 +103,8 @@ class LoginSessionMiddlewareTest extends SapphireTest
 
     public function testMiddlewareSessionWrongMember()
     {
-        $session = new Session(['activeLoginSession' => 1]);
+        $sessionID = $this->idFromFixture(LoginSession::class, '1');
+        $session = new Session(['activeLoginSession' => $sessionID]);
         $request = $this->buildRequestMock('/', [], [], null, $session);
         $request->method('getIP')->willReturn('192.168.0.1');
 
