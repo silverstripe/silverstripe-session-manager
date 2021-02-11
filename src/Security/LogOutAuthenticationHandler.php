@@ -27,9 +27,10 @@ class LogOutAuthenticationHandler implements AuthenticationHandler
 
     public function logOut(HTTPRequest $request = null)
     {
-        if ($request == null) {
-            $request = Controller::curr()->request;
+        if ($request == null && !Controller::has_curr()) {
+            throw new InvalidArgumentException("No HTTPRequest is provided and there is no controller either.");
         }
+        $request = Controller::curr()->request;
 
         $loginHandler = Injector::inst()->get(LogInAuthenticationHandler::class);
         $member = Security::getCurrentUser();
