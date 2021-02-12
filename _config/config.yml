@@ -36,5 +36,4 @@ SilverStripe\Core\Injector\Injector:
   SilverStripe\Control\Director:
     properties:
       Middlewares:
-        GarbageCollectionMiddleware: '%$SilverStripe\SessionManager\Control\GarbageCollectionMiddleware'
         LoginSessionMiddleware: '%$SilverStripe\SessionManager\Control\LoginSessionMiddleware'

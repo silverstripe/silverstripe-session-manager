@@ -2,6 +2,12 @@
 
 Allow users to manage and revoke access to multiple login sessions across devices.
 
+[![Build Status](https://api.travis-ci.com/silverstripe/silverstripe-session-manager.svg?branch=1)](https://travis-ci.com/silverstripe/silverstripe-session-manager)
+[![Code Quality](http://img.shields.io/scrutinizer/g/silverstripe/silverstripe-session-manager.svg?style=flat)](https://scrutinizer-ci.com/g/silverstripe/silverstripe-session-manager)
+[![Code coverage](https://codecov.io/gh/silverstripe/silverstripe-session-manager/branch/master/graph/badge.svg)](https://codecov.io/gh/silverstripe/silverstripe-session-manager)
+[![Version](http://img.shields.io/packagist/v/silverstripe/session-manager.svg?style=flat)](https://packagist.org/packages/silverstripe/session-manager)
+[![License](http://img.shields.io/packagist/l/silverstripe/session-manager.svg?style=flat)](LICENSE)
+
 **This module is in development, and is not ready for use in production**
 
 ![CMS view](images/cms.png)
@@ -75,26 +81,16 @@ Note that if the user’s session expires before this timeout (e.g. a short `ses
 
 ### Garbage collection
 
-By default, this module will trigger garbage collection of expired sessions once in every 50 requests (approximately, using `mt_rand()`). It’s advised to disable this method of garbage collection and instead set up a cron task which points to `dev/tasks/LoginSessionGarbageCollectionTask`.
+Expired sessions need to be cleaned up periodically to avoid bloating the database. There are two methods available to manage this:
 
-The default garbage collection probability can be adjusted by changing the `GarbageCollectionMiddleware.probability` config setting:
+#### Via `silverstripe/crontask` (recommended)
+If you have the `silverstripe/crontask` module installed and configured, garbage collection will run automatically every 5 minutes via `GarbageCollectionCronTask`, and no further action is required.
 
-```yml
-SilverStripe\SessionManager\Control\GarbageCollectionMiddleware:
-  probability: 100 # Triggers garbage collection for 1 in every ~100 requests
+#### Via `LoginSessionGarbageCollectionTask`
+Alternatively, you can create a system cron entry to run the `LoginSessionGarbageCollectionTask` directly on a regular cadence:
+
 ```
-
-The default garbage collection can be disabled by disabling `GarbageCollectionMiddleware`:
-
-```yml
----
-After: '#session-manager-middleware'
----
-SilverStripe\Core\Injector\Injector:
-  SilverStripe\Control\Director:
-    properties:
-      Middlewares:
-        GarbageCollectionMiddleware: null
+`*/5 * * * * /path/to/webroot/vendor/bin/sake dev/tasks/LoginSessionGarbageCollectionTask
 ```
 
 ## To-do
