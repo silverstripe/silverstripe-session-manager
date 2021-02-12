@@ -9,6 +9,11 @@ use SilverStripe\Core\Injector\Injector;
 use SilverStripe\ORM\Connect\DatabaseException;
 use SilverStripe\SessionManager\Service\GarbageCollectionService;
 
+/**
+ * Class GarbageCollectionMiddleware
+ * @package SilverStripe\SessionManager\Control
+ * @codeCoverageIgnore
+ */
 class GarbageCollectionMiddleware implements HTTPMiddleware
 {
     use Configurable;
