@@ -30,7 +30,9 @@ class LogOutAuthenticationHandler implements AuthenticationHandler
         // Fall back to retrieving request from current Controller if available
         if ($request === null) {
             if (!Controller::has_curr()) {
-                throw new InvalidArgumentException("Authentication with SessionManager enabled requires an active HTTPRequest.");
+                throw new InvalidArgumentException(
+                    "Authentication with SessionManager enabled requires an active HTTPRequest."
+                );
             }
 
             $request = Controller::curr()->getRequest();
