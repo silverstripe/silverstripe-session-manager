@@ -23,7 +23,7 @@ class GarbageCollectionService
         $lifetime = Config::inst()->get(LoginSession::class, 'default_session_lifetime');
         $sessions = LoginSession::get()->filter([
             'LastAccessed:LessThan' => date('Y-m-d H:i:s', time() - $lifetime),
-            'Persistent' => false
+            'Persistent' => 0
         ]);
         $sessions->removeAll();
     }
@@ -34,7 +34,7 @@ class GarbageCollectionService
     protected function collectImplicitlyExpiredSessions()
     {
         $sessions = LoginSession::get()->filter([
-            'Persistent' => true,
+            'Persistent' => 1,
             'LoginHash.ExpiryDate:LessThan' => date('Y-m-d H:i:s')
         ]);
         $sessions->removeAll();

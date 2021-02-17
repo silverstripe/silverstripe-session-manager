@@ -6,6 +6,11 @@ use SilverStripe\Core\Injector\Injector;
 use SilverStripe\Dev\BuildTask;
 use SilverStripe\SessionManager\Service\GarbageCollectionService;
 
+/**
+ * Class GarbageCollectionTask
+ * @package SilverStripe\Tasks
+ * @codeCoverageIgnore
+ */
 class GarbageCollectionTask extends BuildTask
 {
     private static $segment = 'LoginSessionGarbageCollectionTask';

@@ -13,6 +13,11 @@ use SilverStripe\ORM\ValidationException;
 use SilverStripe\SessionManager\Security\LogInAuthenticationHandler;
 use SilverStripe\View\Requirements;
 
+/**
+ * Class GridFieldRevokeLoginSessionAction
+ * @package SilverStripe\SessionManager\Forms
+ * @codeCoverageIgnore
+ */
 class GridFieldRevokeLoginSessionAction implements GridField_ColumnProvider, GridField_ActionProvider
 {
     use Injectable;
