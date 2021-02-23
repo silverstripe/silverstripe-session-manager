@@ -8,10 +8,6 @@ use SilverStripe\Core\Extension;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\GridField\GridField;
 use SilverStripe\Forms\GridField\GridFieldConfig_Base;
-use SilverStripe\MFA\Authenticator\ChangePasswordHandler;
-use SilverStripe\MFA\Exception\InvalidMethodException;
-use SilverStripe\MFA\FormField\RegisteredMFAMethodListField;
-use SilverStripe\MFA\Model\RegisteredMethod;
 use SilverStripe\ORM\FieldType\DBDatetime;
 use SilverStripe\Security\Member;
 use SilverStripe\Security\Permission;
@@ -64,7 +60,7 @@ class MemberExtension extends Extension implements PermissionProvider
 
         $fields->addFieldToTab(
             'Root.Main',
-            $methodListField = SessionManagerField::create(
+            $sessionManagerField = SessionManagerField::create(
                 'SessionManagerField',
                 _t(__CLASS__ . '.SESSION_MANAGER_SETTINGS_FIELD_LABEL', 'Session Manager Settings'),
                 $this->owner->ID
@@ -72,7 +68,7 @@ class MemberExtension extends Extension implements PermissionProvider
         );
 
         if (!$this->currentUserCanEditSessionManagerConfig()) {
-            $methodListField->setReadonly(true);
+            $sessionManagerField->setReadonly(true);
         }
 
         return $fields;
@@ -102,7 +98,8 @@ class MemberExtension extends Extension implements PermissionProvider
     }
 
     /**
-     * Determines whether the logged in user has sufficient permission to modify the SessionManager config for this Member.
+     * Determines whether the logged in user has sufficient permission
+     * to modify the SessionManager config for this Member.
      * Note that this is different from being able to _reset_ the config (which administrators can do).
      *
      * @return bool
@@ -121,7 +118,7 @@ class MemberExtension extends Extension implements PermissionProvider
     {
         $label = _t(
             __CLASS__ . '.SESSION_MANAGER_PERMISSION_LABEL',
-            'View/reset SessionManager configuration for other members'
+            'View/purge login sessions for other members'
         );
 
         $category = _t(
@@ -131,7 +128,7 @@ class MemberExtension extends Extension implements PermissionProvider
 
         $description = _t(
             __CLASS__ . '.SESSION_MANAGER_PERMISSION_DESCRIPTION',
-            'Ability to view and reset registered SessionManager methods for other members.'
+            'Ability to view and purge active login sessions for other members.'
             . ' Requires the "Access to \'Security\' section" permission.'
         );
 

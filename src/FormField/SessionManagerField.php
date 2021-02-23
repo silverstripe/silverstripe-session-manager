@@ -43,15 +43,4 @@ class SessionManagerField extends FormField
 
         return array_merge($defaults, []);
     }
-
-    /**
-     * Get the registered backup method (if any) from the currently logged in user.
-     *
-     * @return RegisteredMethod|null
-     */
-    protected function getBackupMethod(): ?RegisteredMethod
-    {
-        $backupMethod = MethodRegistry::singleton()->getBackupMethod();
-        return RegisteredMethodManager::singleton()->getFromMember(Security::getCurrentUser(), $backupMethod);
-    }
 }
