@@ -2,6 +2,7 @@
 
 namespace SilverStripe\SessionManager\Security;
 
+use SilverStripe\Control\Controller;
 use SilverStripe\Control\HTTPRequest;
 use SilverStripe\Core\Injector\Injector;
 use SilverStripe\Security\AuthenticationHandler;
@@ -26,6 +27,17 @@ class LogOutAuthenticationHandler implements AuthenticationHandler
 
     public function logOut(HTTPRequest $request = null)
     {
+        // Fall back to retrieving request from current Controller if available
+        if ($request === null) {
+            if (!Controller::has_curr()) {
+                throw new InvalidArgumentException(
+                    "Authentication with SessionManager enabled requires an active HTTPRequest."
+                );
+            }
+
+            $request = Controller::curr()->getRequest();
+        }
+
         $loginHandler = Injector::inst()->get(LogInAuthenticationHandler::class);
         $member = Security::getCurrentUser();
 

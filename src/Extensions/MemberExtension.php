@@ -40,7 +40,7 @@ class MemberExtension extends Extension implements PermissionProvider
         $sessionLifetime = $this->getSessionLifetime();
         $maxAge = DBDatetime::now()->getTimestamp() - $sessionLifetime;
         $currentSessions = $this->owner->LoginSessions()->filterAny([
-            'Persistent' => true,
+            'Persistent' => 1,
             'LastAccessed:GreaterThan' => date('Y-m-d H:i:s', $maxAge)
         ]);
 

@@ -135,7 +135,7 @@ class LoginSession extends DataObject
             'IPAddress' => $request->getIP(),
             'UserAgent' => $request->getHeader('User-Agent'),
             'MemberID' => $member->ID,
-            'Persistent' => true
+            'Persistent' => 1
         ])->first();
 
         return $session;
@@ -154,7 +154,7 @@ class LoginSession extends DataObject
             'IPAddress' => $request->getIP(),
             'UserAgent' => $request->getHeader('User-Agent'),
             'MemberID' => $member->ID,
-            'Persistent' => $persistent
+            'Persistent' => intval($persistent)
         ]);
         $session->write();
 
