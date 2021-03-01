@@ -54,7 +54,7 @@ class MemberExtension extends Extension implements PermissionProvider
 
         $fields->removeByName(['SessionManagerField']);
 
-        if (!$this->owner->exists() || !$this->currentUserCanViewSessionManagerConfig()) {
+        if (!$this->owner->exists() || !$this->currentUserCanViewSessions()) {
             return $fields;
         }
 
@@ -67,7 +67,7 @@ class MemberExtension extends Extension implements PermissionProvider
             )
         );
 
-        if (!$this->currentUserCanEditSessionManagerConfig()) {
+        if (!$this->currentUserCanEditSessions()) {
             $sessionManagerField->setReadonly(true);
         }
 
@@ -91,10 +91,10 @@ class MemberExtension extends Extension implements PermissionProvider
      *
      * @return bool
      */
-    public function currentUserCanViewSessionManagerConfig(): bool
+    public function currentUserCanViewSessions(): bool
     {
         return (Permission::check(self::SESSION_MANAGER_ADMINISTER_SESSIONS)
-            || $this->currentUserCanEditSessionManagerConfig());
+            || $this->currentUserCanEditSessions());
     }
 
     /**
@@ -104,7 +104,7 @@ class MemberExtension extends Extension implements PermissionProvider
      *
      * @return bool
      */
-    public function currentUserCanEditSessionManagerConfig(): bool
+    public function currentUserCanEditSessions(): bool
     {
         return (Security::getCurrentUser() && Security::getCurrentUser()->ID === $this->owner->ID);
     }
