@@ -30,29 +30,7 @@ class MemberExtension extends Extension implements PermissionProvider
      */
     public function updateCMSFields(FieldList $fields)
     {
-        # todo: remove start \\
-        $fields->removeByName('LoginSessions');
-
-        $sessionLifetime = $this->getSessionLifetime();
-        $maxAge = DBDatetime::now()->getTimestamp() - $sessionLifetime;
-        $currentSessions = $this->owner->LoginSessions()->filterAny([
-            'Persistent' => 1,
-            'LastAccessed:GreaterThan' => date('Y-m-d H:i:s', $maxAge)
-        ]);
-
-        $fields->addFieldToTab(
-            'Root.Sessions',
-            GridField::create(
-                'LoginSessions',
-                'Sessions',
-                $currentSessions,
-                GridFieldConfig_Base::create()
-                    ->addComponent(GridFieldRevokeLoginSessionAction::create())
-            )
-        );
-        # todo: remove end //
-
-        $fields->removeByName(['SessionManagerField']);
+        $fields->removeByName(['LoginSessions', 'SessionManagerField']);
 
         if (!$this->owner->exists() || !$this->currentUserCanViewSessions()) {
             return $fields;
@@ -62,7 +40,7 @@ class MemberExtension extends Extension implements PermissionProvider
             'Root.Main',
             $sessionManagerField = SessionManagerField::create(
                 'SessionManagerField',
-                _t(__CLASS__ . '.SESSION_MANAGER_SETTINGS_FIELD_LABEL', 'Session Manager Settings'),
+                _t(__CLASS__ . '.SESSION_MANAGER_SETTINGS_FIELD_LABEL', 'Devices'),
                 $this->owner->ID
             )
         );
@@ -72,18 +50,6 @@ class MemberExtension extends Extension implements PermissionProvider
         }
 
         return $fields;
-    }
-
-    /**
-     * @return int
-     */
-    protected function getSessionLifetime()
-    {
-        if ($lifetime = Session::config()->get('timeout')) {
-            return $lifetime;
-        }
-
-        return LoginSession::config()->get('default_session_lifetime');
     }
 
     /**

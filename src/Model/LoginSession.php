@@ -2,15 +2,29 @@
 
 namespace SilverStripe\SessionManager\Model;
 
+use SilverStripe\Control\Controller;
 use SilverStripe\Control\HTTPRequest;
+use SilverStripe\Control\Session;
+use SilverStripe\Core\Injector\Injector;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\ORM\FieldType\DBDatetime;
 use SilverStripe\Security\Member;
 use SilverStripe\Security\Permission;
 use SilverStripe\Security\RememberLoginHash;
 use SilverStripe\Security\Security;
+use SilverStripe\SessionManager\Security\LogInAuthenticationHandler;
 use UAParser\Parser;
 
+/**
+ * Class LoginSession
+ * @package SilverStripe\SessionManager\Model
+ *
+ * @property DBDatetime $LastAccessed
+ * @property string $IPAddress
+ * @property string $UserAgent
+ * @property bool $Persistent
+ * @method Member Member
+ */
 class LoginSession extends DataObject
 {
     private static $db = [
@@ -174,5 +188,75 @@ class LoginSession extends DataObject
         $result = $parser->parse($this->UserAgent);
 
         return sprintf('%s on %s', $result->ua->family, $result->os->toString());
+    }
+
+    /**
+     * @param Member|null $member
+     * @param HTTPRequest|null $request
+     * @return LoginSession|null
+     */
+    public static function getCurrentLoginSession(Member $member = null, HTTPRequest $request = null)
+    {
+        if (!$member) {
+            $member = Security::getCurrentUser();
+        }
+
+        // Fall back to retrieving request from current Controller if available
+        if ($request === null) {
+            if (!Controller::has_curr()) {
+                throw new InvalidArgumentException(
+                    "A HTTPRequest is required to check if this is the currently used LoginSession."
+                );
+            }
+
+            $request = Controller::curr()->getRequest();
+        }
+
+        $loginHandler = Injector::inst()->get(LogInAuthenticationHandler::class);
+        $loginSessionID = $request->getSession()->get($loginHandler->getSessionVariable());
+        $loginSession = LoginSession::get()->byID($loginSessionID);
+        return $loginSession;
+    }
+
+    /**
+     * @param Member|null $member
+     * @param HTTPRequest|null $request
+     * @return static|null
+     */
+    public function isCurrent(Member $member = null, HTTPRequest $request = null)
+    {
+        $currentLoginSession = static::getCurrentLoginSession($member, $request);
+        if (!$currentLoginSession) {
+            return false;
+        }
+
+        return $this->ID === $currentLoginSession->ID;
+    }
+
+    /**
+     * @param Member $member
+     * @return mixed
+     */
+    public static function getCurrentSessions(Member $member)
+    {
+        $sessionLifetime = static::getSessionLifetime();
+        $maxAge = DBDatetime::now()->getTimestamp() - $sessionLifetime;
+        $currentSessions = $member->LoginSessions()->filterAny([
+            'Persistent' => 1,
+            'LastAccessed:GreaterThan' => date('Y-m-d H:i:s', $maxAge)
+        ]);
+        return $currentSessions;
+    }
+
+    /**
+     * @return int
+     */
+    public static function getSessionLifetime()
+    {
+        if ($lifetime = Session::config()->get('timeout')) {
+            return $lifetime;
+        }
+
+        return LoginSession::config()->get('default_session_lifetime');
     }
 }

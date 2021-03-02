@@ -8,11 +8,9 @@ Allow users to manage and revoke access to multiple login sessions across device
 [![Version](http://img.shields.io/packagist/v/silverstripe/session-manager.svg?style=flat)](https://packagist.org/packages/silverstripe/session-manager)
 [![License](http://img.shields.io/packagist/l/silverstripe/session-manager.svg?style=flat)](LICENSE)
 
-**This module is in development, and is not ready for use in production**
-
 ![CMS view](images/cms.png)
 
-## How it works
+## Developer Details
 
 The module introduces a new database record type: `LoginSession`.
 On first login, it creates a new record of this type, recording the IP and User-Agent,
@@ -92,9 +90,3 @@ Alternatively, you can create a system cron entry to run the `LoginSessionGarbag
 ```
 `*/5 * * * * /path/to/webroot/vendor/bin/sake dev/tasks/LoginSessionGarbageCollectionTask
 ```
-
-## To-do
-
-- Privacy warning (storing IP/User-Agent - GDPR)
-- More manual testing
-- Unit test coverage

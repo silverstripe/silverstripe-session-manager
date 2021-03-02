@@ -3,19 +3,23 @@
 namespace SilverStripe\SessionManager\FormField;
 
 use SilverStripe\Admin\SecurityAdmin;
+use SilverStripe\Core\Injector\Injector;
 use SilverStripe\Forms\FormField;
+use SilverStripe\MFA\Extension\MemberExtension;
+use SilverStripe\MFA\State\RegisteredMethodDetailsInterface;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\Security\Member;
 use SilverStripe\Security\Security;
+use SilverStripe\SessionManager\Model\LoginSession;
 
 class SessionManagerField extends FormField
 {
     /**
      * {@inheritDoc}
      *
-     * @param string      $name  Field name
+     * @param string $name Field name
      * @param string|null $title Field title
-     * @param int         $value Member ID to apply this field to
+     * @param int $value Member ID to apply this field to
      */
     public function __construct(string $name, ?string $title, int $value)
     {
@@ -41,6 +45,34 @@ class SessionManagerField extends FormField
             $member = DataObject::get_by_id(Member::class, $this->value);
         }
 
-        return array_merge($defaults, []);
+        return array_merge($defaults, [
+            'schema' => [
+                'loginSessions' => $this->getLoginSessions($member)
+            ],
+        ]);
+    }
+
+    /**
+     * @param Member $member
+     * @return array
+     */
+    protected function getLoginSessions(Member $member)
+    {
+        $loginSessions = [];
+        /** @var LoginSession $loginSession */
+        foreach (LoginSession::getCurrentSessions($member) as $loginSession) {
+            $loginSessions[] = [
+                'ID' => $loginSession->ID,
+                'IPAddress' => $loginSession->IPAddress,
+                'UserAgent' => $loginSession->getFriendlyUserAgent(),
+                'IsCurrent' => $loginSession->isCurrent(),
+                'Persistent' => $loginSession->Persistent,
+                'Member' => [
+                    'Name' => $loginSession->Member()->Name
+                ],
+                'LastAccessed' => $loginSession->LastAccessed,
+            ];
+        }
+        return $loginSessions;
     }
 }
