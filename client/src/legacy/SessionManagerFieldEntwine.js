@@ -2,6 +2,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {loadComponent} from 'lib/Injector'; // eslint-disable-line
+import $ from 'jquery';
 
 const FIELD_SELECTOR = '.js-injector-boot [data-field-type="session-manager-field"]';
 
@@ -20,20 +21,20 @@ target="_blank"
 function injectReactSessionManagerField(field) {
     const SessionManagerField = loadComponent('SessionManagerField');
     const {
-        readOnly, schema: {
+        schema: {
             loginSessions
         }
     } = field.data('schema');
 
     ReactDOM.render(
-        <SessionManagerField
-            loginSessions={loginSessions}
-        />,
+      <SessionManagerField
+        loginSessions={loginSessions}
+      />,
         field[0]
     );
 }
 
-window.jQuery.entwine('ss', ($) => {
+$.entwine('ss', () => {
     $(FIELD_SELECTOR).entwine({
         onmatch() {
             // add the learn more link

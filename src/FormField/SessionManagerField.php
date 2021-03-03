@@ -5,8 +5,7 @@ namespace SilverStripe\SessionManager\FormField;
 use SilverStripe\Admin\SecurityAdmin;
 use SilverStripe\Core\Injector\Injector;
 use SilverStripe\Forms\FormField;
-use SilverStripe\MFA\Extension\MemberExtension;
-use SilverStripe\MFA\State\RegisteredMethodDetailsInterface;
+use SilverStripe\SessionManager\Control\LoginSessionController;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\Security\Member;
 use SilverStripe\Security\Security;
@@ -58,6 +57,8 @@ class SessionManagerField extends FormField
      */
     protected function getLoginSessions(Member $member)
     {
+        $logOutEndpoint = LoginSessionController::singleton()->Link('remove');
+
         $loginSessions = [];
         /** @var LoginSession $loginSession */
         foreach (LoginSession::getCurrentSessions($member) as $loginSession) {
@@ -71,6 +72,7 @@ class SessionManagerField extends FormField
                     'Name' => $loginSession->Member()->Name
                 ],
                 'LastAccessed' => $loginSession->LastAccessed,
+                'LogOutEndpoint' => $logOutEndpoint,
             ];
         }
         return $loginSessions;
