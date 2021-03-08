@@ -4,7 +4,7 @@ import LoginSession from './LoginSession';
 
 function SessionManagerField(props) {
     return (
-      <div className={'SessionManagerField'}>
+      <div className={'session-manager-field'}>
         {props.loginSessions.map((loginSession) =>
           <LoginSession key={loginSession.ID} {...loginSession} />
             )}

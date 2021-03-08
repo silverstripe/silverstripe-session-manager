@@ -1,7 +1,7 @@
 // Manages rendering SessionManagerFields in lieu of React support in ModelAdmin
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {loadComponent} from 'lib/Injector'; // eslint-disable-line
+import { loadComponent } from 'lib/Injector';
 import $ from 'jquery';
 
 const FIELD_SELECTOR = '.js-injector-boot [data-field-type="session-manager-field"]';

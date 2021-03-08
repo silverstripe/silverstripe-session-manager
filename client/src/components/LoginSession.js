@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import confirm from '@silverstripe/reactstrap-confirm';
 import Config from 'lib/Config'; // eslint-disable-line
-import api from 'lib/api';
+import backend from 'lib/Backend';
 import moment from 'moment';
 import i18n from 'i18n';
 import PropTypes from 'prop-types';
@@ -21,8 +21,6 @@ class LoginSession extends Component {
     }
 
     async logOut() {
-        // const { ss: { i18n } } = window;
-
         // Confirm with the user
         const confirmMessage = i18n._t(
             'SessionManager.DELETE_CONFIRMATION',
@@ -43,13 +41,23 @@ class LoginSession extends Component {
 
         this.setState({ submitting: true });
 
-        const token = Config.get('SecurityID');
-        const endpoint = `${this.props.LogOutEndpoint}/${this.props.ID}?SecurityID=${token}`;
-        api(endpoint, 'DELETE')
+        const endpoint = backend.createEndpointFetcher({
+            url: `${this.props.LogOutEndpoint}/:id`,
+            method: 'delete',
+            payloadSchema: {
+                id: { urlReplacement: ':id', remove: true }
+            },
+            defaultData: {
+                SecurityID: Config.get('SecurityID')
+            }
+        });
+
+        endpoint({
+            id: this.props.ID
+        })
             .then(response => response.json())
             .then(output => {
                 const failed = !!output.error;
-
                 this.setState({ complete: true, failed, submitting: false });
             })
             .catch(() => {
@@ -65,7 +73,7 @@ class LoginSession extends Component {
         }
 
         return (
-          <div>
+          <div className="login-session">
             <div>{this.props.UserAgent}</div>
             {this.props.IsCurrent && <strong className={'text-success'}>{i18n._t(
                     'SessionManager.CURRENT',
@@ -79,19 +87,19 @@ class LoginSession extends Component {
                     )} ${lastAccessedElapsed}`}
             </div>
             {!this.props.IsCurrent && <a
-                  href="javascript:void(0);" // eslint-disable-line
+              href="javascript:void(0);" // eslint-disable-line
               onClick={this.logOut}
             >{i18n._t(
-                  'SessionManager.LOG_OUT',
-                  'Log Out'
-              )}</a>}
+                'SessionManager.LOG_OUT',
+                    'Log Out'
+                )}</a>}
           </div>
         );
     }
 }
 
 const LoginSessionShape = PropTypes.shape({
-    ID: PropTypes.number,
+    ID: PropTypes.number.isRequired,
     IPAddress: PropTypes.string,
     IsCurrent: PropTypes.bool,
     UserAgent: PropTypes.string,
