@@ -9,19 +9,19 @@ use SilverStripe\Forms\GridField\GridField;
 use SilverStripe\Forms\GridField\GridField_ActionProvider;
 use SilverStripe\Forms\GridField\GridField_ColumnProvider;
 use SilverStripe\Forms\GridField\GridField_FormAction;
+use SilverStripe\ORM\DataList;
 use SilverStripe\ORM\ValidationException;
 use SilverStripe\SessionManager\Security\LogInAuthenticationHandler;
 use SilverStripe\View\Requirements;
 
-/**
- * Class GridFieldRevokeLoginSessionAction
- * @package SilverStripe\SessionManager\Forms
- * @codeCoverageIgnore
- */
 class GridFieldRevokeLoginSessionAction implements GridField_ColumnProvider, GridField_ActionProvider
 {
     use Injectable;
 
+    /**
+     * @param GridField $gridField
+     * @param array $columns
+     */
     public function augmentColumns($gridField, &$columns)
     {
         if (!in_array('Actions', $columns)) {
@@ -29,11 +29,22 @@ class GridFieldRevokeLoginSessionAction implements GridField_ColumnProvider, Gri
         }
     }
 
+    /**
+     * @param GridField $gridField
+     * @param DataObject $record
+     * @param string $columnName
+     * @return array
+     */
     public function getColumnAttributes($gridField, $record, $columnName)
     {
         return ['class' => 'grid-field__col-compact'];
     }
 
+    /**
+     * @param GridField $gridField
+     * @param string $columnName
+     * @return array
+     */
     public function getColumnMetadata($gridField, $columnName)
     {
         if ($columnName == 'Actions') {
@@ -41,16 +52,30 @@ class GridFieldRevokeLoginSessionAction implements GridField_ColumnProvider, Gri
         }
     }
 
+    /**
+     * @param GridField $gridField
+     * @return array
+     */
     public function getColumnsHandled($gridField)
     {
         return ['Actions'];
     }
 
+    /**
+     * @param GridField
+     * @return array
+     */
     public function getActions($gridField)
     {
         return ['revoke'];
     }
 
+    /**
+     * @param GridField $gridField
+     * @param DataObject $record
+     * @param string $columnName
+     * @return string
+     */
     public function getColumnContent($gridField, $record, $columnName)
     {
         Requirements::javascript(
@@ -81,9 +106,21 @@ class GridFieldRevokeLoginSessionAction implements GridField_ColumnProvider, Gri
         return $field->Field();
     }
 
+    /**
+     * @param GridField $gridField
+     * @param string $actionName
+     * @param array $arguments
+     * @param array $data
+     * @throws ValidationException
+     */
     public function handleAction(GridField $gridField, $actionName, $arguments, $data)
     {
-        $item = $gridField->getList()->byID($arguments['RecordID']);
+        /** @var DataList $list */
+        $list = $gridField->getList();
+        if (!($list instanceof DataList)) {
+            return;
+        }
+        $item = $list->byID($arguments['RecordID']);
         if (!$item) {
             return;
         }

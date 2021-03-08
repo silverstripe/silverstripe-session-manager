@@ -3,6 +3,7 @@
 namespace SilverStripe\SessionManager\Control;
 
 use SilverStripe\Control\HTTPRequest;
+use SilverStripe\Control\HTTPResponse;
 use SilverStripe\Control\Middleware\HTTPMiddleware;
 use SilverStripe\Core\Injector\Injector;
 use SilverStripe\ORM\Connect\DatabaseException;
@@ -14,6 +15,11 @@ use SilverStripe\SessionManager\Security\LogInAuthenticationHandler;
 
 class LoginSessionMiddleware implements HTTPMiddleware
 {
+    /**
+     * @param HTTPRequest $request
+     * @param callable $delegate
+     * @return HTTPResponse
+     */
     public function process(HTTPRequest $request, callable $delegate)
     {
         $loginHandler = Injector::inst()->get(LogInAuthenticationHandler::class);
