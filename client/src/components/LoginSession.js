@@ -1,5 +1,5 @@
 /* global window */
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import confirm from '@silverstripe/reactstrap-confirm';
 import Config from 'lib/Config'; // eslint-disable-line
 import backend from 'lib/Backend';
@@ -7,20 +7,10 @@ import moment from 'moment';
 import i18n from 'i18n';
 import PropTypes from 'prop-types';
 
-class LoginSession extends Component {
-    constructor(props) {
-        super(props);
+function LoginSession(props) {
+    const [loading, setLoading] = useState({ complete: false, failed: false, submitting: false });
 
-        this.state = {
-            complete: false,
-            failed: false,
-            submitting: false,
-        };
-
-        this.logOut = this.logOut.bind(this);
-    }
-
-    async logOut() {
+    async function logOut() {
         // Confirm with the user
         const confirmMessage = i18n._t(
             'SessionManager.DELETE_CONFIRMATION',
@@ -39,63 +29,59 @@ class LoginSession extends Component {
             return;
         }
 
-        this.setState({ submitting: true });
+        setLoading({ ...loading, submitting: true });
 
         const endpoint = backend.createEndpointFetcher({
-            url: `${this.props.LogOutEndpoint}/:id`,
+            url: `${props.LogOutEndpoint}/:id`,
             method: 'delete',
             payloadSchema: {
-                id: { urlReplacement: ':id', remove: true }
-            },
-            defaultData: {
-                SecurityID: Config.get('SecurityID')
+                id: { urlReplacement: ':id', remove: true },
+                SecurityID: { querystring: true }
             }
         });
 
         endpoint({
-            id: this.props.ID
+            id: props.ID,
+            SecurityID: Config.get('SecurityID')
         })
             .then(response => response.json())
             .then(output => {
-                const failed = !!output.error;
-                this.setState({ complete: true, failed, submitting: false });
+                setLoading({ complete: true, failed: !!output.error, submitting: false });
             })
             .catch(() => {
-                this.setState({ complete: true, failed: true, submitting: false });
+                setLoading({ complete: true, failed: true, submitting: false });
             });
     }
 
-    render() {
-        const lastAccessedElapsed = moment.utc(this.props.LastAccessed).fromNow();
+    const lastAccessedElapsed = moment.utc(props.LastAccessed).fromNow();
 
-        if (this.state.complete || this.state.submitting) {
-            return null;
-        }
-
-        return (
-          <div className="login-session">
-            <div>{this.props.UserAgent}</div>
-            {this.props.IsCurrent && <strong className={'text-success'}>{i18n._t(
-                    'SessionManager.CURRENT',
-                    'Current'
-                )}</strong>}
-            <div className="text-muted">
-              {this.props.IPAddress}
-              {!this.props.IsCurrent && `, ${i18n._t(
-                        'SessionManager.LAST_ACTIVE',
-                        'last active'
-                    )} ${lastAccessedElapsed}`}
-            </div>
-            {!this.props.IsCurrent && <a
-              href="javascript:void(0);" // eslint-disable-line
-              onClick={this.logOut}
-            >{i18n._t(
-                'SessionManager.LOG_OUT',
-                    'Log Out'
-                )}</a>}
-          </div>
-        );
+    if (loading.complete || loading.submitting) {
+        return null;
     }
+
+    return (
+      <div className="login-session">
+        <div>{props.UserAgent}</div>
+        {props.IsCurrent && <strong className={'text-success'}>{i18n._t(
+                'SessionManager.CURRENT',
+                'Current'
+            )}</strong>}
+        <div className="text-muted">
+          {props.IPAddress}
+          {!props.IsCurrent && `, ${i18n._t(
+                    'SessionManager.LAST_ACTIVE',
+                    'last active'
+                )} ${lastAccessedElapsed}`}
+        </div>
+        {!props.IsCurrent && <a
+                href="javascript:void(0);" // eslint-disable-line
+          onClick={logOut}
+        >{i18n._t(
+                'SessionManager.LOG_OUT',
+                'Log Out'
+            )}</a>}
+      </div>
+    );
 }
 
 const LoginSessionShape = PropTypes.shape({
@@ -110,8 +96,6 @@ const LoginSessionShape = PropTypes.shape({
 });
 
 LoginSession.propTypes = LoginSessionShape;
-
-LoginSession.defaultProps = {};
 
 export default LoginSession;
 
