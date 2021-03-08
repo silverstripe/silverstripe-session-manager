@@ -1,5 +1,6 @@
 ---
 Name: session-manager
+Before: '#mfa-admin'
 ---
 SilverStripe\Security\Member:
   extensions:
@@ -7,6 +8,9 @@ SilverStripe\Security\Member:
 SilverStripe\Security\RememberLoginHash:
   extensions:
     - 'SilverStripe\SessionManager\Extensions\RememberLoginHashExtension'
+SilverStripe\Admin\LeftAndMain:
+  extra_requirements_javascript:
+    - 'silverstripe/session-manager: client/dist/js/bundle.js'
 ---
 Name: session-manager-log-in-handler
 After: '#coreauthentication'
