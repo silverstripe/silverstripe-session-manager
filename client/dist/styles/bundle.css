@@ -1,1 +1,1 @@
-.session-manager-field>div:not(:last-child){margin-bottom:20px}
+.session-manager-field .login-session:not(:last-of-type){margin-bottom:20px}

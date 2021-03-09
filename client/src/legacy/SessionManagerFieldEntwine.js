@@ -26,12 +26,7 @@ function injectReactSessionManagerField(field) {
         }
     } = field.data('schema');
 
-    ReactDOM.render(
-      <SessionManagerField
-        loginSessions={loginSessions}
-      />,
-        field[0]
-    );
+    ReactDOM.render(<SessionManagerField loginSessions={loginSessions} />, field[0]);
 }
 
 $.entwine('ss', () => {

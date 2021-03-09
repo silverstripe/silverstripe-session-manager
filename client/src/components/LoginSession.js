@@ -53,50 +53,38 @@ function LoginSession(props) {
             });
     }
 
-    const lastAccessedElapsed = moment.utc(props.LastAccessed).fromNow();
-
     if (loading.complete || loading.submitting) {
         return null;
     }
 
+    const lastAccessedElapsed = moment.utc(props.LastAccessed).fromNow();
+    const currentStr = i18n._t('SessionManager.CURRENT', 'Current');
+    const lastActiveStr = i18n._t('SessionManager.LAST_ACTIVE', 'last active');
+    const logOutStr = i18n._t('SessionManager.LOG_OUT', 'Log Out');
+
     return (
       <div className="login-session">
         <div>{props.UserAgent}</div>
-        {props.IsCurrent && <strong className={'text-success'}>{i18n._t(
-                'SessionManager.CURRENT',
-                'Current'
-            )}</strong>}
+        {props.IsCurrent && <strong className={'text-success'}>{currentStr}</strong>}
         <div className="text-muted">
           {props.IPAddress}
-          {!props.IsCurrent && `, ${i18n._t(
-                    'SessionManager.LAST_ACTIVE',
-                    'last active'
-                )} ${lastAccessedElapsed}`}
+          {!props.IsCurrent && `, ${lastActiveStr} ${lastAccessedElapsed}`}
         </div>
         {!props.IsCurrent && <a
                 href="javascript:void(0);" // eslint-disable-line
           onClick={logOut}
-        >{i18n._t(
-                'SessionManager.LOG_OUT',
-                'Log Out'
-            )}</a>}
+        >{logOutStr}</a>}
       </div>
     );
 }
 
-const LoginSessionShape = PropTypes.shape({
+LoginSession.propTypes = {
     ID: PropTypes.number.isRequired,
-    IPAddress: PropTypes.string,
+    IPAddress: PropTypes.string.isRequired,
     IsCurrent: PropTypes.bool,
     UserAgent: PropTypes.string,
-    Persistent: PropTypes.number,
-    Member: PropTypes.object,
-    LastAccessed: PropTypes.string,
-    LogOutEndpoint: PropTypes.string,
-});
-
-LoginSession.propTypes = LoginSessionShape;
+    LastAccessed: PropTypes.string.isRequired,
+    LogOutEndpoint: PropTypes.string.isRequired,
+};
 
 export default LoginSession;
-
-export { LoginSessionShape };
