@@ -2,7 +2,8 @@
 @import "variables";
 
 // Import all of your SCSS stylesheets using relative paths from "components"
-@import '../components/SessionManagerField.scss';
+@import '../components/LoginSession/LoginSession.scss';
+@import '../components/SessionManagerField/SessionManagerField.scss';
 
 // Import any legacy SCSS stylesheets
 // e.g. @import '../styles/MyComponent-ModelAdmin-legacy.scss

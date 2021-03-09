@@ -1,0 +1,8 @@
+.login-session__logout:not([href]) {
+    cursor: pointer;
+    color: $link-color;
+
+    &:hover, &:active {
+        text-decoration: underline;
+    }
+}

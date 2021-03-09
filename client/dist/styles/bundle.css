@@ -1,1 +1,1 @@
-.session-manager-field .login-session:not(:last-of-type){margin-bottom:20px}
+.login-session__logout:not([href]){cursor:pointer;color:#0071c4}.login-session__logout:not([href]):active,.login-session__logout:not([href]):hover{text-decoration:underline}.session-manager-field .login-session:not(:last-of-type){margin-bottom:20px}

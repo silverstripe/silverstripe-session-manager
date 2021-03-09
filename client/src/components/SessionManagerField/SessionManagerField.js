@@ -1,6 +1,6 @@
 /* global window */
 import React from 'react';
-import LoginSession from './LoginSession';
+import LoginSession from '../LoginSession/LoginSession';
 
 function SessionManagerField(props) {
     return (

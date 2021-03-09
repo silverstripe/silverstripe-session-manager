@@ -16,14 +16,8 @@ function LoginSession(props) {
             'SessionManager.DELETE_CONFIRMATION',
             'Are you sure you want to delete this login session?'
         );
-        const confirmTitle = i18n._t(
-            'SessionManager.CONFIRMATION_TITLE',
-            'Are you sure?'
-        );
-        const buttonLabel = i18n._t(
-            'SessionManager.DELETE_CONFIRMATION_BUTTON',
-            'Remove login session'
-        );
+        const confirmTitle = i18n._t('SessionManager.CONFIRMATION_TITLE', 'Are you sure?');
+        const buttonLabel = i18n._t('SessionManager.DELETE_CONFIRMATION_BUTTON', 'Remove login session');
 
         if (!await confirm(confirmMessage, { title: confirmTitle, confirmLabel: buttonLabel })) {
             return;
@@ -71,7 +65,9 @@ function LoginSession(props) {
           {!props.IsCurrent && `, ${lastActiveStr} ${lastAccessedElapsed}`}
         </div>
         {!props.IsCurrent && <a
-                href="javascript:void(0);" // eslint-disable-line
+          role={'button'}
+          tabIndex={'0'}
+          className={'login-session__logout'}
           onClick={logOut}
         >{logOutStr}</a>}
       </div>
