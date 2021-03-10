@@ -51,26 +51,44 @@ function LoginSession(props) {
         return null;
     }
 
+    const created = moment(props.Created);
+    const lastAccessed = moment(props.LastAccessed);
     const lastAccessedElapsed = moment.utc(props.LastAccessed).fromNow();
     const currentStr = i18n._t('SessionManager.CURRENT', 'Current');
     const lastActiveStr = i18n._t('SessionManager.LAST_ACTIVE', 'last active');
     const logOutStr = i18n._t('SessionManager.LOG_OUT', 'Log Out');
 
+    const activityTooltip = i18n.inject(
+        i18n._t('Admin.ACTIVITY_TOOLTIP_TEXT', 'Signed in {signedIn}, Last active {lastActive}'),
+        {
+            signedIn: created.format('L LT'),
+            lastActive: lastAccessed.format('L LT')
+        }
+    );
+
     return (
-      <div className="login-session">
-        <div>{props.UserAgent}</div>
-        {props.IsCurrent && <strong className={'text-success'}>{currentStr}</strong>}
-        <div className="text-muted">
-          {props.IPAddress}
-          {!props.IsCurrent && `, ${lastActiveStr} ${lastAccessedElapsed}`}
+        <div className="login-session">
+            <div>{props.UserAgent}</div>
+            {props.IsCurrent &&
+                <strong className={'text-success'} data-toggle="tooltip" data-placement="top" title={activityTooltip}>
+                    {currentStr}
+                </strong>
+            }
+            <div className="text-muted">
+                {props.IPAddress}
+                {!props.IsCurrent &&
+                    <span data-toggle="tooltip" data-placement="top" title={activityTooltip}>
+                        , {lastActiveStr} {lastAccessedElapsed}
+                    </span>
+                }
+            </div>
+            {!props.IsCurrent && <a
+                role={'button'}
+                tabIndex={'0'}
+                className={'login-session__logout'}
+                onClick={logOut}
+            >{logOutStr}</a>}
         </div>
-        {!props.IsCurrent && <a
-          role={'button'}
-          tabIndex={'0'}
-          className={'login-session__logout'}
-          onClick={logOut}
-        >{logOutStr}</a>}
-      </div>
     );
 }
 
@@ -79,6 +97,7 @@ LoginSession.propTypes = {
     IPAddress: PropTypes.string.isRequired,
     IsCurrent: PropTypes.bool,
     UserAgent: PropTypes.string,
+    Created: PropTypes.string.isRequired,
     LastAccessed: PropTypes.string.isRequired,
     LogOutEndpoint: PropTypes.string.isRequired,
 };

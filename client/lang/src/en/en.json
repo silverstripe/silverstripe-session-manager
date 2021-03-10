@@ -5,4 +5,5 @@
     "SessionManager.CURRENT": "Current",
     "SessionManager.LAST_ACTIVE": "last active",
     "SessionManager.LOG_OUT": "Log Out",
+    "SessionManager.ACTIVITY_TOOLTIP_TEXT": "Signed in {signedIn}, Last active {lastActive}",
 }

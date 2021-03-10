@@ -71,6 +71,7 @@ class SessionManagerField extends FormField
                 'Member' => [
                     'Name' => $loginSession->Member()->Name
                 ],
+                'Created' => $loginSession->Created,
                 'LastAccessed' => $loginSession->LastAccessed,
                 'LogOutEndpoint' => $logOutEndpoint,
             ];
