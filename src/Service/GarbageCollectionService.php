@@ -3,11 +3,14 @@
 namespace SilverStripe\SessionManager\Service;
 
 use SilverStripe\Core\Config\Config;
+use SilverStripe\Core\Injector\Injectable;
 use SilverStripe\Security\RememberLoginHash;
 use SilverStripe\SessionManager\Model\LoginSession;
 
 class GarbageCollectionService
 {
+    use Injectable;
+
     public function collect()
     {
         $this->collectExpiredSessions();
