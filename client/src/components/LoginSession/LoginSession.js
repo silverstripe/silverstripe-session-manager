@@ -55,7 +55,10 @@ function LoginSession(props) {
     const lastAccessed = moment(props.LastAccessed);
     const lastAccessedElapsed = moment.utc(props.LastAccessed).fromNow();
     const currentStr = i18n._t('SessionManager.CURRENT', 'Current');
-    const lastActiveStr = i18n._t('SessionManager.LAST_ACTIVE', 'last active');
+    const lastActiveStr = i18n.inject(
+        i18n._t('SessionManager.LAST_ACTIVE', 'last active {lastAccessedElapsed}...'),
+        { lastAccessedElapsed }
+    );
     const logOutStr = i18n._t('SessionManager.LOG_OUT', 'Log Out');
 
     const activityTooltip = i18n.inject(
@@ -67,28 +70,28 @@ function LoginSession(props) {
     );
 
     return (
-        <div className="login-session">
-            <div>{props.UserAgent}</div>
-            {props.IsCurrent &&
-                <strong className={'text-success'} data-toggle="tooltip" data-placement="top" title={activityTooltip}>
-                    {currentStr}
-                </strong>
+      <div className="login-session">
+        <div>{props.UserAgent}</div>
+        {props.IsCurrent &&
+        <strong className={'text-success'} data-toggle="tooltip" data-placement="top" title={activityTooltip}>
+          {currentStr}
+        </strong>
             }
-            <div className="text-muted">
-                {props.IPAddress}
-                {!props.IsCurrent &&
-                    <span data-toggle="tooltip" data-placement="top" title={activityTooltip}>
-                        , {lastActiveStr} {lastAccessedElapsed}
-                    </span>
+        <div className="text-muted">
+          {props.IPAddress}
+          {!props.IsCurrent &&
+            <span data-toggle="tooltip" data-placement="top" title={activityTooltip}>
+                        , {lastActiveStr}
+            </span>
                 }
-            </div>
-            {!props.IsCurrent && <a
-                role={'button'}
-                tabIndex={'0'}
-                className={'login-session__logout'}
-                onClick={logOut}
-            >{logOutStr}</a>}
         </div>
+        {!props.IsCurrent && <a
+          role={'button'}
+          tabIndex={'0'}
+          className={'login-session__logout'}
+          onClick={logOut}
+        >{logOutStr}</a>}
+      </div>
     );
 }
 
