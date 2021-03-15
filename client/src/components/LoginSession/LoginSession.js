@@ -52,13 +52,19 @@ function LoginSession(props) {
     }
 
     const created = moment(props.Created);
+    const createdElapsed = moment.utc(props.Created).fromNow();
     const lastAccessed = moment(props.LastAccessed);
     const lastAccessedElapsed = moment.utc(props.LastAccessed).fromNow();
     const currentStr = i18n._t('SessionManager.CURRENT', 'Current');
-    const lastActiveStr = i18n.inject(
-        i18n._t('SessionManager.LAST_ACTIVE', 'last active {lastAccessedElapsed}...'),
-        { lastAccessedElapsed }
-    );
+    const lastActiveStr = props.IsCurrent ?
+        i18n.inject(
+            i18n._t('SessionManager.AUTHENTICATED', 'authenticated {createdElapsed}...'),
+            {createdElapsed}
+        )
+        : i18n.inject(
+            i18n._t('SessionManager.LAST_ACTIVE', 'last active {lastAccessedElapsed}...'),
+            {lastAccessedElapsed}
+        );
     const logOutStr = i18n._t('SessionManager.LOG_OUT', 'Log Out');
 
     const activityTooltip = i18n.inject(
@@ -79,11 +85,9 @@ function LoginSession(props) {
             }
         <div className="text-muted">
           {props.IPAddress}
-          {!props.IsCurrent &&
-            <span data-toggle="tooltip" data-placement="top" title={activityTooltip}>
-                        , {lastActiveStr}
-            </span>
-                }
+          <span data-toggle="tooltip" data-placement="top" title={activityTooltip}>
+            , {lastActiveStr}
+          </span>
         </div>
         {!props.IsCurrent && <a
           role={'button'}
