@@ -40,7 +40,7 @@ class MemberExtension extends Extension implements PermissionProvider
             'Root.Main',
             $sessionManagerField = SessionManagerField::create(
                 'SessionManagerField',
-                _t(__CLASS__ . '.SESSION_MANAGER_SETTINGS_FIELD_LABEL', 'Devices'),
+                _t(__CLASS__ . '.SESSION_MANAGER_SETTINGS_FIELD_LABEL', 'Authenticated devices'),
                 $this->owner->ID
             )
         );

@@ -1,3 +1,7 @@
-.session-manager-field .login-session:not(:last-of-type) {
-    margin-bottom: 20px;
+.session-manager-field {
+    padding: $input-padding-y 0;
+
+    .login-session:not(:last-of-type) {
+        margin-bottom: 20px;
+    }
 }

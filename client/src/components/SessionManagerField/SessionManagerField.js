@@ -4,11 +4,11 @@ import LoginSession from '../LoginSession/LoginSession';
 
 function SessionManagerField(props) {
     return (
-      <div className={'session-manager-field'}>
+      <ul className={'session-manager-field list-unstyled'}>
         {props.loginSessions.map((loginSession) =>
           <LoginSession key={loginSession.ID} {...loginSession} />
             )}
-      </div>
+      </ul>
     );
 }
 

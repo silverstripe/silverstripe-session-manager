@@ -6,6 +6,7 @@ import backend from 'lib/Backend';
 import moment from 'moment';
 import i18n from 'i18n';
 import PropTypes from 'prop-types';
+import jQuery from 'jquery';
 
 function LoginSession(props) {
     const [loading, setLoading] = useState({ complete: false, failed: false, submitting: false });
@@ -45,25 +46,33 @@ function LoginSession(props) {
                     submitting: false
                 });
                 if (response.success) {
-                    jQuery.noticeAdd({
-                        text: i18n._t(
-                            'SessionManager.LOG_OUT_CONFIRMED',
-                            'Successfully logged out of device.'
-                        ),
-                        stay: false,
-                        type: 'success'
-                    });
+                    setTimeout(() => {
+                        setLoading({
+                            complete: true,
+                            failed: !!response.error && !response.success,
+                            fadeOutComplete: true,
+                            submitting: false
+                        });
+                        jQuery.noticeAdd({
+                            text: i18n._t(
+                                'SessionManager.LOG_OUT_CONFIRMED',
+                                'Successfully logged out of device.'
+                            ),
+                            stay: false,
+                            type: 'success'
+                        });
+                    }, 2000);
                 }
             })
             .catch((error) => {
                 setLoading({ complete: true, failed: true, submitting: false });
                 error.response.json().then(response => {
-                    jQuery.noticeAdd({text: response.errors, stay: false, type: 'error'});
+                    jQuery.noticeAdd({ text: response.errors, stay: false, type: 'error' });
                 });
             });
     }
 
-    if ((loading.complete && !loading.failed) || loading.submitting) {
+    if (loading.fadeOutComplete) {
         return null;
     }
 
@@ -75,13 +84,15 @@ function LoginSession(props) {
     const lastActiveStr = props.IsCurrent ?
         i18n.inject(
             i18n._t('SessionManager.AUTHENTICATED', 'authenticated {createdElapsed}...'),
-            {createdElapsed}
+            { createdElapsed }
         )
         : i18n.inject(
             i18n._t('SessionManager.LAST_ACTIVE', 'last active {lastAccessedElapsed}...'),
-            {lastAccessedElapsed}
+            { lastAccessedElapsed }
         );
-    const logOutStr = i18n._t('SessionManager.LOG_OUT', 'Log Out');
+    const logOutStr = (loading.submitting || (loading.complete && !loading.failed)) ?
+        i18n._t('SessionManager.LOGGING_OUT', 'Logging out...')
+        : i18n._t('SessionManager.LOG_OUT', 'Log out');
 
     const activityTooltip = i18n.inject(
         i18n._t('Admin.ACTIVITY_TOOLTIP_TEXT', 'Signed in {signedIn}, Last active {lastActive}'),
@@ -92,26 +103,28 @@ function LoginSession(props) {
     );
 
     return (
-      <div className="login-session">
-        <div>{props.UserAgent}</div>
-        {props.IsCurrent &&
-        <strong className={'text-success'} data-toggle="tooltip" data-placement="top" title={activityTooltip}>
-          {currentStr}
-        </strong>
-            }
-        <div className="text-muted">
+      <li className={`login-session ${(loading.complete && !loading.failed) ? 'hidden' : ''}`}>
+        <p>{props.UserAgent}</p>
+        <p className="text-muted">
           {props.IPAddress}
           <span data-toggle="tooltip" data-placement="top" title={activityTooltip}>
             , {lastActiveStr}
           </span>
-        </div>
+        </p>
+        {props.IsCurrent &&
+        <p>
+            <strong className={'text-success'}>
+                {currentStr}
+            </strong>
+        </p>
+            }
         {!props.IsCurrent && <a
           role={'button'}
           tabIndex={'0'}
           className={'login-session__logout'}
-          onClick={logOut}
+          onClick={loading.submitting ? null : logOut}
         >{logOutStr}</a>}
-      </div>
+      </li>
     );
 }
 

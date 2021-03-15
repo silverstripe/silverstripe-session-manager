@@ -1,3 +1,15 @@
+.login-session {
+    &.hidden {
+        visibility: hidden;
+        opacity: 0;
+        transition: visibility 0s 2s, opacity 2s linear;
+    }
+
+    p {
+        margin: 0;
+    }
+}
+
 .login-session__logout:not([href]) {
     cursor: pointer;
     color: $link-color;
