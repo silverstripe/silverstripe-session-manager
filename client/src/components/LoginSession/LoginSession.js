@@ -38,16 +38,32 @@ function LoginSession(props) {
             id: props.ID,
             SecurityID: Config.get('SecurityID')
         })
-            .then(response => response.json())
-            .then(output => {
-                setLoading({ complete: true, failed: !!output.error, submitting: false });
+            .then(response => {
+                setLoading({
+                    complete: true,
+                    failed: !!response.error && !response.success,
+                    submitting: false
+                });
+                if (response.success) {
+                    jQuery.noticeAdd({
+                        text: i18n._t(
+                            'SessionManager.LOG_OUT_CONFIRMED',
+                            'Successfully logged out of device.'
+                        ),
+                        stay: false,
+                        type: 'success'
+                    });
+                }
             })
-            .catch(() => {
+            .catch((error) => {
                 setLoading({ complete: true, failed: true, submitting: false });
+                error.response.json().then(response => {
+                    jQuery.noticeAdd({text: response.errors, stay: false, type: 'error'});
+                });
             });
     }
 
-    if (loading.complete || loading.submitting) {
+    if ((loading.complete && !loading.failed) || loading.submitting) {
         return null;
     }
 
