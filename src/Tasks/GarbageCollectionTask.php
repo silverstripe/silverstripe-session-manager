@@ -2,7 +2,6 @@
 
 namespace SilverStripe\Tasks;
 
-use SilverStripe\Core\Injector\Injector;
 use SilverStripe\Dev\BuildTask;
 use SilverStripe\SessionManager\Service\GarbageCollectionService;
 
@@ -21,8 +20,7 @@ class GarbageCollectionTask extends BuildTask
 
     public function run($request)
     {
-        $service = Injector::inst()->get(GarbageCollectionService::class);
-        $service->collect();
+        GarbageCollectionService::singleton()->collect();
         echo "Garbage collection completed successfully";
     }
 }

@@ -1,0 +1,3 @@
+en:
+  SilverStripe\SessionManager\Job\GarbageCollectionJob:
+    TITLE: 'Session manager garbage collection'
