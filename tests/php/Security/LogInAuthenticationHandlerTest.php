@@ -14,8 +14,6 @@ use SilverStripe\SessionManager\Security\LogInAuthenticationHandler;
 
 class LogInAuthenticationHandlerTest extends SapphireTest
 {
-    protected $usesDatabase = true;
-
     protected static $fixture_file = 'LogInAuthenticationHandlerTest.yml';
 
     public function testLogin()

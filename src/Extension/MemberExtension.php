@@ -2,14 +2,12 @@
 
 namespace SilverStripe\SessionManager\Extensions;
 
-use SilverStripe\Control\Controller;
 use SilverStripe\Control\Session;
 use SilverStripe\Core\Extension;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\GridField\GridField;
 use SilverStripe\Forms\GridField\GridFieldConfig_Base;
 use SilverStripe\ORM\FieldType\DBDatetime;
-use SilverStripe\Security\Member;
 use SilverStripe\Security\Permission;
 use SilverStripe\Security\PermissionProvider;
 use SilverStripe\Security\Security;
@@ -21,6 +19,9 @@ class MemberExtension extends Extension implements PermissionProvider
 {
     public const SESSION_MANAGER_ADMINISTER_SESSIONS = 'SESSION_MANAGER_ADMINISTER_SESSIONS';
 
+    /**
+     * @var array
+     */
     private static $has_many = [
         'LoginSessions' => LoginSession::class
     ];
@@ -77,7 +78,7 @@ class MemberExtension extends Extension implements PermissionProvider
     /**
      * @return int
      */
-    protected function getSessionLifetime()
+    private function getSessionLifetime(): int
     {
         if ($lifetime = Session::config()->get('timeout')) {
             return $lifetime;

@@ -2,6 +2,7 @@
 
 namespace SilverStripe\SessionManager\Security;
 
+use InvalidArgumentException;
 use SilverStripe\Control\Controller;
 use SilverStripe\Control\HTTPRequest;
 use SilverStripe\ORM\FieldType\DBDatetime;
@@ -19,12 +20,12 @@ class LogInAuthenticationHandler implements AuthenticationHandler
     /**
      * @var string
      */
-    protected $sessionVariable;
+    private $sessionVariable;
 
     /**
      * @var RememberLoginHash
      */
-    protected $rememberLoginHash;
+    private $rememberLoginHash;
 
     /**
      * @return string
@@ -36,16 +37,17 @@ class LogInAuthenticationHandler implements AuthenticationHandler
 
     /**
      * @param string $sessionVariable
+     * @return void
      */
-    public function setSessionVariable($sessionVariable)
+    public function setSessionVariable(string $sessionVariable): void
     {
         $this->sessionVariable = $sessionVariable;
     }
 
     /**
-     * @return string
+     * @return RememberLoginHash|null
      */
-    public function getRememberLoginHash()
+    public function getRememberLoginHash(): ?RememberLoginHash
     {
         return $this->rememberLoginHash;
     }
@@ -58,10 +60,21 @@ class LogInAuthenticationHandler implements AuthenticationHandler
         $this->rememberLoginHash = $rememberLoginHash;
     }
 
+    /**
+     * @param HTTPRequest $request
+     * @return Member|null
+     */
     public function authenticateRequest(HTTPRequest $request)
     {
+        // noop
     }
 
+    /**
+     * @param Member $member
+     * @param bool $persistent
+     * @param HTTPRequest|null $request
+     * @throws InvalidArgumentException
+     */
     public function logIn(Member $member, $persistent = false, HTTPRequest $request = null)
     {
         // Fall back to retrieving request from current Controller if available
@@ -92,7 +105,11 @@ class LogInAuthenticationHandler implements AuthenticationHandler
         $request->getSession()->set($this->getSessionVariable(), $loginSession->ID);
     }
 
+    /**
+     * @param HTTPRequest $request|null
+     */
     public function logOut(HTTPRequest $request = null)
     {
+        // noop
     }
 }

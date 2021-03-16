@@ -2,6 +2,7 @@
 
 namespace SilverStripe\SessionManager\Security;
 
+use InvalidArgumentException;
 use SilverStripe\Control\Controller;
 use SilverStripe\Control\HTTPRequest;
 use SilverStripe\Core\Injector\Injector;
@@ -17,14 +18,30 @@ use SilverStripe\SessionManager\Model\LoginSession;
  */
 class LogOutAuthenticationHandler implements AuthenticationHandler
 {
+    /**
+     * @param HTTPRequest $request
+     * @return Member|null
+     * @throws ValidationException
+     */
     public function authenticateRequest(HTTPRequest $request)
     {
+        // noop
     }
 
+    /**
+     * @param Member $member
+     * @param bool $persistent
+     * @param HTTPRequest $request|null
+     */
     public function logIn(Member $member, $persistent = false, HTTPRequest $request = null)
     {
+        // noop
     }
 
+    /**
+     * @param HTTPRequest $request|null
+     * @throws InvalidArgumentException
+     */
     public function logOut(HTTPRequest $request = null)
     {
         // Fall back to retrieving request from current Controller if available
