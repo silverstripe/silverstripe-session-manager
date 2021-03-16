@@ -41,16 +41,10 @@ class LogOutAuthenticationHandler implements AuthenticationHandler
         $loginHandler = Injector::inst()->get(LogInAuthenticationHandler::class);
         $member = Security::getCurrentUser();
 
-        if (RememberLoginHash::config()->get('logout_across_devices')) {
-            foreach ($member->LoginSessions() as $session) {
-                $session->delete();
-            }
-        } else {
-            $loginSessionID = $request->getSession()->get($loginHandler->getSessionVariable());
-            $loginSession = LoginSession::get()->byID($loginSessionID);
-            if ($loginSession && $loginSession->canDelete($member)) {
-                $loginSession->delete();
-            }
+        $loginSessionID = $request->getSession()->get($loginHandler->getSessionVariable());
+        $loginSession = LoginSession::get()->byID($loginSessionID);
+        if ($loginSession && $loginSession->canDelete($member)) {
+            $loginSession->delete();
         }
 
         $request->getSession()->clear($loginHandler->getSessionVariable());
