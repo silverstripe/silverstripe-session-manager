@@ -7,6 +7,7 @@ import moment from 'moment';
 import i18n from 'i18n';
 import PropTypes from 'prop-types';
 import jQuery from 'jquery';
+import 'regenerator-runtime/runtime';
 
 function LoginSession(props) {
     const [loading, setLoading] = useState({ complete: false, failed: false, submitting: false });
@@ -103,7 +104,7 @@ function LoginSession(props) {
     );
 
     return (
-      <li className={`login-session ${(loading.complete && !loading.failed) ? 'hidden' : ''}`}>
+      <li className={`login-session ${(loading.complete && !loading.failed) ? 'hidden' : ''} list-unstyled`}>
         <p>{props.UserAgent}</p>
         <p className="text-muted">
           {props.IPAddress}
