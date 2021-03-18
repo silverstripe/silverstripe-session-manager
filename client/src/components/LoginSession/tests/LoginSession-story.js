@@ -1,8 +1,7 @@
 import React from 'react';
-import {storiesOf} from '@storybook/react';
+import { storiesOf } from '@storybook/react';
 import LoginSession from 'components/LoginSession/LoginSession';
-import {withKnobs, boolean} from '@storybook/addon-knobs/react';
-import Toast from "../../../../../../admin/client/src/components/Toasts/Toast";
+import { withKnobs, boolean } from '@storybook/addon-knobs/react';
 
 const props = {
     ID: 1,
@@ -16,8 +15,8 @@ const props = {
 storiesOf('SessionManager/LoginSession', module)
     .addDecorator(withKnobs)
     .add('Login session', () => (
-        <LoginSession
-            {...props}
-            IsCurrent={boolean('IsCurrent', false)}
-        />
+      <LoginSession
+        {...props}
+        IsCurrent={boolean('IsCurrent', false)}
+      />
     ));

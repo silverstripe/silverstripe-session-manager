@@ -13,18 +13,6 @@ function LoginSession(props) {
     const [loading, setLoading] = useState({ complete: false, failed: false, submitting: false });
 
     async function logOut() {
-        // Confirm with the user
-        const confirmMessage = i18n._t(
-            'SessionManager.DELETE_CONFIRMATION',
-            'Are you sure you want to delete this login session?'
-        );
-        const confirmTitle = i18n._t('SessionManager.CONFIRMATION_TITLE', 'Are you sure?');
-        const buttonLabel = i18n._t('SessionManager.DELETE_CONFIRMATION_BUTTON', 'Remove login session');
-
-        if (!await confirm(confirmMessage, { title: confirmTitle, confirmLabel: buttonLabel })) {
-            return;
-        }
-
         setLoading({ ...loading, submitting: true });
 
         const endpoint = backend.createEndpointFetcher({
@@ -46,6 +34,7 @@ function LoginSession(props) {
                     failed: !!response.error && !response.success,
                     submitting: false
                 });
+
                 if (response.success) {
                     setTimeout(() => {
                         setLoading({
@@ -54,6 +43,7 @@ function LoginSession(props) {
                             fadeOutComplete: true,
                             submitting: false
                         });
+
                         jQuery.noticeAdd({
                             text: i18n._t(
                                 'SessionManager.LOG_OUT_CONFIRMED',
@@ -67,10 +57,27 @@ function LoginSession(props) {
             })
             .catch((error) => {
                 setLoading({ complete: true, failed: true, submitting: false });
+
                 error.response.json().then(response => {
                     jQuery.noticeAdd({ text: response.errors, stay: false, type: 'error' });
                 });
             });
+    }
+
+    async function attemptLogOut() {
+        // Confirm with the user
+        const confirmMessage = i18n._t(
+            'SessionManager.DELETE_CONFIRMATION',
+            'Are you sure you want to delete this login session?'
+        );
+        const confirmTitle = i18n._t('SessionManager.CONFIRMATION_TITLE', 'Are you sure?');
+        const buttonLabel = i18n._t('SessionManager.DELETE_CONFIRMATION_BUTTON', 'Remove login session');
+
+        if (!await confirm(confirmMessage, { title: confirmTitle, confirmLabel: buttonLabel })) {
+            return;
+        }
+
+        logOut();
     }
 
     if (loading.fadeOutComplete) {
@@ -104,7 +111,7 @@ function LoginSession(props) {
     );
 
     return (
-      <li className={`login-session ${(loading.complete && !loading.failed) ? 'hidden' : ''} list-unstyled`}>
+      <div className={`login-session ${(loading.complete && !loading.failed) ? 'hidden' : ''}`}>
         <p>{props.UserAgent}</p>
         <p className="text-muted">
           {props.IPAddress}
@@ -114,18 +121,18 @@ function LoginSession(props) {
         </p>
         {props.IsCurrent &&
         <p>
-            <strong className={'text-success'}>
-                {currentStr}
-            </strong>
+          <strong className={'text-success'}>
+            {currentStr}
+          </strong>
         </p>
             }
         {!props.IsCurrent && <a
           role={'button'}
           tabIndex={'0'}
           className={'login-session__logout'}
-          onClick={loading.submitting ? null : logOut}
+          onClick={loading.submitting ? null : attemptLogOut}
         >{logOutStr}</a>}
-      </li>
+      </div>
     );
 }
 
