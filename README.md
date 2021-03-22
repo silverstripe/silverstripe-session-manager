@@ -81,8 +81,8 @@ Note that if the user’s session expires before this timeout (e.g. a short `ses
 
 Expired sessions need to be cleaned up periodically to avoid bloating the database. There are two methods available to manage this:
 
-#### Via `silverstripe/crontask` (recommended)
-If you have the `silverstripe/crontask` module installed and configured, garbage collection will run automatically every 5 minutes via `GarbageCollectionCronTask`, and no further action is required.
+#### Via `symbiote/silverstripe-queuedjobs` (recommended)
+If you have the `symbiote/silverstripe-queuedjobs` module installed and configured, garbage collection will run automatically every 1 day via `GarbageCollectionJob`, and no further action is required.  This job will be automatically created if it does not exist on dev/build.
 
 #### Via `LoginSessionGarbageCollectionTask`
 Alternatively, you can create a system cron entry to run the `LoginSessionGarbageCollectionTask` directly on a regular cadence:

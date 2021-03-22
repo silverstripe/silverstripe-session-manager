@@ -16,8 +16,6 @@ class LoginSessionMiddlewareTest extends SapphireTest
 {
     use HttpRequestMockBuilder;
 
-    protected $usesDatabase = true;
-
     protected static $fixture_file = 'LoginSessionMiddlewareTest.yml';
 
     public function testMiddlewareUpdatesLoginSession()
@@ -25,16 +23,15 @@ class LoginSessionMiddlewareTest extends SapphireTest
         // log out
         Security::setCurrentUser(null);
 
-        $sessionID = $this->idFromFixture(LoginSession::class, '1');
+        $sessionID = $this->objFromFixture(LoginSession::class, 'x1')->ID;
         $session = new Session(['activeLoginSession' => $sessionID]);
         $request = $this->buildRequestMock('/', [], [], null, $session);
         $request->method('getIP')->willReturn('192.168.0.1');
-
         $middleware = new LoginSessionMiddleware(new Url('no-match'));
         $next = false;
         $middleware->process(
             $request,
-            static function () use (&$next) {
+            function () use (&$next) {
                 $next = true;
             }
         );
@@ -49,7 +46,7 @@ class LoginSessionMiddlewareTest extends SapphireTest
         $next = false;
         $middleware->process(
             $request,
-            static function () use (&$next) {
+            function () use (&$next) {
                 $next = true;
             }
         );
@@ -74,7 +71,7 @@ class LoginSessionMiddlewareTest extends SapphireTest
 
     public function testMiddlewareSessionRevoked()
     {
-        $sessionID = $this->idFromFixture(LoginSession::class, '1');
+        $sessionID = $this->objFromFixture(LoginSession::class, 'x1')->ID;
         $session = new Session(['activeLoginSession' => $sessionID]);
         $request = $this->buildRequestMock('/', [], [], null, $session);
         $request->method('getIP')->willReturn('192.168.0.1');
@@ -90,7 +87,7 @@ class LoginSessionMiddlewareTest extends SapphireTest
         $next = false;
         $middleware->process(
             $request,
-            static function () use (&$next) {
+            function () use (&$next) {
                 $next = true;
             }
         );
@@ -103,7 +100,7 @@ class LoginSessionMiddlewareTest extends SapphireTest
 
     public function testMiddlewareSessionWrongMember()
     {
-        $sessionID = $this->idFromFixture(LoginSession::class, '1');
+        $sessionID = $this->objFromFixture(LoginSession::class, 'x1')->ID;
         $session = new Session(['activeLoginSession' => $sessionID]);
         $request = $this->buildRequestMock('/', [], [], null, $session);
         $request->method('getIP')->willReturn('192.168.0.1');
@@ -117,7 +114,7 @@ class LoginSessionMiddlewareTest extends SapphireTest
         $next = false;
         $middleware->process(
             $request,
-            static function () use (&$next) {
+            function () use (&$next) {
                 $next = true;
             }
         );

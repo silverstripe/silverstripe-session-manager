@@ -10,17 +10,26 @@ use SilverStripe\SessionManager\Security\LogInAuthenticationHandler;
 
 class RememberLoginHashExtension extends Extension
 {
+    /**
+     * @var array
+     */
     private static $has_one = [
         'LoginSession' => LoginSession::class
     ];
 
-    public function onAfterGenerateToken()
+    /**
+     * @return void
+     */
+    public function onAfterGenerateToken(): void
     {
         $loginHandler = Injector::inst()->get(LogInAuthenticationHandler::class);
         $loginHandler->setRememberLoginHash($this->owner);
     }
 
-    public function onAfterRenewToken()
+    /**
+     * @return void
+     */
+    public function onAfterRenewToken(): void
     {
         $loginHandler = Injector::inst()->get(LogInAuthenticationHandler::class);
         $request = Injector::inst()->get(HTTPRequest::class);

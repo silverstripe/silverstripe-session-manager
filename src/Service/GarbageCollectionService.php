@@ -2,13 +2,18 @@
 
 namespace SilverStripe\SessionManager\Service;
 
-use SilverStripe\Core\Config\Config;
+use SilverStripe\Core\Injector\Injectable;
 use SilverStripe\Security\RememberLoginHash;
 use SilverStripe\SessionManager\Model\LoginSession;
 
 class GarbageCollectionService
 {
-    public function collect()
+    use Injectable;
+
+    /**
+     * Delete expired LoginSession and RememberLoginHash records
+     */
+    public function collect(): void
     {
         $this->collectExpiredSessions();
         $this->collectImplicitlyExpiredSessions();
@@ -18,9 +23,9 @@ class GarbageCollectionService
     /**
      * Collect all non-persistent LoginSession records that are older than the session lifetime
      */
-    protected function collectExpiredSessions()
+    private function collectExpiredSessions(): void
     {
-        $lifetime = Config::inst()->get(LoginSession::class, 'default_session_lifetime');
+        $lifetime = LoginSession::config()->get('default_session_lifetime');
         $sessions = LoginSession::get()->filter([
             'LastAccessed:LessThan' => date('Y-m-d H:i:s', time() - $lifetime),
             'Persistent' => 0
@@ -31,23 +36,21 @@ class GarbageCollectionService
     /**
      * Collect all persistent LoginSession records where the associated RememberLoginHash has expired
      */
-    protected function collectImplicitlyExpiredSessions()
+    private function collectImplicitlyExpiredSessions(): void
     {
-        $sessions = LoginSession::get()->filter([
+        LoginSession::get()->filter([
             'Persistent' => 1,
             'LoginHash.ExpiryDate:LessThan' => date('Y-m-d H:i:s')
-        ]);
-        $sessions->removeAll();
+        ])->removeAll();
     }
 
     /**
      * Collect all RememberLoginHash records that have expired
      */
-    protected function collectExpiredLoginHashes()
+    private function collectExpiredLoginHashes(): void
     {
-        $hashes = RememberLoginHash::get()->filter([
+        RememberLoginHash::get()->filter([
             'ExpiryDate:LessThan' => date('Y-m-d H:i:s')
-        ]);
-        $hashes->removeAll();
+        ])->removeAll();
     }
 }

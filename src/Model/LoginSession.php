@@ -6,6 +6,7 @@ use SilverStripe\Control\Controller;
 use SilverStripe\Control\HTTPRequest;
 use SilverStripe\Control\Session;
 use SilverStripe\Core\Injector\Injector;
+use SilverStripe\Core\Config\Configurable;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\ORM\FieldType\DBDatetime;
 use SilverStripe\Security\Member;
@@ -27,6 +28,11 @@ use UAParser\Parser;
  */
 class LoginSession extends DataObject
 {
+    use Configurable;
+
+    /**
+     * @var array
+     */
     private static $db = [
         'LastAccessed' => 'DBDatetime',
         'IPAddress' => 'Varchar(45)',
@@ -34,22 +40,40 @@ class LoginSession extends DataObject
         'Persistent' => 'Boolean'
     ];
 
+    /**
+     * @var array
+     */
     private static $has_one = [
         'Member' => Member::class
     ];
 
+    /**
+     * @var array
+     */
     private static $belongs_to = [
         'LoginHash' => RememberLoginHash::class
     ];
 
+    /**
+     * @var array
+     */
     private static $indexes = [
         'LastAccessed' => true
     ];
 
+    /**
+     * @var string
+     */
     private static $table_name = 'LoginSession';
 
+    /**
+     * @var string
+     */
     private static $default_sort = 'LastAccessed DESC';
 
+    /**
+     * @var array
+     */
     private static $summary_fields = [
         'IPAddress' => 'IP Address',
         'LastAccessed' => 'Last Accessed',
@@ -57,6 +81,9 @@ class LoginSession extends DataObject
         'FriendlyUserAgent' => 'User Agent'
     ];
 
+    /**
+     * @var array
+     */
     private static $searchable_fields = [
         'IPAddress',
     ];
@@ -70,6 +97,11 @@ class LoginSession extends DataObject
      */
     private static $default_session_lifetime = 3600;
 
+    /**
+     * @param Member $member
+     * @param array $context
+     * @return boolean
+     */
     public function canCreate($member = null, $context = [])
     {
         if (!$member) {
@@ -92,34 +124,46 @@ class LoginSession extends DataObject
         return Permission::checkMember($member, 'CMS_ACCESS_SecurityAdmin');
     }
 
+    /**
+     * @param Member $member
+     * @return boolean
+     */
     public function canView($member = null)
     {
         return $this->handlePermission(__FUNCTION__, $member);
     }
 
+    /**
+     * @param Member $member
+     * @return boolean
+     */
     public function canEdit($member = null)
     {
         return $this->handlePermission(__FUNCTION__, $member);
     }
 
+    /**
+     * @param Member $member
+     * @return boolean
+     */
     public function canDelete($member = null)
     {
         return $this->handlePermission(__FUNCTION__, $member);
     }
 
     /**
-     * @param string $fn Permission method being called - one of canView/canEdit/canDelete
-     * @param mixed $member
+     * @param string $funcName
+     * @param Member $member
      * @return bool
      */
-    public function handlePermission($fn, $member)
+    public function handlePermission(string $funcName, $member): bool
     {
         if (!$member) {
             $member = Security::getCurrentUser();
         }
 
         // Allow extensions to overrule permissions
-        $extended = $this->extendedCan($fn, $member);
+        $extended = $this->extendedCan($funcName, $member);
         if ($extended !== null) {
             return $extended;
         }
@@ -141,27 +185,25 @@ class LoginSession extends DataObject
     /**
      * @param Member $member
      * @param HTTPRequest $request
-     * @return static|null
+     * @return LoginSession|null
      */
-    public static function find(Member $member, HTTPRequest $request)
+    public static function find(Member $member, HTTPRequest $request): ?LoginSession
     {
-        $session = static::get()->filter([
+        return static::get()->filter([
             'IPAddress' => $request->getIP(),
             'UserAgent' => $request->getHeader('User-Agent'),
             'MemberID' => $member->ID,
             'Persistent' => 1
         ])->first();
-
-        return $session;
     }
 
     /**
      * @param Member $member
      * @param boolean $persistent
      * @param HTTPRequest $request
-     * @return static
+     * @return LoginSession
      */
-    public static function generate(Member $member, bool $persistent, HTTPRequest $request)
+    public static function generate(Member $member, bool $persistent, HTTPRequest $request): LoginSession
     {
         $session = static::create()->update([
             'LastAccessed' => DBDatetime::now()->Rfc2822(),
@@ -178,7 +220,7 @@ class LoginSession extends DataObject
     /**
      * @return string
      */
-    public function getFriendlyUserAgent()
+    public function getFriendlyUserAgent(): string
     {
         if (!$this->UserAgent) {
             return '';

@@ -1,16 +1,13 @@
 SilverStripe\SessionManager\Model\LoginSession:
-  1:
-    ID: 1
+  x1:
     LastAccessed: '2003-02-15 10:00:00'
     IPAddress: '192.168.0.1'
     Persistent: false
-  2:
-    ID: 2
+  x2:
     LastAccessed: '2003-02-15 10:00:00'
     IPAddress: '192.168.0.1'
     Persistent: true
-  3:
-    ID: 3
+  x3:
     LastAccessed: '2004-02-15 10:00:00'
     IPAddress: '192.168.10.1'
     Persistent: true
@@ -18,4 +15,4 @@ SilverStripe\SessionManager\Model\LoginSession:
 SilverStripe\Security\RememberLoginHash:
   loginHash:
     ExpiryDate: '2003-05-15 10:00:00'
-    LoginSession: =>SilverStripe\SessionManager\Model\LoginSession.2
+    LoginSession: =>SilverStripe\SessionManager\Model\LoginSession.x2

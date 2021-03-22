@@ -2,25 +2,15 @@
 
 namespace SilverStripe\SessionManager\Tests\Service;
 
-use SilverStripe\CampaignAdmin\SiteTreeExtension;
-use SilverStripe\CMS\Model\SiteTree;
-use SilverStripe\Control\Middleware\ConfirmationMiddleware\Url;
-use SilverStripe\Control\Session;
-use SilverStripe\Control\Tests\HttpRequestMockBuilder;
 use SilverStripe\Dev\SapphireTest;
 use SilverStripe\ORM\FieldType\DBDatetime;
-use SilverStripe\Security\Member;
 use SilverStripe\Security\RememberLoginHash;
-use SilverStripe\Security\Security;
-use SilverStripe\SessionManager\Control\LoginSessionMiddleware;
 use SilverStripe\SessionManager\Extensions\RememberLoginHashExtension;
 use SilverStripe\SessionManager\Model\LoginSession;
 use SilverStripe\SessionManager\Service\GarbageCollectionService;
 
 class GarbageCollectionServiceTest extends SapphireTest
 {
-    protected $usesDatabase = true;
-
     protected static $fixture_file = 'GarbageCollectionServiceTest.yml';
 
     protected static $required_extensions = [
@@ -33,22 +23,23 @@ class GarbageCollectionServiceTest extends SapphireTest
     {
         DBDatetime::set_mock_now('2003-08-15 12:00:00');
 
+        $id1 = $this->objFromFixture(LoginSession::class, 'x1')->ID;
+        $id2 = $this->objFromFixture(LoginSession::class, 'x2')->ID;
+        $id3 = $this->objFromFixture(LoginSession::class, 'x3')->ID;
+
         $garbageCollectionService = new GarbageCollectionService();
         $garbageCollectionService->collect();
 
-        $loginSession = LoginSession::get()->byID(1);
         $this->assertNull(
-            $loginSession,
+            LoginSession::get()->byID($id1),
             "Expired login session is deleted"
         );
-        $loginSession = LoginSession::get()->byID(2);
         $this->assertNull(
-            $loginSession,
+            LoginSession::get()->byID($id2),
             "Expired persistent login hash session is deleted"
         );
-        $loginSession = LoginSession::get()->byID(3);
         $this->assertNotNull(
-            $loginSession,
+            LoginSession::get()->byID($id3),
             "Valid login session is not deleted"
         );
     }
