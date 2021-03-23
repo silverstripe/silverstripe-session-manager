@@ -11,6 +11,8 @@ SilverStripe\Security\RememberLoginHash:
 SilverStripe\Admin\LeftAndMain:
   extra_requirements_javascript:
     - 'silverstripe/session-manager: client/dist/js/bundle.js'
+  extra_requirements_css:
+    - 'silverstripe/session-manager: client/dist/styles/bundle.css'
 ---
 Name: session-manager-log-in-handler
 After: '#coreauthentication'

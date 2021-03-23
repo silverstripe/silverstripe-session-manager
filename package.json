@@ -20,14 +20,20 @@
     "lint-sass": "sass-lint client/src"
   },
   "dependencies": {
+    "@silverstripe/reactstrap-confirm": "^0.0.4",
+    "reactstrap": "^8.5.1",
     "babel-polyfill": "6.7.4",
+    "moment": "^2.22.2",
     "prop-types": "^15.7.2",
     "react": "^16.8.3",
-    "react-dom": "^17.0.1"
+    "react-dom": "^17.0.1",
+    "regenerator-runtime": "^0.13.7"
   },
   "devDependencies": {
+    "mockdate": "^3.0.3",
     "@silverstripe/eslint-config": "^0.0.5",
     "@silverstripe/webpack-config": "^1.0.0",
+    "@storybook/addon-knobs": "^3.4.10",
     "babel-jest": "^23.6.0",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.10.0",
