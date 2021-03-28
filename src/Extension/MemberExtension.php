@@ -41,8 +41,10 @@ class MemberExtension extends Extension implements PermissionProvider
             'Root.Main',
             $sessionManagerField = SessionManagerField::create(
                 'SessionManagerField',
-                _t(__CLASS__ . '.SESSION_MANAGER_SETTINGS_FIELD_LABEL', 'Authenticated devices'),
-                $this->owner->ID
+                _t(__CLASS__ . '.DEVICES', 'Authenticated devices'),
+                $this->owner->ID,
+                _t(__CLASS__ . '.LEARN_MORE', 'Learn more'),
+                'http://userhelp.silverstripe.org/TODO'
             )
         );
 
