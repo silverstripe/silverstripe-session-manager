@@ -5,21 +5,15 @@ namespace SilverStripe\SessionManager\Control;
 use SilverStripe\Admin\LeftAndMain;
 use SilverStripe\Control\HTTPRequest;
 use SilverStripe\Control\HTTPResponse;
-use SilverStripe\Core\Injector\Injector;
-use SilverStripe\ORM\ValidationException;
-use SilverStripe\Security\Member;
-use SilverStripe\Security\Security;
 use SilverStripe\Security\SecurityToken;
 use SilverStripe\SessionManager\Model\LoginSession;
 
-/**
- * Class LoginSessionController
- * @package SilverStripe\SessionManager\Control
- */
+// TODO: move this to Controllers folder and extend Controller instead of LeftAndMain
 class LoginSessionController extends LeftAndMain
 {
     private static $url_segment = 'loginsession';
 
+    // TODO: remove this when no longer extending LeftAndMain
     private static $ignore_menuitem = true;
 
     private static $url_handlers = [
@@ -61,6 +55,8 @@ class LoginSessionController extends LeftAndMain
                 400
             );
         }
+
+        $this->extend('onBeforeRemoveLoginSession', $loginSession);
 
         $loginSession->delete();
 

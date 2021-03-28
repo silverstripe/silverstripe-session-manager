@@ -94,7 +94,7 @@ class LogInAuthenticationHandler implements AuthenticationHandler
         }
 
         $loginSession->LastAccessed = DBDatetime::now()->Rfc2822();
-        $loginSession->IPAddress = $request->getIP();
+        $loginSession->IPAddress = $request ? $request->getIP() : '';
         $loginSession->write();
 
         if ($persistent && $rememberLoginHash = $this->getRememberLoginHash()) {
@@ -102,7 +102,9 @@ class LogInAuthenticationHandler implements AuthenticationHandler
             $rememberLoginHash->write();
         }
 
-        $request->getSession()->set($this->getSessionVariable(), $loginSession->ID);
+        if ($request) {
+            $request->getSession()->set($this->getSessionVariable(), $loginSession->ID);
+        }
     }
 
     /**
