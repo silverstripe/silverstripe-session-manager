@@ -2,27 +2,88 @@
 
 namespace SilverStripe\SessionManager\FormField;
 
-use SilverStripe\Admin\SecurityAdmin;
-use SilverStripe\Core\Injector\Injector;
 use SilverStripe\Forms\FormField;
 use SilverStripe\SessionManager\Control\LoginSessionController;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\Security\Member;
-use SilverStripe\Security\Security;
 use SilverStripe\SessionManager\Model\LoginSession;
+use SilverStripe\View\ViewableData;
 
 class SessionManagerField extends FormField
 {
     /**
+     * @var string
+     */
+    private $titleLinkText = '';
+
+    /**
+     * @var string
+     */
+    private $titleLinkHref = '';
+
+    /**
      * {@inheritDoc}
      *
      * @param string $name Field name
-     * @param string|null $title Field title
-     * @param int $value Member ID to apply this field to
+     * @param null|string|ViewableData $title Field title
+     * @param mixed $value Member ID to apply this field to
+     * @param string $titleLinkText Title link text
+     * @param string $titleLinkHref Title link href
      */
-    public function __construct(string $name, ?string $title, int $value)
-    {
+    public function __construct(
+        string $name,
+        $title = null,
+        $value = null,
+        string $titleLinkText = '',
+        string $titleLinkHref = ''
+    ) {
         parent::__construct($name, $title, $value);
+        $this->titleLinkText = $titleLinkText;
+        $this->titleLinkHref = $titleLinkHref;
+    }
+
+    /**
+     * Returns the field titleLinkText.
+     *
+     * @return string
+     */
+    public function getTitleLinkText(): string
+    {
+        return $this->titleLinkText;
+    }
+
+    /**
+     * Set the field titleLinkText.
+     *
+     * @param string $titleLinkText
+     * @return $this
+     */
+    public function setTitleLinkText(string $titleLinkText)
+    {
+        $this->titleLinkText = $titleLinkText;
+        return $this;
+    }
+
+    /**
+     * Returns the field titleLinkHref.
+     *
+     * @return string
+     */
+    public function getTitleLinkHref(): string
+    {
+        return $this->titleLinkHref;
+    }
+
+    /**
+     * Set the field titleLinkHref.
+     *
+     * @param string $titleLinkHref
+     * @return $this
+     */
+    public function setTitleLinkHref(string $titleLinkHref)
+    {
+        $this->titleLinkHref = $titleLinkHref;
+        return $this;
     }
 
     public function Field($properties = array())
