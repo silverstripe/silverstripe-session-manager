@@ -1,22 +1,22 @@
 .login-session {
+    max-height: 100%;
     &.hidden {
         visibility: hidden;
         opacity: 0;
-        transition: visibility 0s 2s, opacity 2s linear;
+        max-height: 0;
+        transition: visibility 0s 1s, opacity 1s linear, max-height 1s linear;
     }
 
     p {
         margin: 0;
+
+        &:last-of-type {
+            padding-bottom: 20px;
+        }
     }
 }
 
-.login-session__logout:not([href]) {
-    cursor: pointer;
-    color: $link-color;
+.login-session__logout {
     font-weight: bold;
-    outline: none;
-
-    &:hover, &:active {
-        text-decoration: underline;
-    }
+    padding: 0;
 }

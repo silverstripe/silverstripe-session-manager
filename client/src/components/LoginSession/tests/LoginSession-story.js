@@ -3,13 +3,19 @@ import { storiesOf } from '@storybook/react';
 import LoginSession from 'components/LoginSession/LoginSession';
 import { withKnobs, boolean } from '@storybook/addon-knobs/react';
 
+const createDateMinutesAgo = (m) => {
+    const d1 = new Date();
+    const d2 = new Date(d1);
+    d2.setMinutes(d1.getMinutes() - m);
+    return d2.toISOString().replace(/[TZ]/g, ' ').replace(/\.[0-9]+ $/, '');
+};
+
 const props = {
-    ID: 1,
     IPAddress: '127.0.0.1',
     UserAgent: 'Chrome on Mac OS X 10.15.7',
-    Created: '2021-01-20 00:33:41',
-    LastAccessed: '2021-03-11 03:47:22',
-    LogOutEndpoint: 'admin/loginsession/remove',
+    Created: createDateMinutesAgo(120),
+    LastAccessed: createDateMinutesAgo(25),
+    logout: () => 1
 };
 
 storiesOf('SessionManager/LoginSession', module)
@@ -18,5 +24,8 @@ storiesOf('SessionManager/LoginSession', module)
       <LoginSession
         {...props}
         IsCurrent={boolean('IsCurrent', false)}
+        submitting={boolean('Submitting', false)}
+        complete={boolean('Complete', false)}
+        failed={boolean('Failed', false)}
       />
     ));

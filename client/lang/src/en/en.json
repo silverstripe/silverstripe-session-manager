@@ -7,6 +7,5 @@
     "SessionManager.LAST_ACTIVE": "last active {lastAccessedElapsed}...",
     "SessionManager.LOG_OUT": "Log out",
     "SessionManager.LOGGING_OUT": "Logging out...",
-    "SessionManager.LOG_OUT_CONFIRMED": "Successfully logged out of device.",
-    "SessionManager.ACTIVITY_TOOLTIP_TEXT": "Signed in {signedIn}, Last active {lastActive}",
+    "SessionManager.ACTIVITY_TOOLTIP_TEXT": "Signed in {signedIn}, Last active {lastActive}"
 }
