@@ -4,3 +4,7 @@ en:
   SilverStripe\SessionManager\Extensions\MemberExtension:
     DEVICES: 'Authenticated devices'
     LEARN_MORE: 'Learn more'
+  SilverStripe\SessionManager\Control\LoginSessionController:
+    REMOVE_SUCCESS: 'Successfully logged out of device.'
+    REMOVE_FAILURE: 'Something went wrong.'
+    REMOVE_PERMISSION: 'You do not have permission to delete this record.'

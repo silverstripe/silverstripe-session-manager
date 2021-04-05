@@ -13,7 +13,6 @@
     "css": "WEBPACK_CHILD=css npm run build",
     "test": "jest",
     "coverage": "jest --coverage",
-    "lock": "npm-shrinkwrap --dev",
     "lint": "eslint client/src && sass-lint client/src",
     "lint-js": "eslint client/src",
     "lint-js-fix": "eslint client/src --fix",
@@ -22,22 +21,26 @@
   "dependencies": {
     "@silverstripe/reactstrap-confirm": "^0.0.4",
     "babel-polyfill": "6.7.4",
-    "moment": "^2.22.2",
+    "moment": "^2.24.0",
     "prop-types": "^15.7.2",
     "react": "^16.8.3",
-    "react-dom": "^17.0.1",
+    "react-dom": "16.8.3",
+    "react-redux": "^5.0.7",
     "reactstrap": "^8.5.1",
-    "regenerator-runtime": "^0.13.7"
+    "redux": "^4.0.0"
   },
   "devDependencies": {
     "@silverstripe/eslint-config": "^0.0.5",
-    "@silverstripe/webpack-config": "^1.0.0",
+    "@silverstripe/webpack-config": "^1.7.0",
     "@storybook/addon-knobs": "^3.4.10",
     "babel-jest": "^23.6.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-runtime": "^6.26.0",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.10.0",
     "jest-cli": "^23.6.0",
-    "mockdate": "^3.0.3"
+    "mockdate": "^3.0.3",
+    "react-test-renderer": "16.8.3"
   },
   "babel": {
     "presets": [
@@ -45,7 +48,8 @@
       "react"
     ],
     "plugins": [
-      "transform-object-rest-spread"
+      "transform-object-rest-spread",
+      "transform-runtime"
     ]
   },
   "jest": {
