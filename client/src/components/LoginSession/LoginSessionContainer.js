@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import backend from 'lib/Backend';
 import Config from 'lib/Config'; // eslint-disable-line
@@ -11,25 +11,17 @@ import { success, error } from 'state/toasts/ToastsActions';
 // can use wrapper.instance() to test logout().
 // .instance() does not work on stateless functional components
 // https://enzymejs.github.io/enzyme/docs/api/ReactWrapper/instance.html
-class LoginSessionContainer extends Component {
+function LoginSessionContainer(props) {
     //
-    constructor(props) {
-        super(props);
-        this.createEndpoint = this.createEndpoint.bind(this);
-        this.logout = this.logout.bind(this);
-    }
+    const [revokeRequestState, setRevokeRequestState] = useState({
+        complete: false,
+        failed: false,
+        submitting: false
+    });
 
-    componentWillMount() {
-        this.setState({
-            complete: false,
-            failed: false,
-            submitting: false
-        });
-    }
-
-    createEndpoint() {
+    function createEndpoint() {
         return backend.createEndpointFetcher({
-            url: `${this.props.LogOutEndpoint}/:id`,
+            url: `${props.LogOutEndpoint}/:id`,
             method: 'delete',
             payloadSchema: {
                 id: { urlReplacement: ':id', remove: true },
@@ -38,31 +30,28 @@ class LoginSessionContainer extends Component {
         });
     }
 
-    logout() {
-        this.setState({
-            ...this.state,
-            submitting: true
-        });
-        const endpoint = this.createEndpoint();
+    function logout() {
+        setRevokeRequestState({ submitting: true });
+        const endpoint = createEndpoint();
         endpoint({
-            id: this.props.ID,
+            id: props.ID,
             SecurityID: Config.get('SecurityID')
         })
         .then(response => {
             const failed = !response.success;
-            this.setState({
+            setRevokeRequestState({
                 complete: true,
                 failed,
                 submitting: false
             });
             if (failed) {
-                this.props.displayToastFailure(response.message);
+                props.displayToastFailure(response.message);
             } else {
-                this.props.displayToastSuccess(response.message);
+                props.displayToastSuccess(response.message);
             }
         })
         .catch(() => {
-            this.setState({
+            setRevokeRequestState({
                 complete: true,
                 failed: true,
                 submitting: false
@@ -70,11 +59,9 @@ class LoginSessionContainer extends Component {
         });
     }
 
-    render() {
-        const { ID, LogoutEndPoint, ...loginSessionProps } = this.props;
-        const newProps = { logout: this.logout, ...this.state, ...loginSessionProps };
-        return <LoginSession {...newProps} />;
-    }
+    const { ID, LogoutEndPoint, ...loginSessionProps } = props;
+    const newProps = { ...loginSessionProps, ...revokeRequestState, logout };
+    return <LoginSession {...newProps} />;
 }
 
 LoginSessionContainer.propTypes = {
