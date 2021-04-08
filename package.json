@@ -63,7 +63,9 @@
       "../silverstripe/admin/client/src",
       "../silverstripe/admin/node_modules",
       "../../silverstripe/admin/client/src",
-      "../../silverstripe/admin/node_modules"
+      "../../silverstripe/admin/node_modules",
+      "vendor/silverstripe/admin/client/src",
+      "vendor/silverstripe/admin/node_modules"
     ],
     "collectCoverageFrom": [
       "**/*.{js,jsx}",

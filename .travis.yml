@@ -1,4 +1,9 @@
 version: ~> 1.0
 
 import:
-  - silverstripe/silverstripe-travis-shared:config/provision/standard-jobs-range.yml
+  - silverstripe/silverstripe-travis-shared:config/provision/standard-jobs-range-npm.yml
+
+env:
+  global:
+    # require at minimum recipe 4.7 so that redux based toast notification are available
+    - REQUIRE_RECIPE="4.7.x-dev || "
