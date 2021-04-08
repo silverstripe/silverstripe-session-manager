@@ -2,6 +2,7 @@
 
 namespace SilverStripe\SessionManager\Control;
 
+use Exception;
 use SilverStripe\Admin\LeftAndMain;
 use SilverStripe\Control\HTTPRequest;
 use SilverStripe\Control\HTTPResponse;
@@ -17,11 +18,11 @@ class LoginSessionController extends LeftAndMain
     private static $ignore_menuitem = true;
 
     private static $url_handlers = [
-        'DELETE remove/$ID' => 'removeLoginSession',
+        'DELETE remove/$ID' => 'remove',
     ];
 
     private static $allowed_actions = [
-        'removeLoginSession',
+        'remove',
     ];
 
     /**
@@ -30,30 +31,44 @@ class LoginSessionController extends LeftAndMain
      * @param HTTPRequest $request
      * @return HTTPResponse
      */
-    public function removeLoginSession(HTTPRequest $request): HTTPResponse
+    public function remove(HTTPRequest $request): HTTPResponse
     {
-        // Ensure CSRF protection
-        if (!SecurityToken::inst()->checkRequest($request)) {
-            return $this->jsonResponse(
-                ['errors' => 'Request timed out, please try again'],
-                400
-            );
-        }
+        return $this->removeLoginSession($request);
+    }
 
-        $id = $request->param('ID');
-        $loginSession = LoginSession::get()->byID($id);
-        if (!$loginSession) {
-            return $this->jsonResponse(
-                ['errors' => 'Something went wrong.'],
-                400
-            );
-        }
+    private function removeLoginSession(HTTPRequest $request): HTTPResponse
+    {
+        $failureMessage = _t(__CLASS__ . '.REMOVE_FAILURE', 'Something went wrong.');
+        try {
+            // Ensure CSRF protection
+            if (!SecurityToken::inst()->checkRequest($request)) {
+                return $this->jsonResponse([
+                    'success' => false,
+                    'message' => $failureMessage
+                ]);
+            }
 
-        if (!$loginSession->canDelete()) {
-            return $this->jsonResponse(
-                ['errors' => 'You do not have permission to delete this record.'],
-                400
-            );
+            $id = $request->param('ID');
+            $loginSession = LoginSession::get()->byID($id);
+            if (!$loginSession) {
+                return $this->jsonResponse([
+                    'success' => false,
+                    'message' => $failureMessage
+                ]);
+            }
+
+            if (!$loginSession->canDelete()) {
+                $message = _t(__CLASS__ . '.REMOVE_PERMISSION', 'You do not have permission to delete this record.');
+                return $this->jsonResponse([
+                    'success' => false,
+                    'message' => $message
+                ]);
+            }
+        } catch (Exception $e) {
+            return $this->jsonResponse([
+                'success' => false,
+                'message' => $failureMessage
+            ]);
         }
 
         $this->extend('onBeforeRemoveLoginSession', $loginSession);
@@ -62,6 +77,7 @@ class LoginSessionController extends LeftAndMain
 
         return $this->jsonResponse([
             'success' => true,
+            'message' => _t(__CLASS__ . '.REMOVE_SUCCESS', 'Successfully logged out of device.')
         ]);
     }
 
@@ -72,7 +88,7 @@ class LoginSessionController extends LeftAndMain
      * @param int $code The HTTP response code to set on the response
      * @return HTTPResponse
      */
-    protected function jsonResponse(array $response, int $code = 200): HTTPResponse
+    private function jsonResponse(array $response, int $code = 200): HTTPResponse
     {
         return HTTPResponse::create(json_encode($response))
             ->addHeader('Content-Type', 'application/json')

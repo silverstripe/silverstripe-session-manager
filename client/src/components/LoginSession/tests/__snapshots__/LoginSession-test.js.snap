@@ -1,5 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`LoginSession render() should log sessions out correctly 1`] = `"<div class=\\"login-session hidden\\"><p>Chrome on Mac OS X 10.15.7</p><p class=\\"text-muted\\">127.0.0.1<span data-toggle=\\"tooltip\\" data-placement=\\"top\\" title=\\"Signed in 01/20/2021 12:33 AM, Last active 03/11/2021 3:47 AM\\">, last active 11 hours ago...</span></p><a role=\\"button\\" tabindex=\\"0\\" class=\\"login-session__logout\\">Logging out...</a></div>"`;
-
-exports[`LoginSession render() should match the snapshot 1`] = `"<div class=\\"login-session \\"><p>Chrome on Mac OS X 10.15.7</p><p class=\\"text-muted\\">127.0.0.1<span data-toggle=\\"tooltip\\" data-placement=\\"top\\" title=\\"Signed in 01/20/2021 12:33 AM, Last active 03/11/2021 3:47 AM\\">, last active 11 hours ago...</span></p><a role=\\"button\\" tabindex=\\"0\\" class=\\"login-session__logout\\">Log out</a></div>"`;
