@@ -39,7 +39,8 @@
     "autoload": {
         "psr-4": {
             "SilverStripe\\SessionManager\\": "src/",
-            "SilverStripe\\SessionManager\\Tests\\": "tests/php/"
+            "SilverStripe\\SessionManager\\Tests\\": "tests/php/",
+            "SilverStripe\\SessionManager\\Tests\\Behat\\Context\\": "tests/behat/src/"
         }
     },
     "extra": {
