@@ -174,7 +174,7 @@ class LoginSession extends DataObject
         }
 
         // Members can manage their own sessions
-        if ($this->ID == $member->ID) {
+        if ($this->MemberID === $member->ID) {
             return true;
         }
 

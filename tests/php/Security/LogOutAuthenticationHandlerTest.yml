@@ -1,11 +1,52 @@
+SilverStripe\Security\Group:
+  editor:
+    Title: Editor
+  website:
+    Title: WebsiteUser
+
+SilverStripe\Security\Permission:
+  editor:
+    Code: CMS_ACCESS_AssetAdmin
+    Group: =>SilverStripe\Security\Group.editor
+  website:
+    Code: CUSTOM_PERMISSION_LoginToTheWebsiteFrontend
+    Group: =>SilverStripe\Security\Group.website
+
 SilverStripe\Security\Member:
   member1:
     FirstName: 'Andre'
     Email: 'andre@example.org'
+  admin_access:
+    FirstName: 'AdminAccess'
+    Email: 'admin_access@example.com'
+    Groups: =>SilverStripe\Security\Group.editor
+  no_admin_access:
+    FirstName: 'NoAdminAccess'
+    Email: 'no_admin_access@example.com'
+    Groups: =>SilverStripe\Security\Group.website
 
 SilverStripe\SessionManager\Model\LoginSession:
   x1:
     LastAccessed: '2003-02-15 10:00:00'
     IPAddress: '192.168.0.1'
     Member: =>SilverStripe\Security\Member.member1
-
+  admin_access_device_a:
+    UserAgent: 'Admin Access Device A'
+    LastAccessed: '2003-02-15 10:00:00'
+    IPAddress: '192.168.0.1'
+    Member: =>SilverStripe\Security\Member.admin_access
+  admin_access_device_b:
+    UserAgent: 'Admin Access Device B'
+    LastAccessed: '2003-02-15 10:00:00'
+    IPAddress: '192.168.0.1'
+    Member: =>SilverStripe\Security\Member.admin_access
+  no_admin_access_device_a:
+    UserAgent: 'No Admin Access Device A'
+    LastAccessed: '2003-02-15 10:00:00'
+    IPAddress: '192.168.0.1'
+    Member: =>SilverStripe\Security\Member.no_admin_access
+  no_admin_access_device_b:
+    UserAgent: 'No Admin Access Device B'
+    LastAccessed: '2003-02-15 10:00:00'
+    IPAddress: '192.168.0.1'
+    Member: =>SilverStripe\Security\Member.no_admin_access

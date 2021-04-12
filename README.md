@@ -53,18 +53,16 @@ It is also compatible with the [Silverstripe MFA module suite](https://github.co
 
 ## Configuration
 
-### Logout across devices
+### Logout all devices for members without admin access
 
-This module respects the `SilverStripe\Security\RememberLoginHash.logout_across_devices` config setting, which defaults to `true`. This means that the default behaviour is to revoke _all_ a user’s sessions when they log out.
+Some sites allow the creation of members with no admin access, for example sites that allow website users to create an account with a corresponding entry in the member table.  These members have no way to access the session manager and instantly log out an unwanted device.
 
-To change this so that logging out will only revoke the session for that one device, use the following config setting:
+For these members who cannot access admin, when they log out from one device, any existing logged in devices will automatically be logged out.  If they had ticked the 'Remember me' checkbox when logging in, they will not auto-log back in.
 
-```yml
-SilverStripe\Security\RememberLoginHash:
-  logout_across_devices: false
-```
+This functionality is on by default and can be turned off by setting
+`SilverStripe\SessionManager\Security\LogOutAuthenticationHandler.no_admin_access_revoke_all_on_logout` to false
 
-**Important:** do not set this value to false if users do not have access to the CMS (or a custom UI where they can revoke sessions). Doing so would make it impossible to a user to revoke a session if they suspect their device has been compromised.
+Note: The existing config setting `SilverStripe\Security\RememberLoginHash.logout_across_devices` set to true only prevents devices from auto-logging in ("Remember me" checkbox) in the future, it does not instantly log out devices.
 
 ### Session timeout
 
