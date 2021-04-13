@@ -132,11 +132,23 @@ class SessionManagerField extends FormField
                 'Member' => [
                     'Name' => $loginSession->Member()->Name
                 ],
-                'Created' => $loginSession->Created,
-                'LastAccessed' => $loginSession->LastAccessed,
+                'Created' => $this->addUtcOffset($loginSession->Created),
+                'LastAccessed' => $this->addUtcOffset($loginSession->LastAccessed),
                 'LogOutEndpoint' => $logOutEndpoint,
             ];
         }
         return $loginSessions;
+    }
+
+    /**
+     * Will suffix a timezone offset, based on the timezone the server is configured for
+     * e.g.'+13:00' if server timezone is set to Pacific/Auckland
+     *
+     * @param string $mysqlDatetime
+     * @return string
+     */
+    private function addUtcOffset(string $mysqlDatetime)
+    {
+        return $mysqlDatetime . date('P');
     }
 }

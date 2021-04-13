@@ -5,6 +5,12 @@ import moment from 'moment';
 import confirm from '@silverstripe/reactstrap-confirm';
 import Button from 'components/Button/Button';
 
+/**
+ * Local date and Local time format. e.g.: `04/15/2021 1:31 PM` for en_US
+ * @type {string}
+ */
+const format = 'L LT';
+
 function LoginSession(props) {
     // This is an async function because 'confirm' requires it
     // https://www.npmjs.com/package/@silverstripe/reactstrap-confirm
@@ -25,40 +31,47 @@ function LoginSession(props) {
         props.logout();
     }
 
-    const created = moment(props.Created);
-    const createdElapsed = moment.utc(props.Created).fromNow();
-    const lastAccessed = moment(props.LastAccessed);
-    const lastAccessedElapsed = moment.utc(props.LastAccessed).fromNow();
-    const currentStr = i18n._t('SessionManager.CURRENT', 'Current');
-    const lastActiveStr = props.IsCurrent ?
-        i18n.inject(
-            i18n._t('SessionManager.AUTHENTICATED', 'authenticated {createdElapsed}...'),
-            { createdElapsed }
-        )
-        : i18n.inject(
-            i18n._t('SessionManager.LAST_ACTIVE', 'last active {lastAccessedElapsed}...'),
-            { lastAccessedElapsed }
+    function createTooltip() {
+        moment.locale(i18n.detectLocale());
+        const created = moment.utc(props.Created).local();
+        const lastAccessed = moment.utc(props.LastAccessed).local();
+        const createdElapsed = created.fromNow();
+        const lastAccessedElapsed = lastAccessed.fromNow();
+        const activityTooltip = i18n.inject(
+            i18n._t('Admin.ACTIVITY_TOOLTIP_TEXT', 'Signed in {signedIn}, Last active {lastActive}'),
+            {
+                signedIn: created.format(format),
+                lastActive: lastAccessed.format(format)
+            }
         );
+        const lastActiveStr = props.IsCurrent ?
+            i18n.inject(
+                i18n._t('SessionManager.AUTHENTICATED', 'authenticated {createdElapsed}...'),
+                { createdElapsed }
+            )
+            : i18n.inject(
+                i18n._t('SessionManager.LAST_ACTIVE', 'last active {lastAccessedElapsed}...'),
+                { lastAccessedElapsed }
+            );
+
+        return (
+          <span data-toggle="tooltip" data-placement="top" title={activityTooltip}>
+            , {lastActiveStr}
+          </span>
+        );
+    }
+
+    const currentStr = i18n._t('SessionManager.CURRENT', 'Current');
     const logOutStr = (props.submitting || (props.complete && !props.failed)) ?
         i18n._t('SessionManager.LOGGING_OUT', 'Logging out...')
         : i18n._t('SessionManager.LOG_OUT', 'Log out');
-
-    const activityTooltip = i18n.inject(
-        i18n._t('Admin.ACTIVITY_TOOLTIP_TEXT', 'Signed in {signedIn}, Last active {lastActive}'),
-        {
-            signedIn: created.format('L LT'),
-            lastActive: lastAccessed.format('L LT')
-        }
-    );
 
     return (
       <div className={`login-session ${(props.complete && !props.failed) ? 'hidden' : ''}`}>
         <p>{props.UserAgent}</p>
         <p className="text-muted">
           {props.IPAddress}
-          <span data-toggle="tooltip" data-placement="top" title={activityTooltip}>
-            , {lastActiveStr}
-          </span>
+          {createTooltip()}
         </p>
         <p>
           {props.IsCurrent &&
