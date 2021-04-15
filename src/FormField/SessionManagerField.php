@@ -123,6 +123,9 @@ class SessionManagerField extends FormField
         $loginSessions = [];
         /** @var LoginSession $loginSession */
         foreach (LoginSession::getCurrentSessions($member) as $loginSession) {
+            if (!$loginSession->canView()) {
+                continue;
+            }
             $loginSessions[] = [
                 'ID' => $loginSession->ID,
                 'IPAddress' => $loginSession->IPAddress,
