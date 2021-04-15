@@ -72,4 +72,28 @@ class LoginSessionTest extends SapphireTest
             'A LoginSession\'s owner can delete it'
         );
     }
+
+    public function testOrphanSession()
+    {
+        $this->logInWithPermission('ADMIN');
+
+        /** @var LoginSession $session */
+        $session = $this->objFromFixture(LoginSession::class, 'orphan');
+
+        $this->assertFalse($session->canView(), 'Orphan session can not be viewed');
+        $this->assertFalse($session->canEdit(), 'Orphan session can not be edited');
+        $this->assertFalse($session->canDelete(), 'Orphan session can not be deleted');
+    }
+
+    public function testAnonymousUserDoNotHaveAnyRights()
+    {
+        $this->logOut();
+
+        /** @var LoginSession $session */
+        $session = $this->objFromFixture(LoginSession::class, 'orphan');
+
+        $this->assertFalse($session->canView(), 'Anonymous can not view');
+        $this->assertFalse($session->canEdit(), 'Anonymous can not edit');
+        $this->assertFalse($session->canDelete(), 'Anonymous can not delete');
+    }
 }
