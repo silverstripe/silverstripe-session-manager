@@ -16,6 +16,14 @@ use SilverStripe\SessionManager\Model\LoginSession;
 class MemberExtension extends DataExtension
 {
     /**
+     * URL to the user help abot managing session
+     * @var string
+     * @config
+     */
+    private static $session_login_help_url =
+        'https://userhelp.silverstripe.org/en/4/optional_features/managing_devices';
+
+    /**
      * @var array
      */
     private static $has_many = [
@@ -41,14 +49,16 @@ class MemberExtension extends DataExtension
             return;
         }
 
+        $helpUrl = $member::config()->get('session_login_help_url');
+
         $fields->addFieldToTab(
             'Root.Main',
             SessionManagerField::create(
                 'LoginSessions',
                 _t(__CLASS__ . '.DEVICES', 'Authenticated devices'),
                 $this->owner->ID,
-                _t(__CLASS__ . '.LEARN_MORE', 'Learn more'),
-                'http://userhelp.silverstripe.org/TODO'
+                $helpUrl ? _t(__CLASS__ . '.LEARN_MORE', 'Learn more') : '',
+                $helpUrl ?: ''
             )->setReadonly(!$session->canDelete())
         );
     }
