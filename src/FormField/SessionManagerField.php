@@ -3,9 +3,9 @@
 namespace SilverStripe\SessionManager\FormField;
 
 use SilverStripe\Forms\FormField;
-use SilverStripe\SessionManager\Control\LoginSessionController;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\Security\Member;
+use SilverStripe\SessionManager\Control\LoginSessionController;
 use SilverStripe\SessionManager\Model\LoginSession;
 use SilverStripe\View\ViewableData;
 

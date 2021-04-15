@@ -2,15 +2,7 @@
 
 namespace SilverStripe\SessionManager\Tests\Extension;
 
-use SilverStripe\Control\Middleware\ConfirmationMiddleware\Url;
-use SilverStripe\Control\Session;
-use SilverStripe\Control\Tests\HttpRequestMockBuilder;
 use SilverStripe\Dev\SapphireTest;
-use SilverStripe\ORM\FieldType\DBDatetime;
-use SilverStripe\Security\Member;
-use SilverStripe\Security\Security;
-use SilverStripe\SessionManager\Control\LoginSessionMiddleware;
-use SilverStripe\SessionManager\FormField\SessionManagerField;
 use SilverStripe\SessionManager\Model\LoginSession;
 
 class LoginSessionTest extends SapphireTest

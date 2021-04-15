@@ -2,9 +2,9 @@
 
 namespace SilverStripe\SessionManager\Extensions;
 
+use SilverStripe\Forms\FieldList;
 use SilverStripe\ORM\DataExtension;
 use SilverStripe\Security\Member;
-use SilverStripe\Forms\FieldList;
 use SilverStripe\SessionManager\FormField\SessionManagerField;
 use SilverStripe\SessionManager\Model\LoginSession;
 
