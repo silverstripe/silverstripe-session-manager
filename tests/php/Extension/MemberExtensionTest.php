@@ -25,13 +25,8 @@ class MemberExtensionTest extends SapphireTest
 
     public function setUp()
     {
-        return parent::setUp();
+        parent::setUp();
         ForcePermission::reset();
-    }
-
-    protected function tearDown()
-    {
-        parent::tearDown();
     }
 
     private function findField(Member $member): ?SessionManagerField

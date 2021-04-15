@@ -17,11 +17,6 @@ class LoginSessionTest extends SapphireTest
 {
     protected static $fixture_file = '../LoginSessionTest.yml';
 
-    public function setUp()
-    {
-        return parent::setUp();
-    }
-
     public function testCanCreate()
     {
         $this->logInWithPermission('ADMIN');
