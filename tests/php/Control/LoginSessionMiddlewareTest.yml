@@ -5,9 +5,22 @@ SilverStripe\Security\Member:
   member2:
     FirstName: 'Garion'
     Email: 'garion@example.org'
+  member_rmh:
+    FirstName: 'Bob'
+    Email: 'bob@example.com'
 
 SilverStripe\SessionManager\Model\LoginSession:
   x1:
     LastAccessed: '2003-02-15 10:00:00'
     IPAddress: '192.168.0.1'
     Member: =>SilverStripe\Security\Member.member1
+  rmh1:
+    LastAccessed: '2003-02-15 10:00:00'
+    IPAddress: '192.168.0.1'
+    UserAgent: 'Internet Explorer 2'
+    Member: =>SilverStripe\Security\Member.member_rmh
+  rmh2:
+    LastAccessed: '2003-02-15 10:00:00'
+    IPAddress: '192.168.0.1'
+    UserAgent: 'Commodore 64 browser'
+    Member: =>SilverStripe\Security\Member.member_rmh
