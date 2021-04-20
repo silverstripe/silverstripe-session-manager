@@ -43,7 +43,7 @@ class MemberExtension extends DataExtension
             return;
         }
 
-        $session = $member->LoginSessions()->First();
+        $session = $member->LoginSessions()->first();
         if (!$session || !$session->canView()) {
             // We're assuming that the first session permission are representative of the other sessions
             return;

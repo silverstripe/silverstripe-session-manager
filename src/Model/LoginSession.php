@@ -243,6 +243,7 @@ class LoginSession extends DataObject
     /**
      * @param Member|null $member
      * @param HTTPRequest|null $request
+     * @return LoginSession|null
      */
     public static function getCurrentLoginSession(Member $member = null, HTTPRequest $request = null): ?self
     {
@@ -270,8 +271,9 @@ class LoginSession extends DataObject
     /**
      * @param Member|null $member
      * @param HTTPRequest|null $request
+     * @return bool
      */
-    public function isCurrent(Member $member = null, HTTPRequest $request = null): bool
+    public function isCurrent(?Member $member, ?HTTPRequest $request): bool
     {
         $currentLoginSession = static::getCurrentLoginSession($member, $request);
         if (!$currentLoginSession) {
