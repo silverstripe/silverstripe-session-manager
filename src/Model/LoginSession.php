@@ -241,16 +241,12 @@ class LoginSession extends DataObject
     }
 
     /**
-     * @param Member|null $member
+     * Retrieve the Login session for the current request.
      * @param HTTPRequest|null $request
      * @return LoginSession|null
      */
-    public static function getCurrentLoginSession(Member $member = null, HTTPRequest $request = null): ?self
+    public static function getCurrentLoginSession(?HTTPRequest $request = null): ?self
     {
-        if (!$member) {
-            $member = Security::getCurrentUser();
-        }
-
         // Fall back to retrieving request from current Controller if available
         if ($request === null) {
             if (!Controller::has_curr()) {
@@ -269,13 +265,13 @@ class LoginSession extends DataObject
     }
 
     /**
-     * @param Member|null $member
+     * Check if this LoginSession is attached to the current request.
      * @param HTTPRequest|null $request
      * @return bool
      */
-    public function isCurrent(?Member $member, ?HTTPRequest $request): bool
+    public function isCurrent(?HTTPRequest $request = null): bool
     {
-        $currentLoginSession = static::getCurrentLoginSession($member, $request);
+        $currentLoginSession = static::getCurrentLoginSession($request);
         if (!$currentLoginSession) {
             return false;
         }
