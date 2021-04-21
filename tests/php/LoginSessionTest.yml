@@ -1,0 +1,23 @@
+SilverStripe\Security\Member:
+  owner:
+    FirstName: 'Andre'
+    Email: 'andre@example.org'
+  other:
+    FirstName: 'Garion'
+    Email: 'garion@example.org'
+  sessionless:
+    FirstName: 'Maxime'
+    Email: 'max@example.org'
+
+SilverStripe\SessionManager\Model\LoginSession:
+  x1:
+    LastAccessed: '2003-02-15 10:00:00'
+    IPAddress: '192.168.0.1'
+    Member: =>SilverStripe\Security\Member.owner
+  x2:
+    LastAccessed: '2003-02-15 10:00:00'
+    IPAddress: '192.168.0.1'
+    Member: =>SilverStripe\Security\Member.other
+  orphan:
+    LastAccessed: '2003-02-15 10:00:00'
+    IPAddress: '192.168.0.1'

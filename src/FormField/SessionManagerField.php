@@ -3,9 +3,9 @@
 namespace SilverStripe\SessionManager\FormField;
 
 use SilverStripe\Forms\FormField;
-use SilverStripe\SessionManager\Control\LoginSessionController;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\Security\Member;
+use SilverStripe\SessionManager\Control\LoginSessionController;
 use SilverStripe\SessionManager\Model\LoginSession;
 use SilverStripe\View\ViewableData;
 
@@ -123,6 +123,9 @@ class SessionManagerField extends FormField
         $loginSessions = [];
         /** @var LoginSession $loginSession */
         foreach (LoginSession::getCurrentSessions($member) as $loginSession) {
+            if (!$loginSession->canView()) {
+                continue;
+            }
             $loginSessions[] = [
                 'ID' => $loginSession->ID,
                 'IPAddress' => $loginSession->IPAddress,

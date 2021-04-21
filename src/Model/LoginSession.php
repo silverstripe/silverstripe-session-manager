@@ -6,30 +6,29 @@ use SilverStripe\Control\Controller;
 use SilverStripe\Control\HTTPRequest;
 use SilverStripe\Control\Session;
 use SilverStripe\Core\Injector\Injector;
-use SilverStripe\Core\Config\Configurable;
+use SilverStripe\ORM\DataList;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\ORM\FieldType\DBDatetime;
 use SilverStripe\Security\Member;
-use SilverStripe\Security\Permission;
 use SilverStripe\Security\RememberLoginHash;
 use SilverStripe\Security\Security;
 use SilverStripe\SessionManager\Security\LogInAuthenticationHandler;
 use UAParser\Parser;
 
 /**
- * Class LoginSession
- * @package SilverStripe\SessionManager\Model
+ * Tracks a login session for a specific user on a specific device.
+ *
+ * Deleting the LoginSession object for a device will terminate that session for the user.
  *
  * @property DBDatetime $LastAccessed
  * @property string $IPAddress
  * @property string $UserAgent
  * @property bool $Persistent
- * @method Member Member
+ * @property integer $MemberID
+ * @method Member Member()
  */
 class LoginSession extends DataObject
 {
-    use Configurable;
-
     /**
      * @var array
      */
@@ -114,14 +113,8 @@ class LoginSession extends DataObject
             return $extended;
         }
 
-        // Must be logged in to act on login sessions
-        if (!$member) {
-            return false;
-        }
-
-        // Any user with access to SecurityAdmin can create a session
-        // @todo Does this even make sense? When would you non-programatically create a session?
-        return Permission::checkMember($member, 'CMS_ACCESS_SecurityAdmin');
+        // Only the system is allowed to create new LoginSession.
+        return false;
     }
 
     /**
@@ -139,7 +132,18 @@ class LoginSession extends DataObject
      */
     public function canEdit($member = null)
     {
-        return $this->handlePermission(__FUNCTION__, $member);
+        if (!$member) {
+            $member = Security::getCurrentUser();
+        }
+
+        // Allow extensions to overrule permissions
+        $extended = $this->extendedCan(__FUNCTION__, $member);
+        if ($extended !== null) {
+            return $extended;
+        }
+
+        // By default, no one can edit a LoginSession because it's not an object users can directly interact with.
+        return false;
     }
 
     /**
@@ -156,7 +160,7 @@ class LoginSession extends DataObject
      * @param Member $member
      * @return bool
      */
-    public function handlePermission(string $funcName, $member): bool
+    private function handlePermission(string $funcName, $member): bool
     {
         if (!$member) {
             $member = Security::getCurrentUser();
@@ -178,8 +182,8 @@ class LoginSession extends DataObject
             return true;
         }
 
-        // Access to SecurityAdmin implies session management permissions
-        return Permission::checkMember($member, 'CMS_ACCESS_SecurityAdmin');
+        // By default, members can not see other members' sessions
+        return false;
     }
 
     /**
@@ -229,20 +233,20 @@ class LoginSession extends DataObject
         $parser = Parser::create();
         $result = $parser->parse($this->UserAgent);
 
-        return sprintf('%s on %s', $result->ua->family, $result->os->toString());
+        return _t(
+            __CLASS__ . '.BROWSER_ON_OS',
+            "{browser} on {os}.",
+            ['browser' => $result->ua->family, 'os' => $result->os->toString()]
+        );
     }
 
     /**
-     * @param Member|null $member
+     * Retrieve the Login session for the current request.
      * @param HTTPRequest|null $request
      * @return LoginSession|null
      */
-    public static function getCurrentLoginSession(Member $member = null, HTTPRequest $request = null)
+    public static function getCurrentLoginSession(?HTTPRequest $request = null): ?self
     {
-        if (!$member) {
-            $member = Security::getCurrentUser();
-        }
-
         // Fall back to retrieving request from current Controller if available
         if ($request === null) {
             if (!Controller::has_curr()) {
@@ -261,13 +265,13 @@ class LoginSession extends DataObject
     }
 
     /**
-     * @param Member|null $member
+     * Check if this LoginSession is attached to the current request.
      * @param HTTPRequest|null $request
-     * @return static|null
+     * @return bool
      */
-    public function isCurrent(Member $member = null, HTTPRequest $request = null)
+    public function isCurrent(?HTTPRequest $request = null): bool
     {
-        $currentLoginSession = static::getCurrentLoginSession($member, $request);
+        $currentLoginSession = static::getCurrentLoginSession($request);
         if (!$currentLoginSession) {
             return false;
         }
@@ -277,7 +281,7 @@ class LoginSession extends DataObject
 
     /**
      * @param Member $member
-     * @return mixed
+     * @return DataList|LoginSession[]
      */
     public static function getCurrentSessions(Member $member)
     {
@@ -293,7 +297,7 @@ class LoginSession extends DataObject
     /**
      * @return int
      */
-    public static function getSessionLifetime()
+    public static function getSessionLifetime(): int
     {
         if ($lifetime = Session::config()->get('timeout')) {
             return $lifetime;
