@@ -22,6 +22,8 @@ Alternatively, you could call `Permission::check()` to validate if the member ha
 
 ```php
 <?php
+namespace My\App;
+
 use SilverStripe\ORM\DataExtension;
 use SilverStripe\Security\Member;
 
@@ -61,5 +63,5 @@ Add this bit of code to your project's YML configuration te enable your extensio
 ```yml
 SilverStripe\SessionManager\Model\LoginSession:
   extensions:
-    - LoginSessionExtension
+    - My\App\LoginSessionExtension
 ```
