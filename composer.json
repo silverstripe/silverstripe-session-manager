@@ -24,7 +24,7 @@
     ],
     "require": {
         "silverstripe/admin": "^1.7",
-        "silverstripe/framework": "^4.7",
+        "silverstripe/framework": "^4.8",
         "ua-parser/uap-php": "^3.5"
     },
     "require-dev": {
