@@ -43,3 +43,9 @@ SilverStripe\Core\Injector\Injector:
     properties:
       Middlewares:
         LoginSessionMiddleware: '%$SilverStripe\SessionManager\Control\LoginSessionMiddleware'
+---
+Name: session-manager-rememberloginhash
+After: '#coreauthentication'
+---
+SilverStripe\Security\RememberLoginHash:
+  logout_across_devices: false
