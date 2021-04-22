@@ -53,6 +53,24 @@ It is also compatible with the [Silverstripe MFA module suite](https://github.co
 
 ## Configuration
 
+### Logout across devices
+
+Session-manager provides an explicit way to terminate individual sessions and their attached "remember me" tokens. So this module sets `SilverStripe\Security\RememberLoginHash.logout_across_devices` to `false`.
+
+To restore the old behaviour with session manager installed, add the following YML config to your project:
+
+```yml
+---
+Name: myproject-rememberloginhash
+After:
+  - '#session-manager-rememberloginhash'
+---
+SilverStripe\Security\RememberLoginHash:
+  logout_across_devices: true
+```
+
+Read [Saved User Logins](https://docs.silverstripe.org/en/4/developer_guides/security/member/#saved-user-logins) to learn how to configure the "remember me" feature for your users.
+
 ### Session timeout
 
 Non-persisted login sessions (those where the user hasn’t ticked “remember me”) should expire after a period of inactivity, so that they’re removed from the list of active sessions even if the user closes their browser without completing the “log out” action. The length of time before expiry matches the `SilverStripe\Control\Session.timeout` value if one is set, otherwise falling back to a default of one hour. This default can be changed via the following config setting:
