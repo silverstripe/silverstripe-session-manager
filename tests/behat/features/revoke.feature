@@ -6,16 +6,13 @@ Feature: See other devices and revoke their access
   So that I can revoke their access
 
   Background:
-    Given I am logged in with "ADMIN" permissions
+    Given a "group" "AUTHOR group" has permissions "Access to 'Pages' section"
+    And I am logged in with "AUTHOR" permissions
     # Create a mock login session
     And There is a login session for a second device
 
   Scenario: I can see other devices and revoke their access
-    When I go to "/admin/security"
-    # Click the ADMIN user
-    And I click on the ".col-FirstName" element
-    # Ensure XHR loaded from endpoint
-    And I wait until I see the ".login-session  .text-success" element
+    When I go to "/admin/myprofile"
     # Assert text for the two login sessions
     Then I should see the text "Current" in the ".login-session  .text-success" element
     Then I should see the text "Log out" in the ".login-session__logout" element

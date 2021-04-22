@@ -4,4 +4,4 @@ After: '#coreroutes'
 ---
 SilverStripe\Control\Director:
   rules:
-    'loginsession//remove/$ID': SilverStripe\SessionManager\Controllers\LoginSessionController
+    'loginsession//$ID': SilverStripe\SessionManager\Controllers\LoginSessionController

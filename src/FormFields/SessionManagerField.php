@@ -2,6 +2,7 @@
 
 namespace SilverStripe\SessionManager\FormFields;
 
+use SilverStripe\Control\Director;
 use SilverStripe\Forms\FormField;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\Security\Member;
@@ -118,7 +119,7 @@ class SessionManagerField extends FormField
      */
     protected function getLoginSessions(Member $member)
     {
-        $logOutEndpoint = LoginSessionController::singleton()->Link('remove');
+        $logOutEndpoint = LoginSessionController::singleton()->Link();
 
         $loginSessions = [];
         /** @var LoginSession $loginSession */

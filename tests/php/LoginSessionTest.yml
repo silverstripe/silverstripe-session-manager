@@ -1,13 +1,23 @@
+'SilverStripe\Security\Permission':
+  cmsmain:
+    Code: CMS_ACCESS_LeftAndMain
+'SilverStripe\Security\Group':
+  cmsusers:
+    Title: 'CMS Users'
+    Permissions: '=>SilverStripe\Security\Permission.cmsmain'
 SilverStripe\Security\Member:
   owner:
     FirstName: 'Andre'
     Email: 'andre@example.org'
+    Groups: '=>SilverStripe\Security\Group.cmsusers'
   other:
     FirstName: 'Garion'
     Email: 'garion@example.org'
+    Groups: '=>SilverStripe\Security\Group.cmsusers'
   sessionless:
     FirstName: 'Maxime'
     Email: 'max@example.org'
+    Groups: '=>SilverStripe\Security\Group.cmsusers'
 
 SilverStripe\SessionManager\Models\LoginSession:
   x1:
@@ -18,6 +28,10 @@ SilverStripe\SessionManager\Models\LoginSession:
     LastAccessed: '2003-02-15 10:00:00'
     IPAddress: '192.168.0.1'
     Member: =>SilverStripe\Security\Member.other
+  x3:
+    LastAccessed: '2003-02-15 10:00:00'
+    IPAddress: '192.168.0.10'
+    Member: =>SilverStripe\Security\Member.owner
   orphan:
     LastAccessed: '2003-02-15 10:00:00'
     IPAddress: '192.168.0.1'
