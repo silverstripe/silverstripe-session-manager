@@ -30,4 +30,4 @@ Feature: See other devices and revoke their access
     # Assert hidden element is applied which fades to not visible via a css transition
     Then I see the ".login-session.hidden" element
     # Assert toast notification
-    Then I should see a "Successfully logged out of device." success toast
+    Then I should see a "Successfully removed session." success toast

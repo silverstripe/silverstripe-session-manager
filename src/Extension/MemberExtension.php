@@ -55,7 +55,7 @@ class MemberExtension extends DataExtension
             'Root.Main',
             SessionManagerField::create(
                 'LoginSessions',
-                _t(__CLASS__ . '.DEVICES', 'Authenticated devices'),
+                _t(__CLASS__ . '.DEVICES', 'Login Sessions'),
                 $this->owner->ID,
                 $helpUrl ? _t(__CLASS__ . '.LEARN_MORE', 'Learn more') : '',
                 $helpUrl ?: ''

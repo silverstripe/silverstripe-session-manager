@@ -77,7 +77,7 @@ class LoginSessionController extends LeftAndMain
 
         return $this->jsonResponse([
             'success' => true,
-            'message' => _t(__CLASS__ . '.REMOVE_SUCCESS', 'Successfully logged out of device.')
+            'message' => _t(__CLASS__ . '.REMOVE_SUCCESS', 'Successfully removed session.')
         ]);
     }
 

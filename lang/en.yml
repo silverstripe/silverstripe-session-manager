@@ -3,9 +3,9 @@ en:
     MENUTITLE: SilverStripe\SessionManager\Control\LoginSessionController
     REMOVE_FAILURE: 'Something went wrong.'
     REMOVE_PERMISSION: 'You do not have permission to delete this record.'
-    REMOVE_SUCCESS: 'Successfully logged out of device.'
+    REMOVE_SUCCESS: 'Successfully removed session.'
   SilverStripe\SessionManager\Extensions\MemberExtension:
-    DEVICES: 'Authenticated devices'
+    DEVICES: 'Login Sessions'
     LEARN_MORE: 'Learn more'
   SilverStripe\SessionManager\Forms\GridFieldRevokeLoginSessionAction:
     DeletePermissionsFailure: 'No delete permissions'
