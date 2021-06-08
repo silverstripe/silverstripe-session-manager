@@ -7,8 +7,6 @@ en:
   SilverStripe\SessionManager\Extensions\MemberExtension:
     DEVICES: 'Authenticated devices'
     LEARN_MORE: 'Learn more'
-  SilverStripe\SessionManager\Forms\GridFieldRevokeLoginSessionAction:
-    DeletePermissionsFailure: 'No delete permissions'
   SilverStripe\SessionManager\Job\GarbageCollectionJob:
     TITLE: 'Session manager garbage collection'
   SilverStripe\SessionManager\Model\LoginSession:
