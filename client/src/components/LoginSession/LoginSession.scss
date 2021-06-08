@@ -1,10 +1,13 @@
 .login-session {
-    max-height: 100%;
+    overflow: hidden;
+    height: 77px;
+    transition: 0.5s;
+    transition-delay: 1s;
+
     &.hidden {
-        visibility: hidden;
+        height: 0;
         opacity: 0;
-        max-height: 0;
-        transition: visibility 0s 1s, opacity 1s linear, max-height 1s linear;
+        visibility: 0;
     }
 
     p {
