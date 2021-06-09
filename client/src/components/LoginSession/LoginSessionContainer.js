@@ -9,7 +9,7 @@ import i18n from 'i18n';
 
 function createEndpoint(logOutEndpoint) {
     return backend.createEndpointFetcher({
-        url: `${logOutEndpoint}/:id`,
+        url: `${logOutEndpoint}/:id`.replace('//', '/'),
         method: 'delete',
         payloadSchema: {
             id: { urlReplacement: ':id', remove: true },

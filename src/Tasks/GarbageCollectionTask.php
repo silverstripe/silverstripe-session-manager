@@ -3,7 +3,7 @@
 namespace SilverStripe\Tasks;
 
 use SilverStripe\Dev\BuildTask;
-use SilverStripe\SessionManager\Service\GarbageCollectionService;
+use SilverStripe\SessionManager\Services\GarbageCollectionService;
 
 class GarbageCollectionTask extends BuildTask
 {

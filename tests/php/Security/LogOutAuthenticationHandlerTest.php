@@ -7,7 +7,7 @@ use SilverStripe\Control\Tests\HttpRequestMockBuilder;
 use SilverStripe\Dev\SapphireTest;
 use SilverStripe\Security\Member;
 use SilverStripe\Security\Security;
-use SilverStripe\SessionManager\Model\LoginSession;
+use SilverStripe\SessionManager\Models\LoginSession;
 use SilverStripe\SessionManager\Security\LogOutAuthenticationHandler;
 
 class LogOutAuthenticationHandlerTest extends SapphireTest

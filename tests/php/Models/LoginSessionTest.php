@@ -1,9 +1,9 @@
 <?php
 
-namespace SilverStripe\SessionManager\Tests\Extension;
+namespace SilverStripe\SessionManager\Tests\Extensions;
 
 use SilverStripe\Dev\SapphireTest;
-use SilverStripe\SessionManager\Model\LoginSession;
+use SilverStripe\SessionManager\Models\LoginSession;
 
 class LoginSessionTest extends SapphireTest
 {

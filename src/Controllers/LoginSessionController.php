@@ -1,21 +1,17 @@
 <?php
 
-namespace SilverStripe\SessionManager\Control;
+namespace SilverStripe\SessionManager\Controllers;
 
 use Exception;
-use SilverStripe\Admin\LeftAndMain;
+use SilverStripe\Control\Controller;
 use SilverStripe\Control\HTTPRequest;
 use SilverStripe\Control\HTTPResponse;
 use SilverStripe\Security\SecurityToken;
-use SilverStripe\SessionManager\Model\LoginSession;
+use SilverStripe\SessionManager\Models\LoginSession;
 
-// TODO: move this to Controllers folder and extend Controller instead of LeftAndMain
-class LoginSessionController extends LeftAndMain
+class LoginSessionController extends Controller
 {
     private static $url_segment = 'loginsession';
-
-    // TODO: remove this when no longer extending LeftAndMain
-    private static $ignore_menuitem = true;
 
     private static $url_handlers = [
         'DELETE remove/$ID' => 'remove',

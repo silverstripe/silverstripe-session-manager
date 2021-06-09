@@ -12,7 +12,7 @@ You should also consider the relevant privacy legislation in the jurisdiction yo
 
 ## Customising the permissions for `LoginSession`
 
-`SilverStripe\SessionManager\Model\LoginSession` is the object that tracks the users' sessions. By altering the permission logic on this object, you can allow some users to manage other users' sessions. The two permissions you'll most likely want to change are `canView` and `canDelete`. You can customise `canEdit` and `canCreate` as well, but the use case for doing so is less clear.
+`SilverStripe\SessionManager\Models\LoginSession` is the object that tracks the users' sessions. By altering the permission logic on this object, you can allow some users to manage other users' sessions. The two permissions you'll most likely want to change are `canView` and `canDelete`. You can customise `canEdit` and `canCreate` as well, but the use case for doing so is less clear.
 
 ### Creating an extension for `LoginSession`
 
@@ -61,7 +61,7 @@ class LoginSessionExtension extends DataExtension
 Add this bit of code to your project's YML configuration te enable your extension.
 
 ```yml
-SilverStripe\SessionManager\Model\LoginSession:
+SilverStripe\SessionManager\Models\LoginSession:
   extensions:
     - My\App\LoginSessionExtension
 ```
