@@ -1,13 +1,8 @@
 version: ~> 1.0
 
 import:
-  - silverstripe/silverstripe-travis-shared:config/provision/standard-jobs-fixed-behat-npm.yml
-  # TODO: uncomment 'range' when 4.8 branch is available, remove 'fixed' requirement above
-  # - silverstripe/silverstripe-travis-shared:config/provision/standard-jobs-range-behat-npm.yml
+  - silverstripe/silverstripe-travis-shared:config/provision/standard-jobs-range-behat-npm.yml
 
 env:
   global:
-    - REQUIRE_RECIPE="4.x-dev"
-    # TODO: uncomment 4.8.x-dev requirement below when 4.8 branch is available, remove 4.x-dev requirement above
-    # require at minimum recipe 4.8 so that latest RememberLoginHash logic is available
-    # - REQUIRE_RECIPE="4.8.x-dev || "
+    - REQUIRE_RECIPE="4.8.x-dev || "

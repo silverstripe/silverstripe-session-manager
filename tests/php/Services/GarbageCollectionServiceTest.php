@@ -1,13 +1,13 @@
 <?php
 
-namespace SilverStripe\SessionManager\Tests\Service;
+namespace SilverStripe\SessionManager\Tests\Services;
 
 use SilverStripe\Dev\SapphireTest;
 use SilverStripe\ORM\FieldType\DBDatetime;
 use SilverStripe\Security\RememberLoginHash;
 use SilverStripe\SessionManager\Extensions\RememberLoginHashExtension;
-use SilverStripe\SessionManager\Model\LoginSession;
-use SilverStripe\SessionManager\Service\GarbageCollectionService;
+use SilverStripe\SessionManager\Models\LoginSession;
+use SilverStripe\SessionManager\Services\GarbageCollectionService;
 
 class GarbageCollectionServiceTest extends SapphireTest
 {

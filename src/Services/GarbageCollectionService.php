@@ -1,10 +1,10 @@
 <?php
 
-namespace SilverStripe\SessionManager\Service;
+namespace SilverStripe\SessionManager\Services;
 
 use SilverStripe\Core\Injector\Injectable;
 use SilverStripe\Security\RememberLoginHash;
-use SilverStripe\SessionManager\Model\LoginSession;
+use SilverStripe\SessionManager\Models\LoginSession;
 
 class GarbageCollectionService
 {

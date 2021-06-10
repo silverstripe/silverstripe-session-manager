@@ -6,7 +6,7 @@ use Behat\Mink\Element\NodeElement;
 use SilverStripe\BehatExtension\Context\FixtureContext as BaseFixtureContext;
 use SilverStripe\Control\Controller;
 use SilverStripe\Security\Member;
-use SilverStripe\SessionManager\Model\LoginSession;
+use SilverStripe\SessionManager\Models\LoginSession;
 
 /**
  * Context used to create fixtures in the SilverStripe ORM.

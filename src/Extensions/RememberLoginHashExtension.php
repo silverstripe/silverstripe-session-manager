@@ -5,7 +5,7 @@ namespace SilverStripe\SessionManager\Extensions;
 use SilverStripe\Control\HTTPRequest;
 use SilverStripe\Core\Extension;
 use SilverStripe\Core\Injector\Injector;
-use SilverStripe\SessionManager\Model\LoginSession;
+use SilverStripe\SessionManager\Models\LoginSession;
 use SilverStripe\SessionManager\Security\LogInAuthenticationHandler;
 
 class RememberLoginHashExtension extends Extension

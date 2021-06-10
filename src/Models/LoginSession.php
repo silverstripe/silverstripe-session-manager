@@ -1,6 +1,6 @@
 <?php
 
-namespace SilverStripe\SessionManager\Model;
+namespace SilverStripe\SessionManager\Models;
 
 use SilverStripe\Control\Controller;
 use SilverStripe\Control\HTTPRequest;

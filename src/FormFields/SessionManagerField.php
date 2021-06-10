@@ -1,12 +1,12 @@
 <?php
 
-namespace SilverStripe\SessionManager\FormField;
+namespace SilverStripe\SessionManager\FormFields;
 
 use SilverStripe\Forms\FormField;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\Security\Member;
-use SilverStripe\SessionManager\Control\LoginSessionController;
-use SilverStripe\SessionManager\Model\LoginSession;
+use SilverStripe\SessionManager\Controllers\LoginSessionController;
+use SilverStripe\SessionManager\Models\LoginSession;
 use SilverStripe\View\ViewableData;
 
 class SessionManagerField extends FormField

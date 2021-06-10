@@ -8,8 +8,8 @@ use SilverStripe\Dev\SapphireTest;
 use SilverStripe\ORM\FieldType\DBDatetime;
 use SilverStripe\Security\Member;
 use SilverStripe\Security\Security;
-use SilverStripe\SessionManager\Control\LoginSessionMiddleware;
-use SilverStripe\SessionManager\Model\LoginSession;
+use SilverStripe\SessionManager\Middleware\LoginSessionMiddleware;
+use SilverStripe\SessionManager\Models\LoginSession;
 use SilverStripe\SessionManager\Security\LogInAuthenticationHandler;
 
 class LogInAuthenticationHandlerTest extends SapphireTest

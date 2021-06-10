@@ -3,7 +3,7 @@ SilverStripe\Security\Member:
     FirstName: 'Andre'
     Email: 'andre@example.org'
 
-SilverStripe\SessionManager\Model\LoginSession:
+SilverStripe\SessionManager\Models\LoginSession:
   x1:
     LastAccessed: '2003-02-15 10:00:00'
     IPAddress: '192.168.0.1'
