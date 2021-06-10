@@ -1,11 +1,11 @@
 <?php
 
-namespace SilverStripe\SessionManager\Tests\Extension;
+namespace SilverStripe\SessionManager\Tests\Extensions;
 
 use SilverStripe\Dev\SapphireTest;
 use SilverStripe\Security\Member;
-use SilverStripe\SessionManager\FormField\SessionManagerField;
-use SilverStripe\SessionManager\Model\LoginSession;
+use SilverStripe\SessionManager\FormFields\SessionManagerField;
+use SilverStripe\SessionManager\Models\LoginSession;
 
 class MemberExtensionTest extends SapphireTest
 {

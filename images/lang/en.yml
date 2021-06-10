@@ -1,17 +1,15 @@
 en:
-  SilverStripe\SessionManager\Control\LoginSessionController:
-    MENUTITLE: SilverStripe\SessionManager\Control\LoginSessionController
+  SilverStripe\SessionManager\Controllers\LoginSessionController:
+    MENUTITLE: SilverStripe\SessionManager\Controllers\LoginSessionController
     REMOVE_FAILURE: 'Something went wrong.'
     REMOVE_PERMISSION: 'You do not have permission to delete this record.'
     REMOVE_SUCCESS: 'Successfully removed session.'
   SilverStripe\SessionManager\Extensions\MemberExtension:
-    DEVICES: 'Login Sessions'
+    DEVICES: 'Login sessions'
     LEARN_MORE: 'Learn more'
-  SilverStripe\SessionManager\Forms\GridFieldRevokeLoginSessionAction:
-    DeletePermissionsFailure: 'No delete permissions'
-  SilverStripe\SessionManager\Job\GarbageCollectionJob:
+  SilverStripe\SessionManagers\GarbageCollectionJob:
     TITLE: 'Session manager garbage collection'
-  SilverStripe\SessionManager\Model\LoginSession:
+  SilverStripe\SessionManager\Models\LoginSession:
     BROWSER_ON_OS: '{browser} on {os}.'
     PLURALNAME: 'Login Sessions'
     PLURALS:

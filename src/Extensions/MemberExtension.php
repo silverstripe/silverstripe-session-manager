@@ -5,8 +5,8 @@ namespace SilverStripe\SessionManager\Extensions;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\ORM\DataExtension;
 use SilverStripe\Security\Member;
-use SilverStripe\SessionManager\FormField\SessionManagerField;
-use SilverStripe\SessionManager\Model\LoginSession;
+use SilverStripe\SessionManager\FormFields\SessionManagerField;
+use SilverStripe\SessionManager\Models\LoginSession;
 
 /**
  * Augment `Member` to allow relationship to the LoginSession DataObject
@@ -55,7 +55,7 @@ class MemberExtension extends DataExtension
             'Root.Main',
             SessionManagerField::create(
                 'LoginSessions',
-                _t(__CLASS__ . '.DEVICES', 'Login Sessions'),
+                _t(__CLASS__ . '.DEVICES', 'Login sessions'),
                 $this->owner->ID,
                 $helpUrl ? _t(__CLASS__ . '.LEARN_MORE', 'Learn more') : '',
                 $helpUrl ?: ''

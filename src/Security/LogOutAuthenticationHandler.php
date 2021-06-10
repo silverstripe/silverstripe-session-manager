@@ -8,9 +8,8 @@ use SilverStripe\Control\HTTPRequest;
 use SilverStripe\Core\Injector\Injector;
 use SilverStripe\Security\AuthenticationHandler;
 use SilverStripe\Security\Member;
-use SilverStripe\Security\RememberLoginHash;
 use SilverStripe\Security\Security;
-use SilverStripe\SessionManager\Model\LoginSession;
+use SilverStripe\SessionManager\Models\LoginSession;
 
 /**
  * This is separate to LogInAuthenticationHandler so that it can be registered with

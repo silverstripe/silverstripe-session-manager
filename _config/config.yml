@@ -42,7 +42,7 @@ SilverStripe\Core\Injector\Injector:
   SilverStripe\Control\Director:
     properties:
       Middlewares:
-        LoginSessionMiddleware: '%$SilverStripe\SessionManager\Control\LoginSessionMiddleware'
+        LoginSessionMiddleware: '%$SilverStripe\SessionManager\Middleware\LoginSessionMiddleware'
 ---
 Name: session-manager-rememberloginhash
 After: '#coreauthentication'

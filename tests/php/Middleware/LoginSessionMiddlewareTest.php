@@ -1,6 +1,6 @@
 <?php
 
-namespace SilverStripe\SessionManager\Tests\Control;
+namespace SilverStripe\SessionManager\Tests\Middleware;
 
 use SilverStripe\Control\Cookie;
 use SilverStripe\Control\Middleware\ConfirmationMiddleware\Url;
@@ -12,8 +12,8 @@ use SilverStripe\Security\IdentityStore;
 use SilverStripe\Security\Member;
 use SilverStripe\Security\RememberLoginHash;
 use SilverStripe\Security\Security;
-use SilverStripe\SessionManager\Control\LoginSessionMiddleware;
-use SilverStripe\SessionManager\Model\LoginSession;
+use SilverStripe\SessionManager\Middleware\LoginSessionMiddleware;
+use SilverStripe\SessionManager\Models\LoginSession;
 
 class LoginSessionMiddlewareTest extends SapphireTest
 {

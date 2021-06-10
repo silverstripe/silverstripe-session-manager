@@ -1,6 +1,6 @@
 <?php
 
-namespace SilverStripe\SessionManager\Tests\Extension;
+namespace SilverStripe\SessionManager\Tests\Extensions;
 
 use SilverStripe\ORM\DataExtension;
 use SilverStripe\Dev\TestOnly;

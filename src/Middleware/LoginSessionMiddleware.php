@@ -1,18 +1,17 @@
 <?php
 
-namespace SilverStripe\SessionManager\Control;
+namespace SilverStripe\SessionManager\Middleware;
 
 use SilverStripe\Control\HTTPRequest;
 use SilverStripe\Control\HTTPResponse;
 use SilverStripe\Control\Middleware\HTTPMiddleware;
-use SilverStripe\Core\Config\Config;
 use SilverStripe\Core\Injector\Injector;
 use SilverStripe\ORM\Connect\DatabaseException;
 use SilverStripe\ORM\FieldType\DBDatetime;
 use SilverStripe\Security\IdentityStore;
 use SilverStripe\Security\RememberLoginHash;
 use SilverStripe\Security\Security;
-use SilverStripe\SessionManager\Model\LoginSession;
+use SilverStripe\SessionManager\Models\LoginSession;
 use SilverStripe\SessionManager\Security\LogInAuthenticationHandler;
 
 class LoginSessionMiddleware implements HTTPMiddleware

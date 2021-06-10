@@ -9,7 +9,7 @@ use SilverStripe\ORM\FieldType\DBDatetime;
 use SilverStripe\Security\AuthenticationHandler;
 use SilverStripe\Security\Member;
 use SilverStripe\Security\RememberLoginHash;
-use SilverStripe\SessionManager\Model\LoginSession;
+use SilverStripe\SessionManager\Models\LoginSession;
 
 /**
  * This is separate to LogOutAuthenticationHandler so that it can be registered with

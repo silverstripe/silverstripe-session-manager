@@ -3,7 +3,7 @@
 namespace SilverStripe\SessionManager\Extensions;
 
 use SilverStripe\Core\Extension;
-use SilverStripe\SessionManager\Job\GarbageCollectionJob;
+use SilverStripe\SessionManager\Jobs\GarbageCollectionJob;
 
 class QueuedJobDescriptorExtension extends Extension
 {

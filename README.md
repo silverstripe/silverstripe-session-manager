@@ -76,7 +76,7 @@ Read [Saved User Logins](https://docs.silverstripe.org/en/4/developer_guides/sec
 Non-persisted login sessions (those where the user hasn’t ticked “remember me”) should expire after a period of inactivity, so that they’re removed from the list of active sessions even if the user closes their browser without completing the “log out” action. The length of time before expiry matches the `SilverStripe\Control\Session.timeout` value if one is set, otherwise falling back to a default of one hour. This default can be changed via the following config setting:
 
 ```yml
-SilverStripe\SessionManager\Model\LoginSession:
+SilverStripe\SessionManager\Models\LoginSession:
   default_session_lifetime: 3600 # Default value: 1 hour in seconds
 ```
 

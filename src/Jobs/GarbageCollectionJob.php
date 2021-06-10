@@ -1,12 +1,12 @@
 <?php
 
-namespace SilverStripe\SessionManager\Job;
+namespace SilverStripe\SessionManager\Jobs;
 
 use SilverStripe\Core\Config\Configurable;
 use SilverStripe\Core\Injector\Injectable;
 use SilverStripe\Core\Injector\Injector;
 use SilverStripe\ORM\FieldType\DBDatetime;
-use SilverStripe\SessionManager\Service\GarbageCollectionService;
+use SilverStripe\SessionManager\Services\GarbageCollectionService;
 use Symbiote\QueuedJobs\DataObjects\QueuedJobDescriptor;
 use Symbiote\QueuedJobs\Services\AbstractQueuedJob;
 use Symbiote\QueuedJobs\Services\QueuedJob;
