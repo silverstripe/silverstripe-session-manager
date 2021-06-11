@@ -7,21 +7,21 @@ import $ from 'jquery';
 const FIELD_SELECTOR = '.js-injector-boot [data-field-type="session-manager-field"]';
 
 function injectReactSessionManagerField(field) {
-    const SessionManagerField = loadComponent('SessionManagerField');
-    const {
-        schema: {
-            loginSessions
-        }
-    } = field.data('schema');
+  const SessionManagerField = loadComponent('SessionManagerField');
+  const {
+    schema: {
+      loginSessions
+    }
+  } = field.data('schema');
 
-    ReactDOM.render(<SessionManagerField loginSessions={loginSessions} />, field[0]);
+  ReactDOM.render(<SessionManagerField loginSessions={loginSessions} />, field[0]);
 }
 
 $.entwine('ss', () => {
-    $(FIELD_SELECTOR).entwine({
-        onmatch() {
-            // inject the react session manager field
-            injectReactSessionManagerField(this);
-        }
-    });
+  $(FIELD_SELECTOR).entwine({
+    onmatch() {
+      // inject the react session manager field
+      injectReactSessionManagerField(this);
+    }
+  });
 });
