@@ -1,25 +1,25 @@
 .login-session {
-    overflow: hidden;
-    height: 77px;
-    transition: 0.5s;
-    transition-delay: 1s;
+  overflow: hidden;
+  height: 77px;
+  transition: 0.5s;
+  transition-delay: 1s;
 
-    &.hidden {
-        height: 0;
-        opacity: 0;
-        visibility: 0;
-    }
+  &.hidden {
+      height: 0;
+      opacity: 0;
+      visibility: 0;
+  }
 
-    p {
-        margin: 0;
+  p {
+      margin: 0;
 
-        &:last-of-type {
-            padding-bottom: 20px;
-        }
-    }
+      &:last-of-type {
+          padding-bottom: 20px;
+      }
+  }
 }
 
 .login-session__logout {
-    font-weight: bold;
-    padding: 0;
+  font-weight: bold;
+  padding: 0;
 }

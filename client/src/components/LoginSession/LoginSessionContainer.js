@@ -8,14 +8,14 @@ import { success, error } from 'state/toasts/ToastsActions';
 import i18n from 'i18n';
 
 function createEndpoint(logOutEndpoint) {
-    return backend.createEndpointFetcher({
-        url: `${logOutEndpoint}/:id`.replace('//', '/'),
-        method: 'delete',
-        payloadSchema: {
-            id: { urlReplacement: ':id', remove: true },
-            SecurityID: { querystring: true }
-        }
-    });
+  return backend.createEndpointFetcher({
+    url: `${logOutEndpoint}/:id`.replace('//', '/'),
+    method: 'delete',
+    payloadSchema: {
+      id: { urlReplacement: ':id', remove: true },
+      SecurityID: { querystring: true }
+    }
+  });
 }
 
 /**
@@ -23,68 +23,68 @@ function createEndpoint(logOutEndpoint) {
  * @param props
  */
 function LoginSessionContainer(props) {
-    const [complete, setComplete] = useState(false);
-    const [failed, setFailed] = useState(false);
-    const [submitting, setSubmitting] = useState(false);
+  const [complete, setComplete] = useState(false);
+  const [failed, setFailed] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
 
-    function logout() {
-        setSubmitting(true);
-        const endpoint = createEndpoint(props.LogOutEndpoint);
-        return endpoint({
-            id: props.ID,
-            SecurityID: Config.get('SecurityID')
-        })
-        .then(response => {
-            const failure = !response.success;
-            setFailed(failure);
+  function logout() {
+    setSubmitting(true);
+    const endpoint = createEndpoint(props.LogOutEndpoint);
+    return endpoint({
+      id: props.ID,
+      SecurityID: Config.get('SecurityID')
+    })
+      .then(response => {
+        const failure = !response.success;
+        setFailed(failure);
 
-            if (failure) {
-                props.displayToastFailure(response.message);
-            } else {
-                props.displayToastSuccess(response.message);
-            }
-        })
-        .catch(() => {
-            setFailed(true);
-            props.displayToastFailure(i18n._t(
-                'SessionManager.COULD_NOT_LOGOUT',
-                'Could not log out of session. Try again later.'
-            ));
-        })
-        .finally(() => {
-            setComplete(true);
-            setSubmitting(false);
-        });
-    }
+        if (failure) {
+          props.displayToastFailure(response.message);
+        } else {
+          props.displayToastSuccess(response.message);
+        }
+      })
+      .catch(() => {
+        setFailed(true);
+        props.displayToastFailure(i18n._t(
+          'SessionManager.COULD_NOT_LOGOUT',
+          'Could not log out of session. Try again later.'
+        ));
+      })
+      .finally(() => {
+        setComplete(true);
+        setSubmitting(false);
+      });
+  }
 
-    const { ID, ...loginSessionProps } = props;
-    const newProps = { logout, complete, failed, submitting, ...loginSessionProps };
-    return <LoginSession {...newProps} />;
+  const { ID, ...loginSessionProps } = props;
+  const newProps = { logout, complete, failed, submitting, ...loginSessionProps };
+  return <LoginSession {...newProps} />;
 }
 
 LoginSessionContainer.propTypes = {
-    // LoginSessionContainer specific:
-    ID: PropTypes.number.isRequired,
-    LogOutEndpoint: PropTypes.string.isRequired,
-    displayToastSuccess: PropTypes.func.isRequired,
-    displayToastFailure: PropTypes.func.isRequired,
-    // Passed on to LoginSession:
-    IPAddress: PropTypes.string.isRequired,
-    IsCurrent: PropTypes.bool,
-    UserAgent: PropTypes.string,
-    Created: PropTypes.string.isRequired,
-    LastAccessed: PropTypes.string.isRequired,
+  // LoginSessionContainer specific:
+  ID: PropTypes.number.isRequired,
+  LogOutEndpoint: PropTypes.string.isRequired,
+  displayToastSuccess: PropTypes.func.isRequired,
+  displayToastFailure: PropTypes.func.isRequired,
+  // Passed on to LoginSession:
+  IPAddress: PropTypes.string.isRequired,
+  IsCurrent: PropTypes.bool,
+  UserAgent: PropTypes.string,
+  Created: PropTypes.string.isRequired,
+  LastAccessed: PropTypes.string.isRequired,
 };
 
 function mapDispatchToProps(dispatch) {
-    return {
-        displayToastSuccess(message) {
-            dispatch(success(message));
-        },
-        displayToastFailure(message) {
-            dispatch(error(message));
-        },
-    };
+  return {
+    displayToastSuccess(message) {
+      dispatch(success(message));
+    },
+    displayToastFailure(message) {
+      dispatch(error(message));
+    },
+  };
 }
 
 export { LoginSessionContainer as Component };
