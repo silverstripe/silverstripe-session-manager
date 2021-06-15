@@ -1,0 +1,17 @@
+en:
+  SilverStripe\SessionManager\Controllers\LoginSessionController:
+    REMOVE_FAILURE: 'Something went wrong.'
+    REMOVE_PERMISSION: 'You do not have permission to delete this record.'
+    REMOVE_SUCCESS: 'Successfully removed session.'
+  SilverStripe\SessionManager\Extensions\MemberExtension:
+    LEARN_MORE: 'Learn more'
+    LOGIN_SESSIONS: 'Login sessions'
+  SilverStripe\SessionManager\Jobs\GarbageCollectionJob:
+    TITLE: 'Session manager garbage collection'
+  SilverStripe\SessionManager\Models\LoginSession:
+    BROWSER_ON_OS: '{browser} on {os}.'
+    PLURALNAME: 'Login Sessions'
+    PLURALS:
+      one: 'A Login Session'
+      other: '{count} Login Sessions'
+    SINGULARNAME: 'Login Session'
