@@ -50,7 +50,3 @@ To remove access for a session associated with a device, click the *_Log out_* l
 [notice]
 A member can only revoke access for their own profile. No one else will have access to remove your sessions.
 [/notice]
-
-## Login session expiry
-
-Login sessions have an expiry of 30 days by default. After this, the session will no longer be valid and the user must log in again. Once a session has expired it will be removed from the list of active login sessions.
