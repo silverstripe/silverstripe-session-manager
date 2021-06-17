@@ -74,11 +74,7 @@ describe('LoginSessionContainer', () => {
       submitting: true
     });
 
-    httpResolve({
-      error: false,
-      success: true,
-      message: 'amazing success'
-    });
+    httpResolve({ message: 'amazing success' });
     await logoutRequest;
 
     // Test final state
@@ -118,10 +114,9 @@ describe('LoginSessionContainer', () => {
       submitting: true
     });
 
-    httpResolve({
-      error: true,
-      success: false,
-      message: 'horrible failure'
+    httpReject({
+      response: {
+        text: () => Promise.resolve(JSON.stringify({ message: 'horrible failure' })) }
     });
     await logoutRequest;
 
@@ -163,7 +158,9 @@ describe('LoginSessionContainer', () => {
     });
 
     // Cause an HTTP Failure
-    httpReject();
+    httpReject({
+      response: { text: () => Promise.resolve('Horrible HTTP Failure') }
+    });
     await logoutRequest;
 
     // Test error state

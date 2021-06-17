@@ -56,7 +56,6 @@ class FixtureContext extends BaseFixtureContext
     private function getMember(): Member
     {
         /** @var Member $member */
-        $member = Member::get()->find('FirstName', 'ADMIN');
-        return $member;
+        return Member::get()->find('FirstName', 'AUTHOR');
     }
 }

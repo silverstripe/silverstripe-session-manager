@@ -1,8 +1,9 @@
 en:
   SilverStripe\SessionManager\Controllers\LoginSessionController:
-    REMOVE_FAILURE: 'Something went wrong.'
-    REMOVE_PERMISSION: 'You do not have permission to delete this record.'
+    INVALID_REQUEST: 'Invalid request'
     REMOVE_SUCCESS: 'Successfully removed session.'
+    SESSION_COULD_NOT_BE_FOUND_OR_NO_LONGER_ACTIVE: 'This session could not be found or is no longer active.'
+    YOUR_SESSION_HAS_EXPIRED: 'Your session has expired'
   SilverStripe\SessionManager\Extensions\MemberExtension:
     LEARN_MORE: 'Learn more'
     LOGIN_SESSIONS: 'Login sessions'

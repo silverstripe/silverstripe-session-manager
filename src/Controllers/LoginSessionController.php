@@ -6,16 +6,21 @@ use Exception;
 use SilverStripe\Control\Controller;
 use SilverStripe\Control\HTTPRequest;
 use SilverStripe\Control\HTTPResponse;
+use SilverStripe\Control\Middleware\HTTPCacheControlMiddleware;
+use SilverStripe\Security\Security;
 use SilverStripe\Security\SecurityToken;
 use SilverStripe\SessionManager\Models\LoginSession;
 
+/**
+ * Handles session revocation AJAX request
+ */
 class LoginSessionController extends Controller
 {
-    private static $url_segment = 'loginsession';
-
     private static $url_handlers = [
-        'DELETE remove/$ID' => 'remove',
+        'DELETE $ID' => 'remove',
     ];
+
+    private static $url_segment = 'loginsession';
 
     private static $allowed_actions = [
         'remove',
@@ -29,42 +34,45 @@ class LoginSessionController extends Controller
      */
     public function remove(HTTPRequest $request): HTTPResponse
     {
-        return $this->removeLoginSession($request);
-    }
+        if (empty(Security::getCurrentUser())) {
+            return $this->jsonResponse(
+                [
+                    'message' => _t(
+                        __CLASS__ . '.YOUR_SESSION_HAS_EXPIRED',
+                        'Your session has expired'
+                    )
+                ],
+                401
+            );
+        }
 
-    private function removeLoginSession(HTTPRequest $request): HTTPResponse
-    {
-        $failureMessage = _t(__CLASS__ . '.REMOVE_FAILURE', 'Something went wrong.');
-        try {
-            // Ensure CSRF protection
-            if (!SecurityToken::inst()->checkRequest($request)) {
-                return $this->jsonResponse([
-                    'success' => false,
-                    'message' => $failureMessage
-                ]);
-            }
+        // Validate CSRF token and ID parameter
+        $id = $request->param('ID');
+        if (!SecurityToken::inst()->checkRequest($request) || !is_numeric($id)) {
+            return $this->jsonResponse(
+                [
+                    'message' => _t(
+                        __CLASS__ . '.INVALID_REQUEST',
+                        'Invalid request'
+                    )
+                ],
+                400
+            );
+        }
 
-            $id = $request->param('ID');
-            $loginSession = LoginSession::get()->byID($id);
-            if (!$loginSession) {
-                return $this->jsonResponse([
-                    'success' => false,
-                    'message' => $failureMessage
-                ]);
-            }
-
-            if (!$loginSession->canDelete()) {
-                $message = _t(__CLASS__ . '.REMOVE_PERMISSION', 'You do not have permission to delete this record.');
-                return $this->jsonResponse([
-                    'success' => false,
-                    'message' => $message
-                ]);
-            }
-        } catch (Exception $e) {
-            return $this->jsonResponse([
-                'success' => false,
-                'message' => $failureMessage
-            ]);
+        $loginSession = LoginSession::get()->byID($id);
+        if (!$loginSession || !$loginSession->canDelete()) {
+            // We're not making a difference between a non-existent session and session you can not revoke
+            // to prevent an adversary from scanning LoginSession IDs
+            return $this->jsonResponse(
+                [
+                    'message' => _t(
+                        __CLASS__ . '.SESSION_COULD_NOT_BE_FOUND_OR_NO_LONGER_ACTIVE',
+                        'This session could not be found or is no longer active.'
+                    )
+                ],
+                404
+            );
         }
 
         $this->extend('onBeforeRemoveLoginSession', $loginSession);
@@ -72,7 +80,6 @@ class LoginSessionController extends Controller
         $loginSession->delete();
 
         return $this->jsonResponse([
-            'success' => true,
             'message' => _t(__CLASS__ . '.REMOVE_SUCCESS', 'Successfully removed session.')
         ]);
     }
@@ -86,6 +93,7 @@ class LoginSessionController extends Controller
      */
     private function jsonResponse(array $response, int $code = 200): HTTPResponse
     {
+        HTTPCacheControlMiddleware::singleton()->disableCache();
         return HTTPResponse::create(json_encode($response))
             ->addHeader('Content-Type', 'application/json')
             ->setStatusCode($code);
