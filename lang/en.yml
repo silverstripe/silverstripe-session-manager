@@ -7,6 +7,7 @@ en:
   SilverStripe\SessionManager\Extensions\MemberExtension:
     LEARN_MORE: 'Learn more'
     LOGIN_SESSIONS: 'Login sessions'
+    REMOVE_SUCCESS: 'Successfully removed session.'
   SilverStripe\SessionManager\Jobs\GarbageCollectionJob:
     TITLE: 'Session manager garbage collection'
   SilverStripe\SessionManager\Models\LoginSession:

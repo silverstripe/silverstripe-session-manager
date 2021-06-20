@@ -18,10 +18,6 @@ Feature: See other devices and revoke their access
     Then I should see the text "Log out" in the ".login-session__logout" element
     # Click "Log out" button
     When I click on the ".login-session__logout" element
-    # Wait for modal to fade in
-    And I wait until I see the ".modal-dialog .btn-primary" element
-    # Click the green button in the modal
-    When I click on the ".modal-dialog .btn-primary" element
     # Assert text has changed
     Then I should see the text "Logging out..." in the ".login-session__logout" element
     # Assert hidden element is applied which fades to not visible via a css transition
