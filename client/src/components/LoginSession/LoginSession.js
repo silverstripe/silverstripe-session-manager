@@ -2,7 +2,6 @@ import i18n from 'i18n';
 import PropTypes from 'prop-types';
 import React from 'react';
 import moment from 'moment';
-import confirm from '@silverstripe/reactstrap-confirm';
 import Button from 'components/Button/Button';
 
 /**
@@ -12,21 +11,9 @@ import Button from 'components/Button/Button';
 const format = 'L LT';
 
 function LoginSession(props) {
-  // This is an async function because 'confirm' requires it
-  // https://www.npmjs.com/package/@silverstripe/reactstrap-confirm
-  async function attemptLogOut() {
-    if (props.submitting) {
-      return;
-    }
-    // Confirm with the user
-    const confirmMessage = i18n._t(
-      'SessionManager.DELETE_CONFIRMATION',
-      'Are you sure you want to delete this login session?'
-    );
-    const confirmTitle = i18n._t('SessionManager.CONFIRMATION_TITLE', 'Are you sure?');
-    const buttonLabel = i18n._t('SessionManager.DELETE_CONFIRMATION_BUTTON', 'Remove login session');
-    if (!await confirm(confirmMessage, { title: confirmTitle, confirmLabel: buttonLabel })) {
-      return;
+  function attemptLogOut() {
+    if (props.submitting || props.complete) {
+        return;
     }
     props.logout();
   }
