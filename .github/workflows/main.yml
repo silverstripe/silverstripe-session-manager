@@ -2,7 +2,7 @@ name: Build Docs
 on:
   push:
     branches:
-      - 'master'
+      - '1'
     paths:
       - 'docs/en/userguide/**'
 jobs:
