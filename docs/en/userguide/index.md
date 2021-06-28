@@ -1,5 +1,7 @@
+---
 title: Session Manager
 summary: Allow members to manage and revoke access to multiple login sessions across devices.
+---
 
 # What does the session manager module do?
 
