@@ -49,3 +49,13 @@ After: '#coreauthentication'
 ---
 SilverStripe\Security\RememberLoginHash:
   logout_across_devices: false
+---
+Name: session-manager-security
+After: '#coresecurity'
+---
+SilverStripe\Security\Security:
+  extensions:
+    - 'SilverStripe\SessionManager\Extensions\SecurityExtension'
+SilverStripe\Assets\AssetControlExtension:
+  excluded_classes:
+    - 'SilverStripe\SessionManager\Models\LoginSession'
