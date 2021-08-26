@@ -1,0 +1,11 @@
+{
+    "SessionManager.CONFIRMATION_TITLE": "Weet je het zeker?",
+    "SessionManager.DELETE_CONFIRMATION_BUTTON": "Verwijder ingelogde sessie",
+    "SessionManager.CURRENT": "Huidige",
+    "SessionManager.AUTHENTICATED": "ingelogd {createdElapsed}...",
+    "SessionManager.LAST_ACTIVE": "laatst actief {lastAccessedElapsed}...",
+    "SessionManager.LOG_OUT": "Uitloggen",
+    "SessionManager.LOGGING_OUT": "Uitloggen...",
+    "SessionManager.ACTIVITY_TOOLTIP_TEXT": "Ingelogd {signedIn}, laatst actief {lastActive}",
+    "SessionManager.COULD_NOT_LOGOUT": "Could not log out of session. Try again later."
+}

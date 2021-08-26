@@ -1,0 +1,19 @@
+sl:
+  SilverStripe\SessionManager\Controllers\LoginSessionController:
+    REMOVE_FAILURE: ''
+    REMOVE_PERMISSION: ''
+    REMOVE_SUCCESS: ''
+  SilverStripe\SessionManager\Extensions\MemberExtension:
+    DEVICES: ''
+    LEARN_MORE: 'Več o tem'
+  SilverStripe\SessionManager\Jobs\GarbageCollectionJob:
+    TITLE: ''
+  SilverStripe\SessionManager\Models\LoginSession:
+    BROWSER_ON_OS: ''
+    PLURALNAME: ''
+    PLURALS:
+      one: ''
+      two: ''
+      few: ''
+      other: ''
+    SINGULARNAME: ''

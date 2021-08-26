@@ -7,5 +7,5 @@
     "SessionManager.LOG_OUT": "Log out",
     "SessionManager.LOGGING_OUT": "Logging out...",
     "SessionManager.ACTIVITY_TOOLTIP_TEXT": "Signed in {signedIn}, Last active {lastActive}",
-    "SessionManager.COULD_NOT_LOGOUT": "Could not log out of session. Try again later."
+    "SessionManager.COULD_NOT_LOGOUT": "Ne povis adiaŭi la sesion. Provu denove poste."
 }
