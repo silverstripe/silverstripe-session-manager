@@ -1,0 +1,17 @@
+eo:
+  SilverStripe\SessionManager\Controllers\LoginSessionController:
+    REMOVE_FAILURE: 'Eraro okazis'
+    REMOVE_PERMISSION: 'Vi ne rajtas forigi ĉi tiun rikordon.'
+    REMOVE_SUCCESS: 'Sukcese elsalutis el la aparato'
+  SilverStripe\SessionManager\Extensions\MemberExtension:
+    DEVICES: "\_\nAŭtentigitaj aparatoj"
+    LEARN_MORE: 'Lerni plu'
+  SilverStripe\SessionManager\Jobs\GarbageCollectionJob:
+    TITLE: 'Seancmastrumila senrubigo'
+  SilverStripe\SessionManager\Models\LoginSession:
+    BROWSER_ON_OS: '{browser} ĉe {os}.'
+    PLURALNAME: ĉ
+    PLURALS:
+      one: 'Unu ensaluta seanco'
+      other: '{count} ensalutaj seancoj'
+    SINGULARNAME: 'Ensaluta seanco'
