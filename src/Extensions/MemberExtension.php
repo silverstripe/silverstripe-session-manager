@@ -21,7 +21,7 @@ class MemberExtension extends DataExtension
      * @config
      */
     private static $session_login_help_url =
-        'https://userhelp.silverstripe.org/en/4/optional_features/managing_devices';
+        'https://userhelp.silverstripe.org/en/4/managing_your_website/session_manager';
 
     /**
      * @var array
