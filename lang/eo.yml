@@ -1,11 +1,12 @@
 eo:
   SilverStripe\SessionManager\Controllers\LoginSessionController:
-    REMOVE_FAILURE: 'Eraro okazis'
-    REMOVE_PERMISSION: 'Vi ne rajtas forigi ĉi tiun rikordon.'
-    REMOVE_SUCCESS: 'Sukcese elsalutis el la aparato'
+    INVALID_REQUEST: ''
+    REMOVE_SUCCESS: ''
+    SESSION_COULD_NOT_BE_FOUND_OR_NO_LONGER_ACTIVE: ''
+    YOUR_SESSION_HAS_EXPIRED: ''
   SilverStripe\SessionManager\Extensions\MemberExtension:
-    DEVICES: "\_\nAŭtentigitaj aparatoj"
     LEARN_MORE: 'Lerni plu'
+    LOGIN_SESSIONS: ''
   SilverStripe\SessionManager\Jobs\GarbageCollectionJob:
     TITLE: 'Seancmastrumila senrubigo'
   SilverStripe\SessionManager\Models\LoginSession:
