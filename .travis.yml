@@ -2,7 +2,3 @@ version: ~> 1.0
 
 import:
   - silverstripe/silverstripe-travis-shared:config/provision/standard-jobs-range-behat-npm.yml
-
-env:
-  global:
-    - REQUIRE_RECIPE="4.8.x-dev || "

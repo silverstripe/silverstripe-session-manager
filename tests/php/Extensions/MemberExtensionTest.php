@@ -17,7 +17,7 @@ class MemberExtensionTest extends SapphireTest
         ]
     ];
 
-    public function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         ForcePermission::reset();

@@ -30,7 +30,7 @@ class LoginSessionControllerTest extends FunctionalTest
     /** @var HttpRequest */
     private $request;
 
-    public function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -195,7 +195,7 @@ class LoginSessionControllerTest extends FunctionalTest
             ['message' => $toast],
             $body
         );
-        $this->assertContains(
+        $this->assertStringContainsString(
             'no-store',
             $response->getHeader('Cache-Control'),
             'Login Session Controller response is never cached',

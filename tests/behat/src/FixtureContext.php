@@ -3,6 +3,7 @@
 namespace SilverStripe\SessionManager\Tests\Behat\Context;
 
 use Behat\Mink\Element\NodeElement;
+use PHPUnit\Framework\Assert;
 use SilverStripe\BehatExtension\Context\FixtureContext as BaseFixtureContext;
 use SilverStripe\Control\Controller;
 use SilverStripe\Security\Member;
@@ -21,7 +22,7 @@ class FixtureContext extends BaseFixtureContext
     {
         $page = $this->getMainContext()->getSession()->getPage();
         $element = $page->find('css', $selector);
-        assertNotNull($element, sprintf('Element %s not found', $selector));
+        Assert::assertNotNull($element, sprintf('Element %s not found', $selector));
     }
 
     /**
@@ -33,8 +34,8 @@ class FixtureContext extends BaseFixtureContext
         $page = $this->getMainContext()->getSession()->getPage();
         /** @var NodeElement $element */
         $element = $page->find('css', $selector);
-        assertNotNull($element, sprintf('Element %s not found', $selector));
-        assertSame($text, $element->getText());
+        Assert::assertNotNull($element, sprintf('Element %s not found', $selector));
+        Assert::assertSame($text, $element->getText());
     }
 
     /**
