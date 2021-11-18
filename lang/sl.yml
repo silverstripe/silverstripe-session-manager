@@ -1,15 +1,15 @@
 sl:
   SilverStripe\SessionManager\Controllers\LoginSessionController:
-    REMOVE_FAILURE: ''
-    REMOVE_PERMISSION: ''
-    REMOVE_SUCCESS: ''
+    INVALID_REQUEST: 'Neveljavni zahtevek'
+    REMOVE_SUCCESS: 'Sejo smo uspešno prekinili.'
+    SESSION_COULD_NOT_BE_FOUND_OR_NO_LONGER_ACTIVE: 'Seje nismo mogli najti ali pa ne obstaja več.'
+    YOUR_SESSION_HAS_EXPIRED: 'Seja je potekla'
   SilverStripe\SessionManager\Extensions\MemberExtension:
-    DEVICES: ''
     LEARN_MORE: 'Več o tem'
   SilverStripe\SessionManager\Jobs\GarbageCollectionJob:
     TITLE: ''
   SilverStripe\SessionManager\Models\LoginSession:
-    BROWSER_ON_OS: ''
+    BROWSER_ON_OS: '{browser} na {os}.'
     PLURALNAME: ''
     PLURALS:
       one: ''
