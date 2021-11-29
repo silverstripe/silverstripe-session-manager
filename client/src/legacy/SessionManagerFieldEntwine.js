@@ -17,7 +17,7 @@ function injectReactSessionManagerField(field) {
   ReactDOM.render(<SessionManagerField loginSessions={loginSessions} />, field[0]);
 }
 
-$.entwine('ss', () => {
+$.entwine('ss', ($) => {
   $(FIELD_SELECTOR).entwine({
     onmatch() {
       // inject the react session manager field
