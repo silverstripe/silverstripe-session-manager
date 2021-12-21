@@ -1,4 +1,4 @@
 version: ~> 1.0
 
 import:
-  - silverstripe/silverstripe-travis-shared:config/provision/standard-jobs-range-behat-npm.yml
+  - silverstripe/silverstripe-travis-shared:config/provision/standard-jobs-fixed-behat-npm.yml
