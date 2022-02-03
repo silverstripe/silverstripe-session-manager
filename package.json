@@ -42,6 +42,9 @@
     "mockdate": "^3.0.3",
     "react-test-renderer": "16.8.3"
   },
+  "resolutions": {
+    "colors": "1.1.2"
+  },
   "babel": {
     "presets": [
       "env",
