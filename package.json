@@ -30,7 +30,7 @@
     "redux": "^4.0.0"
   },
   "devDependencies": {
-    "@silverstripe/eslint-config": "^0.0.6",
+    "@silverstripe/eslint-config": "^0.1.0",
     "@silverstripe/webpack-config": "^1.7.0",
     "@storybook/addon-knobs": "^3.4.10",
     "babel-jest": "^23.6.0",
