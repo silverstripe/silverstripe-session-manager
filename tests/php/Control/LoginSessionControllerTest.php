@@ -190,7 +190,7 @@ class LoginSessionControllerTest extends FunctionalTest
             $response->getStatusCode(),
             $message
         );
-        $body = json_decode($response->getBody(), true);
+        $body = json_decode($response->getBody() ?? '', true);
         $this->assertEquals(
             ['message' => $toast],
             $body
