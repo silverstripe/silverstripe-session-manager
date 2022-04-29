@@ -1,0 +1,26 @@
+SilverStripe\Security\Member:
+  member1:
+    FirstName: 'Andre'
+    Email: 'andre@example.org'
+  member_rmh:
+    FirstName: 'Bob'
+    Email: 'bob@example.com'
+
+SilverStripe\SessionManager\Models\LoginSession:
+  x1:
+    LastAccessed: '2003-02-15 10:00:00'
+    IPAddress: '192.168.0.1'
+    Member: =>SilverStripe\Security\Member.member1
+    Persistent: true
+  x2:
+    LastAccessed: '2003-02-15 10:00:00'
+    IPAddress: '192.168.0.1'
+    Member: =>SilverStripe\Security\Member.member_rmh
+    Persistent: false
+  x3:
+    LastAccessed: '2003-02-15 10:00:00'
+    IPAddress: '192.168.0.14'
+    Member: =>SilverStripe\Security\Member.member_rmh
+  orphan:
+    LastAccessed: '2003-02-15 10:00:00'
+    IPAddress: '192.168.0.1'
