@@ -61,7 +61,7 @@ It is also compatible with the [Silverstripe MFA module suite](https://github.co
 
 ## Configuration
 
-### Logout across devices
+### Removing "remember me" tokens across devices on logout
 
 Session-manager provides an explicit way to terminate individual sessions and their attached "Keep me signed in" tokens. So this module sets `SilverStripe\Security\RememberLoginHash.logout_across_devices` to `false`.
 
@@ -76,6 +76,8 @@ After:
 SilverStripe\Security\RememberLoginHash:
   logout_across_devices: true
 ```
+
+Please note, this configuration only removes "remember me" tokens on logout, it does not terminate active sessions across devices on logout.
 
 Read [Saved User Logins](https://docs.silverstripe.org/en/4/developer_guides/security/member/#saved-user-logins) to learn how to configure the "Keep me signed in" feature for your members.
 
