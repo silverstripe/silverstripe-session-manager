@@ -1,0 +1,18 @@
+de:
+  SilverStripe\SessionManager\Controllers\LoginSessionController:
+    INVALID_REQUEST: 'Ungültige Anfrage'
+    REMOVE_SUCCESS: 'Sitzung erfolgreich beendet.'
+    SESSION_COULD_NOT_BE_FOUND_OR_NO_LONGER_ACTIVE: 'Diese Sitzung konnte nicht gefunden werden oder ist nicht mehr aktiv.'
+    YOUR_SESSION_HAS_EXPIRED: 'Ihre Sitzung ist abgelaufen'
+  SilverStripe\SessionManager\Extensions\MemberExtension:
+    LEARN_MORE: 'Mehr erfahren'
+    LOGIN_SESSIONS: Anmeldesitzungen
+  SilverStripe\SessionManager\Jobs\GarbageCollectionJob:
+    TITLE: 'Müllsammlung des Sitzungsmanagers'
+  SilverStripe\SessionManager\Models\LoginSession:
+    BROWSER_ON_OS: '{browser} an {os}.'
+    PLURALNAME: Anmeldesitzungen
+    PLURALS:
+      one: 'eine Anmeldesitzung'
+      other: '{count} Anmeldesitzungen'
+    SINGULARNAME: Anmeldesitzungen

@@ -6,14 +6,15 @@ sl:
     YOUR_SESSION_HAS_EXPIRED: 'Seja je potekla'
   SilverStripe\SessionManager\Extensions\MemberExtension:
     LEARN_MORE: 'Več o tem'
+    LOGIN_SESSIONS: Prijave
   SilverStripe\SessionManager\Jobs\GarbageCollectionJob:
-    TITLE: ''
+    TITLE: 'Čiščenje z upraviteljem sej'
   SilverStripe\SessionManager\Models\LoginSession:
     BROWSER_ON_OS: '{browser} na {os}.'
-    PLURALNAME: ''
+    PLURALNAME: Prijave
     PLURALS:
-      one: ''
-      two: ''
-      few: ''
-      other: ''
-    SINGULARNAME: ''
+      one: Prijava
+      two: '{count} prijavi'
+      few: '{count} prijav'
+      other: '{count} prijav'
+    SINGULARNAME: Prijava
