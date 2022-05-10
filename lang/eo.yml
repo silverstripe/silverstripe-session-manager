@@ -1,13 +1,15 @@
 eo:
   SilverStripe\SessionManager\Controllers\LoginSessionController:
-    SESSION_COULD_NOT_BE_FOUND_OR_NO_LONGER_ACTIVE: ''
+    SESSION_COULD_NOT_BE_FOUND_OR_NO_LONGER_ACTIVE: 'Seanco estas netrovebla aŭ ne plu aktiva.'
     REMOVE_FAILURE: 'Eraro okazis'
     REMOVE_PERMISSION: 'Vi ne rajtas forigi ĉi tiun rikordon.'
-    REMOVE_SUCCESS: 'Sukcese elsalutis el la aparato'
-    YOUR_SESSION_HAS_EXPIRED: ''
+    REMOVE_SUCCESS: 'Sukcese forigis seancon.'
+    YOUR_SESSION_HAS_EXPIRED: 'Via seanco eksvalidiĝis'
+    INVALID_REQUEST: 'Nevalida peto'
   SilverStripe\SessionManager\Extensions\MemberExtension:
-    DEVICES: "Aŭtentigitaj aparatoj"
+    DEVICES: 'Aŭtentigitaj aparatoj'
     LEARN_MORE: 'Lerni plu'
+    LOGIN_SESSIONS: 'Ensalutaj seancoj'
   SilverStripe\SessionManager\Jobs\GarbageCollectionJob:
     TITLE: 'Seancmastrumila senrubigo'
   SilverStripe\SessionManager\Models\LoginSession:

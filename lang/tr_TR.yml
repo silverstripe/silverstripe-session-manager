@@ -1,0 +1,18 @@
+tr_TR:
+  SilverStripe\SessionManager\Controllers\LoginSessionController:
+    INVALID_REQUEST: ''
+    REMOVE_SUCCESS: 'Oturum başarıyla kaldırıldı.'
+    SESSION_COULD_NOT_BE_FOUND_OR_NO_LONGER_ACTIVE: ''
+    YOUR_SESSION_HAS_EXPIRED: 'Oturumunuz sona erdi'
+  SilverStripe\SessionManager\Extensions\MemberExtension:
+    LEARN_MORE: 'Dahada öğrenin'
+    LOGIN_SESSIONS: ''
+  SilverStripe\SessionManager\Jobs\GarbageCollectionJob:
+    TITLE: ''
+  SilverStripe\SessionManager\Models\LoginSession:
+    BROWSER_ON_OS: ''
+    PLURALNAME: ''
+    PLURALS:
+      one: ''
+      other: ''
+    SINGULARNAME: ''

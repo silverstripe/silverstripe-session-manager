@@ -2,16 +2,20 @@ nl:
   SilverStripe\SessionManager\Controllers\LoginSessionController:
     REMOVE_FAILURE: ''
     REMOVE_PERMISSION: ''
-    REMOVE_SUCCESS: ''
+    REMOVE_SUCCESS: 'Sessie is succesvol verwijderd.'
+    INVALID_REQUEST: 'Ongeldige aanroep'
+    SESSION_COULD_NOT_BE_FOUND_OR_NO_LONGER_ACTIVE: 'Deze sessie kon niet gevonden worden of was niet meer geldig.'
+    YOUR_SESSION_HAS_EXPIRED: 'De browsersessie is verlopen wegens inactiviteit'
   SilverStripe\SessionManager\Extensions\MemberExtension:
     DEVICES: 'Ingelogde apparaten'
     LEARN_MORE: 'Meer weten'
+    LOGIN_SESSIONS: 'Ingelogde sessies'
   SilverStripe\SessionManager\Jobs\GarbageCollectionJob:
-    TITLE: ''
+    TITLE: 'Automatische opschoning sessies'
   SilverStripe\SessionManager\Models\LoginSession:
-    BROWSER_ON_OS: ''
-    PLURALNAME: ''
+    BROWSER_ON_OS: '{browser} op {os}.'
+    PLURALNAME: 'Ingelogde sessies'
     PLURALS:
-      one: ''
-      other: ''
-    SINGULARNAME: ''
+      one: 'Ingelogde sessie'
+      other: '{count} ingelogde sessies'
+    SINGULARNAME: 'Ingelogde sessie'

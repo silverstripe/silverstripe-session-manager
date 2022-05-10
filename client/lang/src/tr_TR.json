@@ -1,11 +1,11 @@
 {
-    "SessionManager.CONFIRMATION_TITLE": "Are you sure?",
-    "SessionManager.DELETE_CONFIRMATION_BUTTON": "Remove login session",
-    "SessionManager.CURRENT": "Current",
+    "SessionManager.CONFIRMATION_TITLE": "Emin misin sen?",
+    "SessionManager.DELETE_CONFIRMATION_BUTTON": "Oturum açmaya girişi kaldır",
+    "SessionManager.CURRENT": "Geçerli",
     "SessionManager.AUTHENTICATED": "authenticated {createdElapsed}...",
     "SessionManager.LAST_ACTIVE": "last active {lastAccessedElapsed}...",
-    "SessionManager.LOG_OUT": "Log out",
-    "SessionManager.LOGGING_OUT": "Logging out...",
+    "SessionManager.LOG_OUT": "Çıkış yap",
+    "SessionManager.LOGGING_OUT": "Oturum kapatılıyor...",
     "SessionManager.ACTIVITY_TOOLTIP_TEXT": "Signed in {signedIn}, Last active {lastActive}",
-    "SessionManager.COULD_NOT_LOGOUT": "Could not log out of session. Try again later."
+    "SessionManager.COULD_NOT_LOGOUT": "Oturumdan çıkış yapılamadı. Daha sonra tekrar deneyin."
 }
