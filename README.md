@@ -2,7 +2,7 @@
 
 Allow members to manage and revoke access to multiple login sessions across devices.
 
-[![Build Status](https://api.travis-ci.com/silverstripe/silverstripe-session-manager.svg?branch=1)](https://travis-ci.com/silverstripe/silverstripe-session-manager)
+[![CI](https://github.com/silverstripe/silverstripe-session-manager/actions/workflows/ci.yml/badge.svg)](https://github.com/silverstripe/silverstripe-session-manager/actions/workflows/ci.yml)
 [![Code Quality](http://img.shields.io/scrutinizer/g/silverstripe/silverstripe-session-manager.svg?style=flat)](https://scrutinizer-ci.com/g/silverstripe/silverstripe-session-manager)
 [![Code coverage](https://codecov.io/gh/silverstripe/silverstripe-session-manager/branch/master/graph/badge.svg)](https://codecov.io/gh/silverstripe/silverstripe-session-manager)
 [![Version](http://img.shields.io/packagist/v/silverstripe/session-manager.svg?style=flat)](https://packagist.org/packages/silverstripe/session-manager)
