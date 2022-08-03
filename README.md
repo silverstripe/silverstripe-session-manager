@@ -1,14 +1,11 @@
 # Silverstripe CMS Session Manager
 
-Allow members to manage and revoke access to multiple login sessions across devices.
-
 [![CI](https://github.com/silverstripe/silverstripe-session-manager/actions/workflows/ci.yml/badge.svg)](https://github.com/silverstripe/silverstripe-session-manager/actions/workflows/ci.yml)
-[![Code Quality](http://img.shields.io/scrutinizer/g/silverstripe/silverstripe-session-manager.svg?style=flat)](https://scrutinizer-ci.com/g/silverstripe/silverstripe-session-manager)
-[![Code coverage](https://codecov.io/gh/silverstripe/silverstripe-session-manager/branch/master/graph/badge.svg)](https://codecov.io/gh/silverstripe/silverstripe-session-manager)
-[![Version](http://img.shields.io/packagist/v/silverstripe/session-manager.svg?style=flat)](https://packagist.org/packages/silverstripe/session-manager)
-[![License](http://img.shields.io/packagist/l/silverstripe/session-manager.svg?style=flat)](LICENSE)
+[![Silverstripe supported module](https://img.shields.io/badge/silverstripe-supported-0071C4.svg)](https://www.silverstripe.org/software/addons/silverstripe-commercially-supported-module-list/)
 
 ![CMS view](images/cms.png)
+
+Allow members to manage and revoke access to multiple login sessions across devices.
 
 ## Developer Details
 
