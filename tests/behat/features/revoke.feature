@@ -6,8 +6,8 @@ Feature: See other devices and revoke their access
   So that I can revoke their access
 
   Background:
-    Given a "group" "AUTHOR group" has permissions "Access to 'Pages' section"
-    And I am logged in with "AUTHOR" permissions
+    Given a "group" "AUTHOR" has permissions "Access to 'Pages' section"
+    And I am logged in as a member of "AUTHOR" group
     # Create a mock login session
     And There is a login session for a second device
 
