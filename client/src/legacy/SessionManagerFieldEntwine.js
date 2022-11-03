@@ -1,6 +1,6 @@
 // Manages rendering SessionManagerFields in lieu of React support in ModelAdmin
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { loadComponent } from 'lib/Injector';
 import $ from 'jquery';
 
@@ -14,7 +14,8 @@ function injectReactSessionManagerField(field) {
     }
   } = field.data('schema');
 
-  ReactDOM.render(<SessionManagerField loginSessions={loginSessions} />, field[0]);
+  const root = createRoot(field[0]);
+  root.render(<SessionManagerField loginSessions={loginSessions} />);
 }
 
 $.entwine('ss', jQuery => {
