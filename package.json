@@ -7,7 +7,7 @@
     "node": ">=18.x"
   },
   "scripts": {
-    "build": "yarn && rm -rf client/dist/* && NODE_ENV=production webpack --mode production --bail --progress",
+    "build": "yarn && yarn lint && rm -rf client/dist/* && NODE_ENV=production webpack --mode production --bail --progress",
     "dev": "NODE_ENV=development webpack --progress",
     "watch": "NODE_ENV=development webpack --watch --progress",
     "css": "WEBPACK_CHILD=css npm run build",
@@ -32,8 +32,8 @@
   },
   "devDependencies": {
     "@babel/runtime": "^7.20.1",
-    "@silverstripe/eslint-config": "^1.0.0-alpha1",
-    "@silverstripe/webpack-config": "^2.0.0-alpha1",
+    "@silverstripe/eslint-config": "^1.0.0-alpha6",
+    "@silverstripe/webpack-config": "^2.0.0-alpha5",
     "@storybook/addon-knobs": "^6.4.0",
     "babel-jest": "^29.3.0",
     "babel-plugin-transform-runtime": "^6.23.0",
