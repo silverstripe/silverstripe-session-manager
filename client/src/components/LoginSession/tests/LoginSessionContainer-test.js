@@ -1,11 +1,10 @@
-/* global jest, jasmine, describe, it, expect, beforeEach, Event, global */
+/* global jest, describe, it, expect, beforeEach, Event, global */
 
 import React from 'react';
 import { Component as LoginSessionContainer } from '../LoginSessionContainer';
 import LoginSession from '../LoginSession';
 import Enzyme, { shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import MockDate from 'mockdate';
 
 let httpResolve;
 let httpReject;
@@ -43,7 +42,8 @@ const props = {
   ...sessionData
 };
 
-MockDate.set('2021-03-12 03:47:22');
+
+jest.useFakeTimers().setSystemTime(new Date('2021-03-12 03:47:22'));
 
 describe('LoginSessionContainer', () => {
   beforeEach(() => {
