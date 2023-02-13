@@ -1,19 +1,16 @@
-/* global jest, jasmine, describe, it, expect, beforeEach, Event */
+/* global jest, describe, it, expect, beforeEach, Event */
 
 import React from 'react';
 import LoginSession from '../LoginSession';
 import Enzyme, { shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import MockDate from 'mockdate';
-
-jest.mock('@silverstripe/reactstrap-confirm', () => () => Promise.resolve(true));
 
 Enzyme.configure({ adapter: new Adapter() });
 
 describe('LoginSession', () => {
   let props;
   beforeEach(() => {
-    MockDate.set('2021-03-12 03:47:22');
+    jest.useFakeTimers().setSystemTime(new Date('2021-03-12 03:47:22'));
     props = {
       IPAddress: '127.0.0.1',
       IsCurrent: false,
