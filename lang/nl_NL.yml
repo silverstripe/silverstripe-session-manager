@@ -1,18 +1,5 @@
 nl_NL:
   SilverStripe\SessionManager\Controllers\LoginSessionController:
-    INVALID_REQUEST: ''
-    REMOVE_SUCCESS: ''
-    SESSION_COULD_NOT_BE_FOUND_OR_NO_LONGER_ACTIVE: ''
     YOUR_SESSION_HAS_EXPIRED: 'De browsersessie is verlopen wegens inactiviteit'
   SilverStripe\SessionManager\Extensions\MemberExtension:
     LEARN_MORE: 'Meer weten'
-    LOGIN_SESSIONS: ''
-  SilverStripe\SessionManager\Jobs\GarbageCollectionJob:
-    TITLE: ''
-  SilverStripe\SessionManager\Models\LoginSession:
-    BROWSER_ON_OS: ''
-    PLURALNAME: ''
-    PLURALS:
-      one: ''
-      other: ''
-    SINGULARNAME: ''

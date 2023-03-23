@@ -1,21 +1,9 @@
 da:
-  SilverStripe\SessionManager\Controllers\LoginSessionController:
-    REMOVE_FAILURE: ''
-    REMOVE_PERMISSION: ''
-    REMOVE_SUCCESS: ''
-    INVALID_REQUEST: ''
-    SESSION_COULD_NOT_BE_FOUND_OR_NO_LONGER_ACTIVE: ''
-    YOUR_SESSION_HAS_EXPIRED: ''
   SilverStripe\SessionManager\Extensions\MemberExtension:
     DEVICES: 'Autentificerede enheder'
     LEARN_MORE: 'Læs mere'
-    LOGIN_SESSIONS: ''
   SilverStripe\SessionManager\Jobs\GarbageCollectionJob:
     TITLE: 'Session manager affaldsindsamling'
   SilverStripe\SessionManager\Models\LoginSession:
-    BROWSER_ON_OS: ''
     PLURALNAME: 'Login sessioner'
-    PLURALS:
-      one: ''
-      other: ''
     SINGULARNAME: 'Login Session'
