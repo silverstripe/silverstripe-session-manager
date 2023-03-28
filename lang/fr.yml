@@ -1,17 +1,3 @@
 fr:
-  SilverStripe\SessionManager\Controllers\LoginSessionController:
-    REMOVE_FAILURE: ''
-    REMOVE_PERMISSION: ''
-    REMOVE_SUCCESS: ''
   SilverStripe\SessionManager\Extensions\MemberExtension:
     DEVICES: 'Appareils authentifiés'
-    LEARN_MORE: ''
-  SilverStripe\SessionManager\Jobs\GarbageCollectionJob:
-    TITLE: ''
-  SilverStripe\SessionManager\Models\LoginSession:
-    BROWSER_ON_OS: ''
-    PLURALNAME: ''
-    PLURALS:
-      one: ''
-      other: ''
-    SINGULARNAME: ''
