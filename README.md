@@ -3,8 +3,6 @@
 [![CI](https://github.com/silverstripe/silverstripe-session-manager/actions/workflows/ci.yml/badge.svg)](https://github.com/silverstripe/silverstripe-session-manager/actions/workflows/ci.yml)
 [![Silverstripe supported module](https://img.shields.io/badge/silverstripe-supported-0071C4.svg)](https://www.silverstripe.org/software/addons/silverstripe-commercially-supported-module-list/)
 
-![CMS view](images/cms.png)
-
 Allow members to manage and revoke access to multiple login sessions across devices.
 
 ## Developer Details
