@@ -5,6 +5,12 @@
 
 Allow members to manage and revoke access to multiple login sessions across devices.
 
+## Installation
+
+```sh
+composer require silverstripe/session-manager
+```
+
 ## Developer Details
 
 The module introduces a new database record type: `LoginSession`.
@@ -74,7 +80,7 @@ SilverStripe\Security\RememberLoginHash:
 
 Please note, this configuration only removes "remember me" tokens on logout, it does not terminate active sessions across devices on logout.
 
-Read [Saved User Logins](https://docs.silverstripe.org/en/4/developer_guides/security/member/#saved-user-logins) to learn how to configure the "Keep me signed in" feature for your members.
+Read [Saved User Logins](https://docs.silverstripe.org/en/developer_guides/security/member/#saved-user-logins) to learn how to configure the "Keep me signed in" feature for your members.
 
 ### Session timeout
 
