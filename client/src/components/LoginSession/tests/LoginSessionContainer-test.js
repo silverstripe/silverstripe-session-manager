@@ -1,24 +1,22 @@
-/* global jest, describe, it, expect, beforeEach, Event, global */
+/* global jest, test, describe, it, expect, beforeEach, Event, global */
 
 import React from 'react';
 import { Component as LoginSessionContainer } from '../LoginSessionContainer';
-import LoginSession from '../LoginSession';
-import Enzyme, { shallow } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
+import { fireEvent, render, screen } from '@testing-library/react';
 
-let httpResolve;
-let httpReject;
+let doResolve;
+let doReject;
 
 jest.mock('lib/Backend', () => ({
   createEndpointFetcher: () => () => (
     new Promise((resolve, reject) => {
-      httpResolve = resolve;
-      httpReject = reject;
+      doResolve = resolve;
+      doReject = reject;
     })
   )
 }));
 
-Enzyme.configure({ adapter: new Adapter() });
+jest.useFakeTimers().setSystemTime(new Date('2021-03-12 03:47:22'));
 
 window.ss.config = {
   SecurityID: 1234567890
@@ -32,148 +30,84 @@ const sessionData = {
   LastAccessed: '2021-03-11 03:47:22'
 };
 
-const props = {
-  // used in LoginSessionContainer
-  ID: 1,
-  LogOutEndpoint: '/test',
-  displayToastSuccess: jest.fn(() => 1),
-  displayToastFailure: jest.fn(() => 1),
-  // passed on to LoginSession
-  ...sessionData
-};
+function makeProps(obj = {}) {
+  return {
+    ID: 1,
+    LogOutEndpoint: '/test',
+    displayToastSuccess: () => {},
+    displayToastFailure: () => {},
+    ...sessionData,
+    ...obj,
+  };
+}
 
-
-jest.useFakeTimers().setSystemTime(new Date('2021-03-12 03:47:22'));
-
-describe('LoginSessionContainer', () => {
-  beforeEach(() => {
-    props.displayToastSuccess.mockClear();
-    props.displayToastFailure.mockClear();
+test('LoginSessionContainer should call displayToastSuccess on success', async () => {
+  const displayToastSuccess = jest.fn();
+  const displayToastFailure = jest.fn();
+  const { container } = render(
+    <LoginSessionContainer {...makeProps({
+      displayToastSuccess,
+      displayToastFailure
+    })}
+    />
+  );
+  fireEvent.click(container.querySelector('.login-session__logout'));
+  await screen.findByText('Logging out...');
+  doResolve({
+    message: 'a great success'
   });
+  await new Promise((resolve) => setTimeout(resolve(), 0));
+  expect(displayToastSuccess).toHaveBeenCalledWith('a great success');
+  expect(displayToastFailure).not.toHaveBeenCalled();
+  // The weirdness below is to stop the "act() warning" that comes from the finally() block in
+  // LoginSessionContainer::logout()
+  // https://kentcdodds.com/blog/fix-the-not-wrapped-in-act-warning#how-to-fix-the-act-warning
+  await new Promise((resolve) => setTimeout(resolve(), 0));
+  await screen.findByText('Logging out...');
+});
 
-  it('should call displayToastSuccess on success', async () => {
-    let wrapper = shallow(<LoginSessionContainer {...props} />);
-    let loginSession = wrapper.find(LoginSession).first();
-
-    // Test initial state
-    expect(loginSession.props()).toMatchObject({
-      ...sessionData,
-      complete: false,
-      failed: false,
-      submitting: false
-    });
-
-    // Test loading state
-    const logoutRequest = loginSession.props().logout();
-    wrapper = wrapper.update();
-    loginSession = wrapper.find(LoginSession).first();
-    expect(loginSession.props()).toMatchObject({
-      ...sessionData,
-      complete: false,
-      failed: false,
-      submitting: true
-    });
-
-    httpResolve({ message: 'amazing success' });
-    await logoutRequest;
-
-    // Test final state
-    wrapper = wrapper.update();
-    loginSession = wrapper.find(LoginSession).first();
-    expect(loginSession.props()).toMatchObject({
-      ...sessionData,
-      complete: true,
-      failed: false,
-      submitting: false
-    });
-
-    expect(props.displayToastSuccess).toBeCalledWith('amazing success');
-    expect(props.displayToastFailure).not.toBeCalled();
+test('LoginSessionContainer should call displayToastFailure on failure', async () => {
+  const displayToastSuccess = jest.fn();
+  const displayToastFailure = jest.fn();
+  const { container } = render(
+    <LoginSessionContainer {...makeProps({
+      displayToastSuccess,
+      displayToastFailure
+    })}
+    />
+  );
+  fireEvent.click(container.querySelector('.login-session__logout'));
+  await screen.findByText('Logging out...');
+  doReject({
+    response: {
+      text: () => Promise.resolve(JSON.stringify({ message: 'horrible failure' }))
+    }
   });
+  await new Promise((resolve) => setTimeout(resolve(), 0));
+  await screen.findByText('Log out');
+  expect(displayToastSuccess).not.toHaveBeenCalled();
+  expect(displayToastFailure).toHaveBeenCalledWith('horrible failure');
+});
 
-  it('should call displayToastFailure on failure', async () => {
-    let wrapper = shallow(<LoginSessionContainer {...props} />);
-    let loginSession = wrapper.find(LoginSession).first();
-
-    // Test initial state
-    expect(loginSession.props()).toMatchObject({
-      ...sessionData,
-      complete: false,
-      failed: false,
-      submitting: false
-    });
-
-    // Test loading state
-    const logoutRequest = loginSession.props().logout();
-    wrapper = wrapper.update();
-    loginSession = wrapper.find(LoginSession).first();
-    expect(loginSession.props()).toMatchObject({
-      ...sessionData,
-      complete: false,
-      failed: false,
-      submitting: true
-    });
-
-    httpReject({
-      response: {
-        text: () => Promise.resolve(JSON.stringify({ message: 'horrible failure' })) }
-    });
-    await logoutRequest;
-
-    // Test finale state
-    wrapper = wrapper.update();
-    loginSession = wrapper.find(LoginSession).first();
-    expect(loginSession.props()).toMatchObject({
-      ...sessionData,
-      complete: true,
-      failed: true,
-      submitting: false
-    });
-
-    expect(props.displayToastFailure).toBeCalledWith('horrible failure');
-    expect(props.displayToastSuccess).not.toBeCalled();
+test('LoginSessionContainer Handles HTTP Request failure', async () => {
+  const displayToastSuccess = jest.fn();
+  const displayToastFailure = jest.fn();
+  const { container } = render(
+    <LoginSessionContainer {...makeProps({
+      displayToastSuccess,
+      displayToastFailure
+    })}
+    />
+  );
+  fireEvent.click(container.querySelector('.login-session__logout'));
+  await screen.findByText('Logging out...');
+  doReject({
+    response: {
+      text: () => Promise.resolve('Horrible HTTP Failure')
+    }
   });
-
-  it('Handles HTTP Request failure', async () => {
-    let wrapper = shallow(<LoginSessionContainer {...props} />);
-    let loginSession = wrapper.find(LoginSession).first();
-
-    // Test initial state
-    expect(loginSession.props()).toMatchObject({
-      ...sessionData,
-      complete: false,
-      failed: false,
-      submitting: false
-    });
-
-    // Test loading state
-    const logoutRequest = loginSession.props().logout();
-    wrapper = wrapper.update();
-    loginSession = wrapper.find(LoginSession).first();
-    expect(loginSession.props()).toMatchObject({
-      ...sessionData,
-      complete: false,
-      failed: false,
-      submitting: true
-    });
-
-    // Cause an HTTP Failure
-    httpReject({
-      response: { text: () => Promise.resolve('Horrible HTTP Failure') }
-    });
-    await logoutRequest;
-
-    // Test error state
-    wrapper = wrapper.update();
-    loginSession = wrapper.find(LoginSession).first();
-    expect(loginSession.props()).toMatchObject({
-      ...sessionData,
-      complete: true,
-      failed: true,
-      submitting: false
-    });
-
-    expect(props.displayToastFailure).toBeCalledWith('Could not log out of session. Try again later.');
-    expect(props.displayToastSuccess).not.toBeCalled();
-  });
+  await new Promise((resolve) => setTimeout(resolve(), 0));
+  await screen.findByText('Log out');
+  expect(displayToastSuccess).not.toHaveBeenCalled();
+  expect(displayToastFailure).toHaveBeenCalledWith('Could not log out of session. Try again later.');
 });
