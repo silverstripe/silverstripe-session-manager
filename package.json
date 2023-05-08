@@ -35,15 +35,12 @@
     "@silverstripe/eslint-config": "^1.0.0",
     "@silverstripe/webpack-config": "^2.0.0",
     "@storybook/addon-knobs": "^6.4.0",
+    "@testing-library/react": "^14.0.0",
     "babel-jest": "^29.3.0",
     "babel-plugin-transform-runtime": "^6.23.0",
-    "enzyme": "^3.11.0",
-    "enzyme-adapter-react-16": "^1.15.7",
     "jest-cli": "^29.3.0",
     "jest-environment-jsdom": "^29.3.1",
     "mockdate": "^3.0.5",
-    "react-16": "npm:react@^16.14.0",
-    "react-dom-16": "npm:react-dom@^16.14.0",
     "react-test-renderer": "^18.2.0",
     "webpack": "^5.74.0",
     "webpack-cli": "^5.0.0"
@@ -59,13 +56,9 @@
     "roots": [
       "client/src"
     ],
-    "moduleNameMapper": {
-      "^react-dom/client$": "react-dom-16",
-      "^react-dom((/.*)?)$": "react-dom-16$1",
-      "^react((/.*)?)$": "react-16$1"
-    },
     "moduleDirectories": [
       "client/src",
+      "node_modules",
       "../admin/client/src",
       "../admin/node_modules",
       "../silverstripe/admin/client/src",
@@ -85,6 +78,7 @@
       "!**/*-test.{js,jsx}",
       "!**/*-story.{js,jsx}"
     ],
+    "globalSetup": "./jest-global-setup.js",
     "testMatch": [
       "**/tests/**/*-test.js?(x)"
     ],
