@@ -34,7 +34,6 @@
     "@babel/runtime": "^7.20.1",
     "@silverstripe/eslint-config": "^1.0.0",
     "@silverstripe/webpack-config": "^2.0.0",
-    "@storybook/addon-knobs": "^6.4.0",
     "babel-jest": "^29.3.0",
     "babel-plugin-transform-runtime": "^6.23.0",
     "enzyme": "^3.11.0",
@@ -66,6 +65,7 @@
     },
     "moduleDirectories": [
       "client/src",
+      "node_modules",
       "../admin/client/src",
       "../admin/node_modules",
       "../silverstripe/admin/client/src",
