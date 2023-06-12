@@ -34,32 +34,32 @@ function LoginSessionContainer(props) {
       id: props.ID,
       SecurityID: Config.get('SecurityID')
     })
-    .then(response => {
-      props.displayToastSuccess(response.message);
-    })
-    .catch(err => {
-      setFailed(true);
-      return err.response.text().then(json => {
+      .then(response => {
+        props.displayToastSuccess(response.message);
+      })
+      .catch(err => {
+        setFailed(true);
+        return err.response.text().then(json => {
         // Try to parse the error response
-        const response = JSON.parse(json);
-        if (typeof response !== 'object' || typeof response.message !== 'string') {
-          return Promise.reject('No readable error message');
-        }
-        props.displayToastFailure(response.message);
-        return Promise.resolve();
-      });
-    })
-    .catch(() => {
+          const response = JSON.parse(json);
+          if (typeof response !== 'object' || typeof response.message !== 'string') {
+            return Promise.reject('No readable error message');
+          }
+          props.displayToastFailure(response.message);
+          return Promise.resolve();
+        });
+      })
+      .catch(() => {
       // Catch all error handler
-      props.displayToastFailure(i18n._t(
-        'SessionManager.COULD_NOT_LOGOUT',
-        'Could not log out of session. Try again later.'
-      ));
-    })
-    .finally(() => {
-      setComplete(true);
-      setSubmitting(false);
-    });
+        props.displayToastFailure(i18n._t(
+          'SessionManager.COULD_NOT_LOGOUT',
+          'Could not log out of session. Try again later.'
+        ));
+      })
+      .finally(() => {
+        setComplete(true);
+        setSubmitting(false);
+      });
   }
 
   const { ID, ...loginSessionProps } = props;
