@@ -19,8 +19,78 @@ const props = {
 };
 
 export default {
-  title: 'SessionManager/LoginSession',
-  component: LoginSession
+  title: 'SessionManager/LoginSession Component',
+  component: LoginSession,
+  tags: ['autodocs'],
+  parameters: {
+    docs: {
+      description: {
+        component: 'Badge component for displaying a message in a Bootstrap "badge" style.'
+      },
+      canvas: {
+        sourceState: 'shown',
+      },
+      controls: { exclude: ['logout'] }
+    }
+  },
+  argTypes: {
+    IPAddress: {
+      control: 'text',
+      table: {
+        type: { summary: 'string' },
+        defaultValue: { summary: null },
+      },
+    },
+    UserAgent: {
+      control: 'text',
+      table: {
+        type: { summary: 'string' },
+        defaultValue: { summary: null },
+      },
+    },
+    Created: {
+      control: 'text',
+      table: {
+        type: { summary: 'string' },
+        defaultValue: { summary: null },
+      },
+    },
+    LastAccessed: {
+      control: 'text',
+      table: {
+        type: { summary: 'string' },
+        defaultValue: { summary: null },
+      },
+    },
+    IsCurrent: {
+      control: 'boolean',
+      table: {
+        type: { summary: 'boolean' },
+        defaultValue: { summary: 'false' },
+      },
+    },
+    submitting: {
+      control: 'boolean',
+      table: {
+        type: { summary: 'boolean' },
+        defaultValue: { summary: 'false' },
+      },
+    },
+    complete: {
+      control: 'boolean',
+      table: {
+        type: { summary: 'boolean' },
+        defaultValue: { summary: 'false' },
+      },
+    },
+    failed: {
+      control: 'boolean',
+      table: {
+        type: { summary: 'boolean' },
+        defaultValue: { summary: 'false' },
+      },
+    },
+  }
 };
 
 export const _LoginSession = {
