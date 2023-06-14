@@ -7,6 +7,9 @@ en:
   SilverStripe\SessionManager\Extensions\MemberExtension:
     LEARN_MORE: 'Learn more'
     LOGIN_SESSIONS: 'Login sessions'
+    has_many_LoginSessions: 'Login sessions'
+  SilverStripe\SessionManager\Extensions\RememberLoginHashExtension:
+    has_one_LoginSession: 'Login session'
   SilverStripe\SessionManager\Jobs\GarbageCollectionJob:
     TITLE: 'Session manager garbage collection'
   SilverStripe\SessionManager\Models\LoginSession:
@@ -16,3 +19,9 @@ en:
       one: 'A Login Session'
       other: '{count} Login Sessions'
     SINGULARNAME: 'Login Session'
+    belongs_to_LoginHash: 'Login hash'
+    db_IPAddress: 'IP address'
+    db_LastAccessed: 'Last accessed'
+    db_Persistent: Persistent
+    db_UserAgent: 'User agent'
+    has_one_Member: Member
