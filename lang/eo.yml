@@ -10,6 +10,7 @@ eo:
     DEVICES: 'Aŭtentigitaj aparatoj'
     LEARN_MORE: 'Lerni plu'
     LOGIN_SESSIONS: 'Ensalutaj seancoj'
+    has_many_LoginSessions: 'Ensalutaj seancoj'
   SilverStripe\SessionManager\Jobs\GarbageCollectionJob:
     TITLE: 'Seancmastrumila senrubigo'
   SilverStripe\SessionManager\Models\LoginSession:
