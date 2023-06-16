@@ -8,6 +8,7 @@ nl:
     DEVICES: 'Ingelogde apparaten'
     LEARN_MORE: 'Meer weten'
     LOGIN_SESSIONS: 'Ingelogde sessies'
+    has_many_LoginSessions: 'Ingelogde sessies'
   SilverStripe\SessionManager\Jobs\GarbageCollectionJob:
     TITLE: 'Automatische opschoning sessies'
   SilverStripe\SessionManager\Models\LoginSession:
