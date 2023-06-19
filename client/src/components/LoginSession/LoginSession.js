@@ -13,7 +13,7 @@ const format = 'L LT';
 function LoginSession(props) {
   function attemptLogOut() {
     if (props.submitting || props.complete) {
-        return;
+      return;
     }
     props.logout();
   }
