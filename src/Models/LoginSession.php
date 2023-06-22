@@ -2,18 +2,19 @@
 
 namespace SilverStripe\SessionManager\Models;
 
-use SilverStripe\Control\Controller;
-use SilverStripe\Control\HTTPRequest;
-use SilverStripe\Control\Session;
-use SilverStripe\Core\Injector\Injector;
+use UAParser\Parser;
+use InvalidArgumentException;
 use SilverStripe\ORM\DataList;
 use SilverStripe\ORM\DataObject;
-use SilverStripe\ORM\FieldType\DBDatetime;
+use SilverStripe\Control\Session;
 use SilverStripe\Security\Member;
-use SilverStripe\Security\RememberLoginHash;
 use SilverStripe\Security\Security;
+use SilverStripe\Control\Controller;
+use SilverStripe\Control\HTTPRequest;
+use SilverStripe\Core\Injector\Injector;
+use SilverStripe\ORM\FieldType\DBDatetime;
+use SilverStripe\Security\RememberLoginHash;
 use SilverStripe\SessionManager\Security\LogInAuthenticationHandler;
-use UAParser\Parser;
 
 /**
  * Tracks a login session for a specific user on a specific device.
@@ -187,6 +188,41 @@ class LoginSession extends DataObject
     }
 
     /**
+     * @param HTTPRequest|null $request
+     * @return string
+     */
+    public static function getAnonymizedIPFromRequest(HTTPRequest $request = null): string
+    {
+        if (!$request) {
+            return '';
+        }
+        $ip = $request->getIP();
+        $wrappedIPv6 = false;
+        if (str_starts_with($ip, '[') && str_ends_with($ip, ']')) {
+            $wrappedIPv6 = true;
+            $ip = substr($ip, 1, -1);
+        }
+
+        $packedAddress = inet_pton($ip);
+        if (4 === \strlen($packedAddress)) {
+            $mask = '255.255.255.0';
+        } elseif ($ip === inet_ntop($packedAddress & inet_pton('::ffff:ffff:ffff'))) {
+            $mask = '::ffff:ffff:ff00';
+        } elseif ($ip === inet_ntop($packedAddress & inet_pton('::ffff:ffff'))) {
+            $mask = '::ffff:ff00';
+        } else {
+            $mask = 'ffff:ffff:ffff:ffff:0000:0000:0000:0000';
+        }
+        $ip = inet_ntop($packedAddress & inet_pton($mask));
+
+        if ($wrappedIPv6) {
+            $ip = '[' . $ip . ']';
+        }
+
+        return $ip;
+    }
+
+    /**
      * @param Member $member
      * @param HTTPRequest $request
      * @return LoginSession|null
@@ -194,7 +230,7 @@ class LoginSession extends DataObject
     public static function find(Member $member, HTTPRequest $request): ?LoginSession
     {
         return static::get()->filter([
-            'IPAddress' => $request->getIP(),
+            'IPAddress' => self::getAnonymizedIPFromRequest($request),
             'UserAgent' => $request->getHeader('User-Agent'),
             'MemberID' => $member->ID,
             'Persistent' => 1
@@ -211,7 +247,7 @@ class LoginSession extends DataObject
     {
         $session = static::create()->update([
             'LastAccessed' => DBDatetime::now()->Rfc2822(),
-            'IPAddress' => $request->getIP(),
+            'IPAddress' => self::getAnonymizedIPFromRequest($request),
             'UserAgent' => $request->getHeader('User-Agent'),
             'MemberID' => $member->ID,
             'Persistent' => intval($persistent)
@@ -219,6 +255,17 @@ class LoginSession extends DataObject
         $session->write();
 
         return $session;
+    }
+
+    /**
+     * @param HTTPRequest|null $request
+     * @return void
+     */
+    public function updateLastAccessed(HTTPRequest $request = null)
+    {
+        $this->LastAccessed = DBDatetime::now()->Rfc2822();
+        $this->IPAddress = LoginSession::getAnonymizedIPFromRequest($request);
+        $this->write();
     }
 
     /**
