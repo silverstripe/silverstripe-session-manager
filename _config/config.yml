@@ -49,3 +49,5 @@ After: '#coreauthentication'
 ---
 SilverStripe\Security\RememberLoginHash:
   logout_across_devices: false
+SilverStripe\SessionManager\Models\LoginSession:
+  last_accessed_threshold: 300
