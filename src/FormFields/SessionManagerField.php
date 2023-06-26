@@ -127,7 +127,7 @@ class SessionManagerField extends FormField
             if (!$loginSession->canView()) {
                 continue;
             }
-            
+
             $member = DataObject::get_by_id(Member::class, $loginSession->MemberID);
 
             $loginSessions[] = [
