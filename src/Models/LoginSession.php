@@ -260,7 +260,7 @@ class LoginSession extends DataObject
 
         $loginHandler = Injector::inst()->get(LogInAuthenticationHandler::class);
         $loginSessionID = $request->getSession()->get($loginHandler->getSessionVariable());
-        $loginSession = LoginSession::get()->byID($loginSessionID);
+        $loginSession = DataObject::get_by_id(LoginSession::class, $loginSessionID);
         return $loginSession;
     }
 
