@@ -7,6 +7,7 @@ use SilverStripe\Control\HTTPResponse;
 use SilverStripe\Control\Middleware\HTTPMiddleware;
 use SilverStripe\Core\Injector\Injector;
 use SilverStripe\ORM\Connect\DatabaseException;
+use SilverStripe\ORM\DataObject;
 use SilverStripe\ORM\FieldType\DBDatetime;
 use SilverStripe\Security\IdentityStore;
 use SilverStripe\Security\RememberLoginHash;
@@ -31,7 +32,8 @@ class LoginSessionMiddleware implements HTTPMiddleware
 
         try {
             $loginSessionID = $request->getSession()->get($loginHandler->getSessionVariable());
-            $loginSession = LoginSession::get()->byID($loginSessionID);
+            /** @var LoginSession $loginSession */
+            $loginSession = DataObject::get_by_id(LoginSession::class, $loginSessionID);
 
             // If the session has already been revoked, or we've got a mismatched
             // member / session, log the user out (this also revokes the session)
@@ -42,10 +44,14 @@ class LoginSessionMiddleware implements HTTPMiddleware
                 return $delegate($request);
             }
 
-            // Update LastAccessed date and IP address
-            $loginSession->LastAccessed = DBDatetime::now()->Rfc2822();
-            $loginSession->IPAddress = $request->getIP();
-            $loginSession->write();
+            // Update LastAccessed date and IP address if > that threshold
+            $date = DBDatetime::now()->Rfc2822();
+            $threshold = LoginSession::getUpdateThreshold();
+            if (strtotime($date) > strtotime($loginSession->LastAccessed) + $threshold) {
+                $loginSession->LastAccessed = $date;
+                $loginSession->IPAddress = $request->getIP();
+                $loginSession->write();
+            }
         } catch (DatabaseException $e) {
             // Database isn't ready, carry on.
         }
