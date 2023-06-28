@@ -39,7 +39,7 @@ class GarbageCollectionServiceTest extends SapphireTest
             LoginSession::get()->byID($id2),
             "Expired persistent login hash session is deleted"
         );
-        // LastAccessed is set to '2004-02-15 10:00:00' => it should not be deleted
+        // LastAccessed is set to '2004-02-15 10:00:00' and it has no hash => it should not be deleted
         $this->assertNotNull(
             LoginSession::get()->byID($id3),
             "Valid login session is not deleted"
@@ -47,7 +47,7 @@ class GarbageCollectionServiceTest extends SapphireTest
         $this->assertEquals(
             0,
             LoginSession::get()->byID($id3)->LoginHash()->ID,
-            "Hash is deleted but session is still valid"
+            "There is no hash but session is still valid"
         );
 
         DBDatetime::set_mock_now('2005-08-15 12:00:00');
@@ -56,7 +56,7 @@ class GarbageCollectionServiceTest extends SapphireTest
 
         $this->assertNull(
             LoginSession::get()->byID($id3),
-            "Login session is now deleted"
+            "Persistent Login session is now deleted"
         );
     }
 }
