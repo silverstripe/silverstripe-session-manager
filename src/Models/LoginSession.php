@@ -2,18 +2,19 @@
 
 namespace SilverStripe\SessionManager\Models;
 
-use SilverStripe\Control\Controller;
-use SilverStripe\Control\HTTPRequest;
-use SilverStripe\Control\Session;
-use SilverStripe\Core\Injector\Injector;
+use UAParser\Parser;
+use InvalidArgumentException;
 use SilverStripe\ORM\DataList;
 use SilverStripe\ORM\DataObject;
-use SilverStripe\ORM\FieldType\DBDatetime;
+use SilverStripe\Control\Session;
 use SilverStripe\Security\Member;
-use SilverStripe\Security\RememberLoginHash;
 use SilverStripe\Security\Security;
+use SilverStripe\Control\Controller;
+use SilverStripe\Control\HTTPRequest;
+use SilverStripe\Core\Injector\Injector;
+use SilverStripe\ORM\FieldType\DBDatetime;
+use SilverStripe\Security\RememberLoginHash;
 use SilverStripe\SessionManager\Security\LogInAuthenticationHandler;
-use UAParser\Parser;
 
 /**
  * Tracks a login session for a specific user on a specific device.
@@ -95,6 +96,14 @@ class LoginSession extends DataObject
      * @var int
      */
     private static $default_session_lifetime = 3600;
+
+    /**
+     * The length of time between two updates to the LastAccessed field
+     *
+     * @config
+     * @var int
+     */
+    private static $last_accessed_threshold = 300;
 
     /**
      * @param Member $member
@@ -260,7 +269,7 @@ class LoginSession extends DataObject
 
         $loginHandler = Injector::inst()->get(LogInAuthenticationHandler::class);
         $loginSessionID = $request->getSession()->get($loginHandler->getSessionVariable());
-        $loginSession = LoginSession::get()->byID($loginSessionID);
+        $loginSession = DataObject::get_by_id(LoginSession::class, $loginSessionID);
         return $loginSession;
     }
 
@@ -285,13 +294,22 @@ class LoginSession extends DataObject
      */
     public static function getCurrentSessions(Member $member)
     {
-        $sessionLifetime = static::getSessionLifetime();
-        $maxAge = DBDatetime::now()->getTimestamp() - $sessionLifetime;
+        $maxAge = self::getMaxAge();
         $currentSessions = $member->LoginSessions()->filterAny([
             'Persistent' => 1,
             'LastAccessed:GreaterThan' => date('Y-m-d H:i:s', $maxAge)
         ]);
         return $currentSessions;
+    }
+
+    /**
+     * Get the max age for all valid sessions
+     * @return string
+     */
+    public static function getMaxAge(): string
+    {
+        $lifetime = static::getSessionLifetime() + static::getUpdateThreshold();
+        return date('Y-m-d H:i:s', DBDatetime::now()->getTimestamp() - $lifetime);
     }
 
     /**
@@ -304,5 +322,13 @@ class LoginSession extends DataObject
         }
 
         return LoginSession::config()->get('default_session_lifetime');
+    }
+
+    /**
+     * @return int
+     */
+    public static function getUpdateThreshold(): int
+    {
+        return LoginSession::config()->get('last_accessed_threshold') ?? 0;
     }
 }
