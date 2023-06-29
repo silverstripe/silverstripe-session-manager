@@ -1,8 +1,8 @@
 /* global jest, test, describe, it, expect, beforeEach, Event */
 
 import React from 'react';
-import LoginSession from '../LoginSession';
 import { render } from '@testing-library/react';
+import LoginSession from '../LoginSession';
 
 jest.useFakeTimers().setSystemTime(new Date('2021-03-12 03:47:22'));
 

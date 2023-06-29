@@ -3,9 +3,9 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import backend from 'lib/Backend';
 import Config from 'lib/Config'; // eslint-disable-line
-import LoginSession from './LoginSession';
 import { success, error } from 'state/toasts/ToastsActions';
 import i18n from 'i18n';
+import LoginSession from './LoginSession';
 
 function createEndpoint(logOutEndpoint) {
   return backend.createEndpointFetcher({

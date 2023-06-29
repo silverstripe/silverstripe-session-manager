@@ -1,7 +1,7 @@
 /* global window */
 import React from 'react';
-import LoginSessionContainer from '../LoginSession/LoginSessionContainer';
 import PropTypes from 'prop-types';
+import LoginSessionContainer from '../LoginSession/LoginSessionContainer';
 
 function SessionManagerField(props) {
   return (
