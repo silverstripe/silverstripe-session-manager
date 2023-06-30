@@ -322,9 +322,6 @@ class LoginSession extends DataObject
         return LoginSession::config()->get('default_session_lifetime');
     }
 
-    /**
-     * @return int
-     */
     public static function getUpdateThreshold(): int
     {
         return LoginSession::config()->get('last_accessed_threshold') ?? 0;
