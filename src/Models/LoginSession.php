@@ -100,7 +100,6 @@ class LoginSession extends DataObject
     /**
      * The length of time between two updates to the LastAccessed field
      *
-     * @config
      * @var int
      */
     private static $last_accessed_threshold = 300;
