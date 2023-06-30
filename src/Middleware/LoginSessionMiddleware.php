@@ -33,7 +33,7 @@ class LoginSessionMiddleware implements HTTPMiddleware
         try {
             $loginSessionID = $request->getSession()->get($loginHandler->getSessionVariable());
             /** @var LoginSession $loginSession */
-            $loginSession = DataObject::get_by_id(LoginSession::class, $loginSessionID);
+            $loginSession = LoginSession::get_by_id($loginSessionID);
 
             // If the session has already been revoked, or we've got a mismatched
             // member / session, log the user out (this also revokes the session)
