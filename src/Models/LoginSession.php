@@ -302,7 +302,6 @@ class LoginSession extends DataObject
 
     /**
      * Get the max age for all valid sessions
-     * @return string
      */
     public static function getMaxAge(): string
     {
