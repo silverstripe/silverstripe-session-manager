@@ -137,7 +137,7 @@ class SessionManagerField extends FormField
                 'IsCurrent' => $loginSession->isCurrent(),
                 'Persistent' => $loginSession->Persistent,
                 'Member' => [
-                    'Name' => $member->Name
+                    'Name' => Member::get_by_id($loginSession->MemberID)->Name ?? ''
                 ],
                 'Created' => $this->addUtcOffset($loginSession->Created),
                 'LastAccessed' => $this->addUtcOffset($loginSession->LastAccessed),
