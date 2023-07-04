@@ -128,7 +128,6 @@ class SessionManagerField extends FormField
                 continue;
             }
 
-            $member = DataObject::get_by_id(Member::class, $loginSession->MemberID);
 
             $loginSessions[] = [
                 'ID' => $loginSession->ID,
