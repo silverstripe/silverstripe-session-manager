@@ -292,10 +292,10 @@ class LoginSession extends DataObject
      */
     public static function getCurrentSessions(Member $member)
     {
-        $maxAge = static::getMaxAge();
+        $maxAge = self::getMaxAge();
         $currentSessions = $member->LoginSessions()->filterAny([
             'Persistent' => 1,
-            'LastAccessed:GreaterThan' => date('Y-m-d H:i:s', $maxAge)
+            'LastAccessed:GreaterThan' => $maxAge
         ]);
         return $currentSessions;
     }
