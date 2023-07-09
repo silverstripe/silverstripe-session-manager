@@ -1,8 +1,8 @@
 /* global jest, test, describe, it, expect, beforeEach, Event, global */
 
 import React from 'react';
-import { Component as LoginSessionContainer } from '../LoginSessionContainer';
 import { fireEvent, render, screen } from '@testing-library/react';
+import { Component as LoginSessionContainer } from '../LoginSessionContainer';
 
 let doResolve;
 let doReject;
