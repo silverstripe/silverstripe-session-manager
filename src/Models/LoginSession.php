@@ -14,6 +14,7 @@ use SilverStripe\Security\RememberLoginHash;
 use SilverStripe\Security\Security;
 use SilverStripe\SessionManager\Security\LogInAuthenticationHandler;
 use UAParser\Parser;
+use SilverStripe\Control\Util\IPUtils;
 
 /**
  * Tracks a login session for a specific user on a specific device.
@@ -194,7 +195,7 @@ class LoginSession extends DataObject
     public static function find(Member $member, HTTPRequest $request): ?LoginSession
     {
         return static::get()->filter([
-            'IPAddress' => $request->getIP(),
+            'IPAddress' => $this->getIpFromRequest($request),
             'UserAgent' => $request->getHeader('User-Agent'),
             'MemberID' => $member->ID,
             'Persistent' => 1
@@ -211,7 +212,7 @@ class LoginSession extends DataObject
     {
         $session = static::create()->update([
             'LastAccessed' => DBDatetime::now()->Rfc2822(),
-            'IPAddress' => $request->getIP(),
+            'IPAddress' => $this->getIpFromRequest($request),
             'UserAgent' => $request->getHeader('User-Agent'),
             'MemberID' => $member->ID,
             'Persistent' => intval($persistent)
@@ -304,5 +305,34 @@ class LoginSession extends DataObject
         }
 
         return LoginSession::config()->get('default_session_lifetime');
+    }
+
+    /**
+     * Update LastAccessed date and IP address
+     *
+     * @param HTTPRequest $request
+     * @return void
+     */
+    public function updateLastAccessed(HTTPRequest $request = null)
+    {
+        $this->LastAccessed = DBDatetime::now()->Rfc2822();
+        $this->IPAddress = $this->getIpFromRequest($request);
+        $this->write();
+    }
+
+    /**
+     * @param HTTPRequest|null $request
+     * @return string
+     */
+    private function getIpFromRequest(HTTPRequest $request = null): string
+    {
+        if (!$request) {
+            return '';
+        }
+        $ip = $request->getIP();
+        if (static::config()->anonymize_ip) {
+            $ip = IPUtils::anonymize($ip);
+        }
+        return $ip;
     }
 }
