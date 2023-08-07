@@ -309,9 +309,6 @@ class LoginSession extends DataObject
 
     /**
      * Update LastAccessed date and IP address
-     *
-     * @param HTTPRequest $request
-     * @return void
      */
     public function updateLastAccessed(HTTPRequest $request = null)
     {
