@@ -320,7 +320,7 @@ class LoginSession extends DataObject
         $this->write();
     }
 
-    private function getIpFromRequest(HTTPRequest $request = null): string
+    private function getIpFromRequest(?HTTPRequest $request = null): string
     {
         if (!$request) {
             return '';
