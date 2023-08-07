@@ -310,7 +310,7 @@ class LoginSession extends DataObject
     /**
      * Update LastAccessed date and IP address
      */
-    public function updateLastAccessed(HTTPRequest $request = null)
+    public function updateLastAccessed(?HTTPRequest $request = null): void
     {
         $this->LastAccessed = DBDatetime::now()->Rfc2822();
         $this->IPAddress = $this->getIpFromRequest($request);
