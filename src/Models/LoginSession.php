@@ -97,6 +97,8 @@ class LoginSession extends DataObject
      */
     private static $default_session_lifetime = 3600;
 
+    private static bool $anonymize_ip = false;
+
     /**
      * @param Member $member
      * @param array $context
