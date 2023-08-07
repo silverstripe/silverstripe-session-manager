@@ -330,7 +330,7 @@ class LoginSession extends DataObject
             return '';
         }
         $ip = $request->getIP();
-        if (static::config()->anonymize_ip) {
+        if (static::config()->get('anonymize_ip')) {
             $ip = IPUtils::anonymize($ip);
         }
         return $ip;
