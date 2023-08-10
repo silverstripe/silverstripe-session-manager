@@ -2,22 +2,49 @@
 
 namespace SilverStripe\SessionManager\Services;
 
+use SilverStripe\Core\Config\Configurable;
 use SilverStripe\Core\Injector\Injectable;
+use SilverStripe\ORM\DB;
 use SilverStripe\Security\RememberLoginHash;
 use SilverStripe\SessionManager\Models\LoginSession;
 
 class GarbageCollectionService
 {
+    use Configurable;
     use Injectable;
+
+    /**
+     * Limit the number of records collected per run. Defaults to 0 (no limit).
+     */
+    private static int $batch_remove_limit = 0;
 
     /**
      * Delete expired LoginSession and RememberLoginHash records
      */
-    public function collect(): void
+    public function collect(): array
     {
-        $this->collectExpiredSessions();
-        $this->collectImplicitlyExpiredSessions();
-        $this->collectExpiredLoginHashes();
+        $expiredSessions = $this->collectExpiredSessions();
+        $implicitlyExpiredSessions = $this->collectImplicitlyExpiredSessions();
+        $loginHashes = $this->collectExpiredLoginHashes();
+        return [
+            'expiredSessions' => $expiredSessions,
+            'implicitlyExpiredSessions' => $implicitlyExpiredSessions,
+            'loginHashes' => $loginHashes,
+        ];
+    }
+
+    private function batchRemoveAll($datalist): int
+    {
+        $i = 0;
+        $limit = self::config()->get('batch_remove_limit');
+        $limitedList = $limit > 0 ? $datalist->limit($limit) : $datalist;
+        DB::get_conn()->transactionStart();
+        foreach ($limitedList as $record) {
+            $record->delete();
+            $i++;
+        }
+        DB::get_conn()->transactionEnd();
+        return $i;
     }
 
     /**
@@ -30,7 +57,7 @@ class GarbageCollectionService
             'LastAccessed:LessThan' => date('Y-m-d H:i:s', time() - $lifetime),
             'Persistent' => 0
         ]);
-        $sessions->removeAll();
+        return $this->batchRemoveAll($sessions);
     }
 
     /**
@@ -38,10 +65,11 @@ class GarbageCollectionService
      */
     private function collectImplicitlyExpiredSessions(): void
     {
-        LoginSession::get()->filter([
+        $sessions = LoginSession::get()->filter([
             'Persistent' => 1,
             'LoginHash.ExpiryDate:LessThan' => date('Y-m-d H:i:s')
-        ])->removeAll();
+        ]);
+        return $this->batchRemoveAll($sessions);
     }
 
     /**
@@ -49,8 +77,9 @@ class GarbageCollectionService
      */
     private function collectExpiredLoginHashes(): void
     {
-        RememberLoginHash::get()->filter([
+        $hashes = RememberLoginHash::get()->filter([
             'ExpiryDate:LessThan' => date('Y-m-d H:i:s')
-        ])->removeAll();
+        ]);
+        return $this->batchRemoveAll($hashes);
     }
 }
