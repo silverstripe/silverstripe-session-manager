@@ -197,7 +197,7 @@ class LoginSession extends DataObject
     public static function find(Member $member, HTTPRequest $request): ?LoginSession
     {
         return static::get()->filter([
-            'IPAddress' => $this->getIpFromRequest($request),
+            'IPAddress' => static::getIpFromRequest($request),
             'UserAgent' => $request->getHeader('User-Agent'),
             'MemberID' => $member->ID,
             'Persistent' => 1
@@ -214,7 +214,7 @@ class LoginSession extends DataObject
     {
         $session = static::create()->update([
             'LastAccessed' => DBDatetime::now()->Rfc2822(),
-            'IPAddress' => $this->getIpFromRequest($request),
+            'IPAddress' => static::getIpFromRequest($request),
             'UserAgent' => $request->getHeader('User-Agent'),
             'MemberID' => $member->ID,
             'Persistent' => intval($persistent)
@@ -319,7 +319,7 @@ class LoginSession extends DataObject
         $this->write();
     }
 
-    private function getIpFromRequest(?HTTPRequest $request = null): string
+    private static function getIpFromRequest(?HTTPRequest $request = null): string
     {
         if (!$request) {
             return '';
