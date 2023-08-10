@@ -43,7 +43,7 @@ class LoginSessionMiddleware implements HTTPMiddleware
                 return $delegate($request);
             }
 
-            $loginSession->updateLastAccessed($request)
+            $loginSession->updateLastAccessed($request);
         } catch (DatabaseException $e) {
             // Database isn't ready, carry on.
         }
