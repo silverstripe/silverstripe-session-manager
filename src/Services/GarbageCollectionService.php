@@ -70,7 +70,7 @@ class GarbageCollectionService
      */
     private function collectExpiredLoginHashes(): void
     {
-        $hashes = RememberLoginHash::get()->filter([
+        RememberLoginHash::get()->filter([
             'ExpiryDate:LessThan' => date('Y-m-d H:i:s')
         ]);
         return $this->batchRemoveAll($hashes);
