@@ -65,7 +65,7 @@ class GarbageCollectionService
             'Persistent' => 1,
             'LoginHash.ExpiryDate:LessThan' => date('Y-m-d H:i:s')
         ]);
-        return $this->batchRemoveAll($sessions);
+        $this->batchRemoveAll($sessions);
     }
 
     /**
