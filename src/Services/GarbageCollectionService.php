@@ -24,14 +24,9 @@ class GarbageCollectionService
      */
     public function collect(): void
     {
-        $expiredSessions = $this->collectExpiredSessions();
-        $implicitlyExpiredSessions = $this->collectImplicitlyExpiredSessions();
-        $loginHashes = $this->collectExpiredLoginHashes();
-        return [
-            'expiredSessions' => $expiredSessions,
-            'implicitlyExpiredSessions' => $implicitlyExpiredSessions,
-            'loginHashes' => $loginHashes,
-        ];
+        $this->collectExpiredSessions();
+        $this->collectImplicitlyExpiredSessions();
+        $this->collectExpiredLoginHashes();
     }
 
     private function batchRemoveAll($datalist): int
