@@ -73,6 +73,5 @@ class GarbageCollectionService
         RememberLoginHash::get()->filter([
             'ExpiryDate:LessThan' => date('Y-m-d H:i:s')
         ]);
-        return $this->batchRemoveAll($hashes);
     }
 }
