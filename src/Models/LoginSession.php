@@ -319,10 +319,10 @@ class LoginSession extends DataObject
         $this->write();
     }
 
-    private static function getIpFromRequest(?HTTPRequest $request = null): string
+    private static function getIpFromRequest(?HTTPRequest $request = null): ?string
     {
         if (!$request) {
-            return '';
+            return null;
         }
         $ip = $request->getIP();
         if (static::config()->get('anonymize_ip')) {
