@@ -53,7 +53,7 @@ class GarbageCollectionService
             'LastAccessed:LessThan' => date('Y-m-d H:i:s', time() - $lifetime),
             'Persistent' => 0
         ]);
-        return $this->batchRemoveAll($sessions);
+        $this->batchRemoveAll($sessions);
     }
 
     /**
