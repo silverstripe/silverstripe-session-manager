@@ -29,18 +29,15 @@ class GarbageCollectionService
         $this->collectExpiredLoginHashes();
     }
 
-    private function batchRemoveAll($datalist): int
+    private function batchRemoveAll($datalist)
     {
-        $i = 0;
         $limit = self::config()->get('batch_remove_limit');
         $limitedList = $limit > 0 ? $datalist->limit($limit) : $datalist;
         DB::get_conn()->transactionStart();
         foreach ($limitedList as $record) {
             $record->delete();
-            $i++;
         }
         DB::get_conn()->transactionEnd();
-        return $i;
     }
 
     /**
