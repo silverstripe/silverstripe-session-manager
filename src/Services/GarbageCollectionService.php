@@ -32,7 +32,7 @@ class GarbageCollectionService
     private function batchRemoveAll($datalist)
     {
         $limit = self::config()->get('batch_remove_limit');
-        $limitedList = $limit > 0 ? $datalist->limit($limit) : $datalist;
+        $limitedList = $datalist->limit($limit);
         DB::get_conn()->transactionStart();
         foreach ($limitedList as $record) {
             $record->delete();
