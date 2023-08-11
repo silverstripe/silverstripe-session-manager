@@ -61,7 +61,7 @@ class GarbageCollectionService
      */
     private function collectImplicitlyExpiredSessions(): void
     {
-        $sessions = LoginSession::get()->filter([
+        LoginSession::get()->filter([
             'Persistent' => 1,
             'LoginHash.ExpiryDate:LessThan' => date('Y-m-d H:i:s')
         ]);
