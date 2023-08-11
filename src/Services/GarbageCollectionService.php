@@ -22,7 +22,7 @@ class GarbageCollectionService
     /**
      * Delete expired LoginSession and RememberLoginHash records
      */
-    public function collect(): array
+    public function collect(): void
     {
         $expiredSessions = $this->collectExpiredSessions();
         $implicitlyExpiredSessions = $this->collectImplicitlyExpiredSessions();
