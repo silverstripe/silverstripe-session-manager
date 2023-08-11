@@ -15,9 +15,9 @@ class GarbageCollectionService
     use Injectable;
 
     /**
-     * Limit the number of records collected per run. Defaults to 0 (no limit).
+     * Limit the number of records collected per run.
      */
-    private static int $batch_remove_limit = 0;
+    private static ?int $batch_remove_limit = null;
 
     /**
      * Delete expired LoginSession and RememberLoginHash records
