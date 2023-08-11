@@ -106,3 +106,12 @@ Alternatively, you can create a system cron entry to run the `LoginSessionGarbag
 ```
 `*/5 * * * * /path/to/webroot/vendor/bin/sake dev/tasks/LoginSessionGarbageCollectionTask
 ```
+
+## Anonymize IP
+
+You can anonymize stored IP addresses by enabling the following option:
+
+```yml
+SilverStripe\SessionManager\Models\LoginSession:
+  anonymize_ip: true
+```
