@@ -5,7 +5,6 @@ namespace SilverStripe\SessionManager\Services;
 use SilverStripe\Core\Config\Configurable;
 use SilverStripe\Core\Injector\Injectable;
 use SilverStripe\ORM\DB;
-use SilverStripe\ORM\FieldType\DBDatetime;
 use SilverStripe\Security\RememberLoginHash;
 use SilverStripe\SessionManager\Models\LoginSession;
 
