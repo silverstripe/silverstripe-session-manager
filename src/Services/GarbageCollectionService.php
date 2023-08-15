@@ -2,14 +2,22 @@
 
 namespace SilverStripe\SessionManager\Services;
 
+use SilverStripe\Core\Config\Configurable;
 use SilverStripe\Core\Injector\Injectable;
+use SilverStripe\ORM\DB;
 use SilverStripe\ORM\FieldType\DBDatetime;
 use SilverStripe\Security\RememberLoginHash;
 use SilverStripe\SessionManager\Models\LoginSession;
 
 class GarbageCollectionService
 {
+    use Configurable;
     use Injectable;
+
+    /**
+     * Limit the number of records collected per run.
+     */
+    private static ?int $batch_remove_limit = null;
 
     /**
      * Delete expired LoginSession and RememberLoginHash records
@@ -21,6 +29,17 @@ class GarbageCollectionService
         $this->collectExpiredLoginHashes();
     }
 
+    private function batchRemoveAll($datalist)
+    {
+        $limit = self::config()->get('batch_remove_limit');
+        $limitedList = $datalist->limit($limit);
+        DB::get_conn()->transactionStart();
+        foreach ($limitedList as $record) {
+            $record->delete();
+        }
+        DB::get_conn()->transactionEnd();
+    }
+
     /**
      * Collect all non-persistent LoginSession records that are older than the session lifetime
      */
@@ -28,10 +47,11 @@ class GarbageCollectionService
     {
         $lifetime = LoginSession::config()->get('default_session_lifetime');
         $now = DBDatetime::now()->getTimestamp() - $lifetime;
-        LoginSession::get()->filter([
+        $sessions = LoginSession::get()->filter([
             'LastAccessed:LessThan' => date('Y-m-d H:i:s', $now),
-            'Persistent' => 0
-        ])->removeAll();
+            'Persistent' => 0,
+        ]);
+        $this->batchRemoveAll($sessions);
     }
 
     /**
@@ -40,19 +60,21 @@ class GarbageCollectionService
     private function collectImplicitlyExpiredSessions(): void
     {
         $now = DBDatetime::now()->getTimestamp();
-        LoginSession::get()->filter([
+        $sessions = LoginSession::get()->filter([
             'Persistent' => 1,
             'LoginHash.ExpiryDate:LessThan' => date('Y-m-d H:i:s', $now),
-        ])->removeAll();
+        ]);
+        $this->batchRemoveAll($sessions);
 
         $lifetime = LoginSession::config()->get('default_session_lifetime');
         $now = DBDatetime::now()->getTimestamp() - $lifetime;
         // If a persistent session has no login hash, use LastAccessed
-        LoginSession::get()->filter([
+        $sessions = LoginSession::get()->filter([
             'LastAccessed:LessThan' => date('Y-m-d H:i:s', $now),
             'Persistent' => 1,
             'LoginHash.ExpiryDate' => null,
-        ])->removeAll();
+        ]);
+        $this->batchRemoveAll($sessions);
     }
 
     /**
@@ -61,8 +83,9 @@ class GarbageCollectionService
     private function collectExpiredLoginHashes(): void
     {
         $now = DBDatetime::now()->getTimestamp();
-        RememberLoginHash::get()->filter([
+        $hashes = RememberLoginHash::get()->filter([
             'ExpiryDate:LessThan' => date('Y-m-d H:i:s', $now),
-        ])->removeAll();
+        ]);
+        $this->batchRemoveAll($hashes);
     }
 }
