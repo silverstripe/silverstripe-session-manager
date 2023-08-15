@@ -1,17 +1,17 @@
-name: Keepalive
+name: Merge-up
 
 on:
-  # At 9:45 AM UTC, on day 6 of the month
+  # At 1:00 PM UTC, only on Monday
   schedule:
-    - cron: '45 9 6 * *'
+    - cron: '0 13 * * 1'
   workflow_dispatch:
 
 jobs:
-  keepalive:
-    name: Keepalive
+  merge-up:
+    name: Merge-up
     # Only run cron on the silverstripe account
     if: (github.event_name == 'schedule' && github.repository_owner == 'silverstripe') || (github.event_name != 'schedule')
     runs-on: ubuntu-latest
     steps:
-      - name: Keepalive
-        uses: silverstripe/gha-keepalive@v1
+      - name: Merge-up
+        uses: silverstripe/gha-merge-up@v1

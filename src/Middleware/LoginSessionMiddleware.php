@@ -31,6 +31,7 @@ class LoginSessionMiddleware implements HTTPMiddleware
 
         try {
             $loginSessionID = $request->getSession()->get($loginHandler->getSessionVariable());
+            /** @var LoginSession $loginSession */
             $loginSession = LoginSession::get()->byID($loginSessionID);
 
             // If the session has already been revoked, or we've got a mismatched
@@ -42,10 +43,7 @@ class LoginSessionMiddleware implements HTTPMiddleware
                 return $delegate($request);
             }
 
-            // Update LastAccessed date and IP address
-            $loginSession->LastAccessed = DBDatetime::now()->Rfc2822();
-            $loginSession->IPAddress = $request->getIP();
-            $loginSession->write();
+            $loginSession->updateLastAccessed($request);
         } catch (DatabaseException $e) {
             // Database isn't ready, carry on.
         }

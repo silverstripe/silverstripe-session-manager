@@ -5,6 +5,7 @@ namespace SilverStripe\SessionManager\Services;
 use SilverStripe\Core\Config\Configurable;
 use SilverStripe\Core\Injector\Injectable;
 use SilverStripe\ORM\DB;
+use SilverStripe\ORM\FieldType\DBDatetime;
 use SilverStripe\Security\RememberLoginHash;
 use SilverStripe\SessionManager\Models\LoginSession;
 
@@ -45,9 +46,10 @@ class GarbageCollectionService
     private function collectExpiredSessions(): void
     {
         $lifetime = LoginSession::config()->get('default_session_lifetime');
+        $now = DBDatetime::now()->getTimestamp() - $lifetime;
         $sessions = LoginSession::get()->filter([
-            'LastAccessed:LessThan' => date('Y-m-d H:i:s', time() - $lifetime),
-            'Persistent' => 0
+            'LastAccessed:LessThan' => date('Y-m-d H:i:s', $now),
+            'Persistent' => 0,
         ]);
         $this->batchRemoveAll($sessions);
     }
@@ -57,9 +59,20 @@ class GarbageCollectionService
      */
     private function collectImplicitlyExpiredSessions(): void
     {
+        $now = DBDatetime::now()->getTimestamp();
         $sessions = LoginSession::get()->filter([
             'Persistent' => 1,
-            'LoginHash.ExpiryDate:LessThan' => date('Y-m-d H:i:s')
+            'LoginHash.ExpiryDate:LessThan' => date('Y-m-d H:i:s', $now),
+        ]);
+        $this->batchRemoveAll($sessions);
+
+        $lifetime = LoginSession::config()->get('default_session_lifetime');
+        $now = DBDatetime::now()->getTimestamp() - $lifetime;
+        // If a persistent session has no login hash, use LastAccessed
+        $sessions = LoginSession::get()->filter([
+            'LastAccessed:LessThan' => date('Y-m-d H:i:s', $now),
+            'Persistent' => 1,
+            'LoginHash.ExpiryDate' => null,
         ]);
         $this->batchRemoveAll($sessions);
     }
@@ -69,8 +82,9 @@ class GarbageCollectionService
      */
     private function collectExpiredLoginHashes(): void
     {
+        $now = DBDatetime::now()->getTimestamp();
         $hashes = RememberLoginHash::get()->filter([
-            'ExpiryDate:LessThan' => date('Y-m-d H:i:s')
+            'ExpiryDate:LessThan' => date('Y-m-d H:i:s', $now),
         ]);
         $this->batchRemoveAll($hashes);
     }
