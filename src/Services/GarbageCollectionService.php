@@ -46,9 +46,9 @@ class GarbageCollectionService
     private function collectExpiredSessions(): void
     {
         $lifetime = LoginSession::config()->get('default_session_lifetime');
-        $now = DBDatetime::now()->getTimestamp() - $lifetime;
+        $maxAge = LoginSession::getMaxAge();
         $sessions = LoginSession::get()->filter([
-            'LastAccessed:LessThan' => date('Y-m-d H:i:s', $now),
+            'LastAccessed:LessThan' => $maxAge,
             'Persistent' => 0,
         ]);
         $this->batchRemoveAll($sessions);
@@ -67,10 +67,10 @@ class GarbageCollectionService
         $this->batchRemoveAll($sessions);
 
         $lifetime = LoginSession::config()->get('default_session_lifetime');
-        $now = DBDatetime::now()->getTimestamp() - $lifetime;
+        $maxAge = LoginSession::getMaxAge();
         // If a persistent session has no login hash, use LastAccessed
         $sessions = LoginSession::get()->filter([
-            'LastAccessed:LessThan' => date('Y-m-d H:i:s', $now),
+            'LastAccessed:LessThan' => $maxAge,
             'Persistent' => 1,
             'LoginHash.ExpiryDate' => null,
         ]);

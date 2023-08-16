@@ -2,18 +2,19 @@
 
 namespace SilverStripe\SessionManager\Models;
 
-use SilverStripe\Control\Controller;
-use SilverStripe\Control\HTTPRequest;
-use SilverStripe\Control\Session;
-use SilverStripe\Core\Injector\Injector;
+use UAParser\Parser;
+use InvalidArgumentException;
 use SilverStripe\ORM\DataList;
 use SilverStripe\ORM\DataObject;
-use SilverStripe\ORM\FieldType\DBDatetime;
+use SilverStripe\Control\Session;
 use SilverStripe\Security\Member;
-use SilverStripe\Security\RememberLoginHash;
 use SilverStripe\Security\Security;
+use SilverStripe\Control\Controller;
+use SilverStripe\Control\HTTPRequest;
+use SilverStripe\Core\Injector\Injector;
+use SilverStripe\ORM\FieldType\DBDatetime;
+use SilverStripe\Security\RememberLoginHash;
 use SilverStripe\SessionManager\Security\LogInAuthenticationHandler;
-use UAParser\Parser;
 use SilverStripe\Control\Util\IPUtils;
 
 /**
@@ -98,6 +99,12 @@ class LoginSession extends DataObject
     private static $default_session_lifetime = 3600;
 
     private static bool $anonymize_ip = false;
+
+    /**
+     * The length of time between two updates to the LastAccessed field
+     *
+     */
+    private static int $last_accessed_threshold = 300;
 
     /**
      * @param Member $member
@@ -288,13 +295,21 @@ class LoginSession extends DataObject
      */
     public static function getCurrentSessions(Member $member)
     {
-        $sessionLifetime = static::getSessionLifetime();
-        $maxAge = DBDatetime::now()->getTimestamp() - $sessionLifetime;
+        $maxAge = static::getMaxAge();
         $currentSessions = $member->LoginSessions()->filterAny([
             'Persistent' => 1,
-            'LastAccessed:GreaterThan' => date('Y-m-d H:i:s', $maxAge)
+            'LastAccessed:GreaterThan' => $maxAge
         ]);
         return $currentSessions;
+    }
+
+    /**
+     * Get the max age for all valid sessions
+     */
+    public static function getMaxAge(): string
+    {
+        $lifetime = static::getSessionLifetime() + static::config()->get('last_accessed_threshold');
+        return date('Y-m-d H:i:s', DBDatetime::now()->getTimestamp() - $lifetime);
     }
 
     /**
