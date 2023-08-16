@@ -309,7 +309,7 @@ class LoginSession extends DataObject
      */
     public static function getMaxAge(): string
     {
-        $lifetime = static::getSessionLifetime() + static::getUpdateThreshold();
+        $lifetime = static::getSessionLifetime() + static::config()->get('last_accessed_threshold');
         return date('Y-m-d H:i:s', DBDatetime::now()->getTimestamp() - $lifetime);
     }
 
@@ -323,11 +323,6 @@ class LoginSession extends DataObject
         }
 
         return LoginSession::config()->get('default_session_lifetime');
-    }
-
-    public static function getUpdateThreshold(): int
-    {
-        return LoginSession::config()->get('last_accessed_threshold') ?? 0;
     }
 
     /**
