@@ -93,9 +93,7 @@ class LogInAuthenticationHandler implements AuthenticationHandler
             $loginSession = LoginSession::generate($member, $persistent, $request);
         }
 
-        $loginSession->LastAccessed = DBDatetime::now()->Rfc2822();
-        $loginSession->IPAddress = $request ? $request->getIP() : '';
-        $loginSession->write();
+        $loginSession->updateLastAccessed($request);
 
         if ($persistent && $rememberLoginHash = $this->getRememberLoginHash()) {
             $rememberLoginHash->LoginSessionID = $loginSession->ID;

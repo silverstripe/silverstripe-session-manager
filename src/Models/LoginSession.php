@@ -15,6 +15,8 @@ use SilverStripe\Core\Injector\Injector;
 use SilverStripe\ORM\FieldType\DBDatetime;
 use SilverStripe\Security\RememberLoginHash;
 use SilverStripe\SessionManager\Security\LogInAuthenticationHandler;
+use UAParser\Parser;
+use SilverStripe\Control\Util\IPUtils;
 
 /**
  * Tracks a login session for a specific user on a specific device.
@@ -96,6 +98,8 @@ class LoginSession extends DataObject
      * @var int
      */
     private static $default_session_lifetime = 3600;
+
+    private static bool $anonymize_ip = false;
 
     /**
      * The length of time between two updates to the LastAccessed field
@@ -201,7 +205,7 @@ class LoginSession extends DataObject
     public static function find(Member $member, HTTPRequest $request): ?LoginSession
     {
         return static::get()->filter([
-            'IPAddress' => $request->getIP(),
+            'IPAddress' => static::getIpFromRequest($request),
             'UserAgent' => $request->getHeader('User-Agent'),
             'MemberID' => $member->ID,
             'Persistent' => 1
@@ -218,7 +222,7 @@ class LoginSession extends DataObject
     {
         $session = static::create()->update([
             'LastAccessed' => DBDatetime::now()->Rfc2822(),
-            'IPAddress' => $request->getIP(),
+            'IPAddress' => static::getIpFromRequest($request),
             'UserAgent' => $request->getHeader('User-Agent'),
             'MemberID' => $member->ID,
             'Persistent' => intval($persistent)
@@ -324,5 +328,27 @@ class LoginSession extends DataObject
     public static function getUpdateThreshold(): int
     {
         return LoginSession::config()->get('last_accessed_threshold') ?? 0;
+    }
+
+    /**
+     * Update LastAccessed date and IP address
+     */
+    public function updateLastAccessed(?HTTPRequest $request = null): void
+    {
+        $this->LastAccessed = DBDatetime::now()->Rfc2822();
+        $this->IPAddress = static::getIpFromRequest($request);
+        $this->write();
+    }
+
+    private static function getIpFromRequest(?HTTPRequest $request = null): ?string
+    {
+        if (!$request) {
+            return null;
+        }
+        $ip = $request->getIP();
+        if (static::config()->get('anonymize_ip')) {
+            $ip = IPUtils::anonymize($ip);
+        }
+        return $ip;
     }
 }

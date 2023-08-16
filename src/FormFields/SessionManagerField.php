@@ -127,6 +127,8 @@ class SessionManagerField extends FormField
             if (!$loginSession->canView()) {
                 continue;
             }
+
+
             $loginSessions[] = [
                 'ID' => $loginSession->ID,
                 'IPAddress' => $loginSession->IPAddress,
@@ -134,7 +136,7 @@ class SessionManagerField extends FormField
                 'IsCurrent' => $loginSession->isCurrent(),
                 'Persistent' => $loginSession->Persistent,
                 'Member' => [
-                    'Name' => $loginSession->Member()->Name
+                    'Name' => Member::get_by_id($loginSession->MemberID)->Name ?? ''
                 ],
                 'Created' => $this->addUtcOffset($loginSession->Created),
                 'LastAccessed' => $this->addUtcOffset($loginSession->LastAccessed),

@@ -48,9 +48,7 @@ class LoginSessionMiddleware implements HTTPMiddleware
             $date = DBDatetime::now()->Rfc2822();
             $threshold = LoginSession::getUpdateThreshold();
             if (strtotime($date) > strtotime($loginSession->LastAccessed) + $threshold) {
-                $loginSession->LastAccessed = $date;
-                $loginSession->IPAddress = $request->getIP();
-                $loginSession->write();
+                $loginSession->updateLastAccessed($request);
             }
         } catch (DatabaseException $e) {
             // Database isn't ready, carry on.
