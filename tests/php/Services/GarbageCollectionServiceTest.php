@@ -56,7 +56,8 @@ class GarbageCollectionServiceTest extends SapphireTest
         $garbageCollectionService->collect();
 
         // Max age for the session should include threshold
-        $this->assertEquals(300, LoginSession::getUpdateThreshold());
+        $threshold = LoginSession::config()->get('last_accessed_threshold');
+        $this->assertEquals(300, $threshold);
         $this->assertEquals("2004-02-15 09:55:01", LoginSession::getMaxAge());
         $this->assertNotNull(
             LoginSession::get()->byID($id3),
