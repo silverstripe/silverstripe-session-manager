@@ -6,14 +6,14 @@ if (typeof(ss) === 'undefined' || typeof(ss.i18n) === 'undefined') {
   }
 } else {
   ss.i18n.addDictionary('da', {
-    "SessionManager.CONFIRMATION_TITLE": "Er du sikker?",
-    "SessionManager.DELETE_CONFIRMATION_BUTTON": "Fjern login-session",
-    "SessionManager.CURRENT": "Nuværende",
-    "SessionManager.AUTHENTICATED": "autentificeret {createdElapsed}...",
-    "SessionManager.LAST_ACTIVE": "senest aktiv {lastAccessedElapsed}...",
-    "SessionManager.LOG_OUT": "Log ud",
-    "SessionManager.LOGGING_OUT": "Logger af...",
     "SessionManager.ACTIVITY_TOOLTIP_TEXT": "Loggede på {signedIn}, Senest aktiv {lastActive}",
-    "SessionManager.COULD_NOT_LOGOUT": "Could not log out of session. Try again later."
+    "SessionManager.AUTHENTICATED": "autentificeret {createdElapsed}...",
+    "SessionManager.CONFIRMATION_TITLE": "Er du sikker?",
+    "SessionManager.COULD_NOT_LOGOUT": "Could not log out of session. Try again later.",
+    "SessionManager.CURRENT": "Nuværende",
+    "SessionManager.DELETE_CONFIRMATION_BUTTON": "Fjern login-session",
+    "SessionManager.LAST_ACTIVE": "senest aktiv {lastAccessedElapsed}...",
+    "SessionManager.LOGGING_OUT": "Logger af...",
+    "SessionManager.LOG_OUT": "Log ud"
 });
 }
