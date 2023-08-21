@@ -6,14 +6,14 @@ if (typeof(ss) === 'undefined' || typeof(ss.i18n) === 'undefined') {
   }
 } else {
   ss.i18n.addDictionary('de_DE', {
-    "SessionManager.CONFIRMATION_TITLE": "Sind Sie sicher?",
-    "SessionManager.DELETE_CONFIRMATION_BUTTON": "Anmeldesitzung entfernen",
-    "SessionManager.CURRENT": "Aktuell",
-    "SessionManager.AUTHENTICATED": "authentifiziert {createdElapsed}...",
-    "SessionManager.LAST_ACTIVE": "zuletzt aktiv {lastAccessedElapsed}...",
-    "SessionManager.LOG_OUT": "Abmelden",
-    "SessionManager.LOGGING_OUT": "Abmelden...",
     "SessionManager.ACTIVITY_TOOLTIP_TEXT": "Angemeldet {signedIn}, Zuletzt aktiv {lastActive}",
-    "SessionManager.COULD_NOT_LOGOUT": "Die Sitzung konnte nicht abgemeldet werden. Versuchen Sie es später noch einmal."
+    "SessionManager.AUTHENTICATED": "authentifiziert {createdElapsed}...",
+    "SessionManager.CONFIRMATION_TITLE": "Sind Sie sicher?",
+    "SessionManager.COULD_NOT_LOGOUT": "Die Sitzung konnte nicht abgemeldet werden. Versuchen Sie es später noch einmal.",
+    "SessionManager.CURRENT": "Aktuell",
+    "SessionManager.DELETE_CONFIRMATION_BUTTON": "Anmeldesitzung entfernen",
+    "SessionManager.LAST_ACTIVE": "zuletzt aktiv {lastAccessedElapsed}...",
+    "SessionManager.LOGGING_OUT": "Abmelden...",
+    "SessionManager.LOG_OUT": "Abmelden"
 });
 }
