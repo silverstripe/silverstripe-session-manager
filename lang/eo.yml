@@ -1,16 +1,18 @@
 eo:
   SilverStripe\SessionManager\Controllers\LoginSessionController:
-    SESSION_COULD_NOT_BE_FOUND_OR_NO_LONGER_ACTIVE: 'Seanco estas netrovebla aŭ ne plu aktiva.'
+    INVALID_REQUEST: 'Nevalida peto'
     REMOVE_FAILURE: 'Eraro okazis'
     REMOVE_PERMISSION: 'Vi ne rajtas forigi ĉi tiun rikordon.'
     REMOVE_SUCCESS: 'Sukcese forigis seancon.'
+    SESSION_COULD_NOT_BE_FOUND_OR_NO_LONGER_ACTIVE: 'Seanco estas netrovebla aŭ ne plu aktiva.'
     YOUR_SESSION_HAS_EXPIRED: 'Via seanco eksvalidiĝis'
-    INVALID_REQUEST: 'Nevalida peto'
   SilverStripe\SessionManager\Extensions\MemberExtension:
     DEVICES: 'Aŭtentigitaj aparatoj'
     LEARN_MORE: 'Lerni plu'
     LOGIN_SESSIONS: 'Ensalutaj seancoj'
     has_many_LoginSessions: 'Ensalutaj seancoj'
+  SilverStripe\SessionManager\Extensions\RememberLoginHashExtension:
+    has_one_LoginSession: 'Ensaluta seanco'
   SilverStripe\SessionManager\Jobs\GarbageCollectionJob:
     TITLE: 'Seancmastrumila senrubigo'
   SilverStripe\SessionManager\Models\LoginSession:
@@ -20,3 +22,9 @@ eo:
       one: 'Unu ensaluta seanco'
       other: '{count} ensalutaj seancoj'
     SINGULARNAME: 'Ensaluta seanco'
+    belongs_to_LoginHash: 'Ensaluta haketaĵo'
+    db_IPAddress: IP-adreso
+    db_LastAccessed: 'Laste atingita'
+    db_Persistent: Persista
+    db_UserAgent: 'Klienta aplikaĵo'
+    has_one_Member: Membro
