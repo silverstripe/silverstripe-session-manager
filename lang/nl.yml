@@ -1,7 +1,7 @@
 nl:
   SilverStripe\SessionManager\Controllers\LoginSessionController:
-    REMOVE_SUCCESS: 'Sessie is succesvol verwijderd.'
     INVALID_REQUEST: 'Ongeldige aanroep'
+    REMOVE_SUCCESS: 'Sessie is succesvol verwijderd.'
     SESSION_COULD_NOT_BE_FOUND_OR_NO_LONGER_ACTIVE: 'Deze sessie kon niet gevonden worden of was niet meer geldig.'
     YOUR_SESSION_HAS_EXPIRED: 'De browsersessie is verlopen wegens inactiviteit'
   SilverStripe\SessionManager\Extensions\MemberExtension:

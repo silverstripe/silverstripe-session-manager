@@ -6,14 +6,14 @@ if (typeof(ss) === 'undefined' || typeof(ss.i18n) === 'undefined') {
   }
 } else {
   ss.i18n.addDictionary('tr_TR', {
-    "SessionManager.CONFIRMATION_TITLE": "Emin misin sen?",
-    "SessionManager.DELETE_CONFIRMATION_BUTTON": "Oturum açmaya girişi kaldır",
-    "SessionManager.CURRENT": "Geçerli",
-    "SessionManager.AUTHENTICATED": "authenticated {createdElapsed}...",
-    "SessionManager.LAST_ACTIVE": "last active {lastAccessedElapsed}...",
-    "SessionManager.LOG_OUT": "Çıkış yap",
-    "SessionManager.LOGGING_OUT": "Oturum kapatılıyor...",
     "SessionManager.ACTIVITY_TOOLTIP_TEXT": "Signed in {signedIn}, Last active {lastActive}",
-    "SessionManager.COULD_NOT_LOGOUT": "Oturumdan çıkış yapılamadı. Daha sonra tekrar deneyin."
+    "SessionManager.AUTHENTICATED": "authenticated {createdElapsed}...",
+    "SessionManager.CONFIRMATION_TITLE": "Emin misin sen?",
+    "SessionManager.COULD_NOT_LOGOUT": "Oturumdan çıkış yapılamadı. Daha sonra tekrar deneyin.",
+    "SessionManager.CURRENT": "Geçerli",
+    "SessionManager.DELETE_CONFIRMATION_BUTTON": "Oturum açmaya girişi kaldır",
+    "SessionManager.LAST_ACTIVE": "last active {lastAccessedElapsed}...",
+    "SessionManager.LOGGING_OUT": "Oturum kapatılıyor...",
+    "SessionManager.LOG_OUT": "Çıkış yap"
 });
 }

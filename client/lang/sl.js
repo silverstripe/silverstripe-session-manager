@@ -6,14 +6,14 @@ if (typeof(ss) === 'undefined' || typeof(ss.i18n) === 'undefined') {
   }
 } else {
   ss.i18n.addDictionary('sl', {
-    "SessionManager.CONFIRMATION_TITLE": "Potrdite akcijo",
-    "SessionManager.DELETE_CONFIRMATION_BUTTON": "Izvedi odjave",
-    "SessionManager.CURRENT": "Trenutno",
-    "SessionManager.AUTHENTICATED": "avtenticiran {createdElapsed}...",
-    "SessionManager.LAST_ACTIVE": "nazadnje aktiven {lastAccessedElapsed}...",
-    "SessionManager.LOG_OUT": "Odjava",
-    "SessionManager.LOGGING_OUT": "Odjavljam ...",
     "SessionManager.ACTIVITY_TOOLTIP_TEXT": "Prijavljen {signedIn}, Nazadnje aktiven {lastActive}",
-    "SessionManager.COULD_NOT_LOGOUT": "Ni vas bilo mogoče odjaviti. Poskusite ponovno kasneje."
+    "SessionManager.AUTHENTICATED": "avtenticiran {createdElapsed}...",
+    "SessionManager.CONFIRMATION_TITLE": "Potrdite akcijo",
+    "SessionManager.COULD_NOT_LOGOUT": "Ni vas bilo mogoče odjaviti. Poskusite ponovno kasneje.",
+    "SessionManager.CURRENT": "Trenutno",
+    "SessionManager.DELETE_CONFIRMATION_BUTTON": "Izvedi odjave",
+    "SessionManager.LAST_ACTIVE": "nazadnje aktiven {lastAccessedElapsed}...",
+    "SessionManager.LOGGING_OUT": "Odjavljam ...",
+    "SessionManager.LOG_OUT": "Odjava"
 });
 }
