@@ -14,8 +14,8 @@ sl:
     BROWSER_ON_OS: '{browser} na {os}.'
     PLURALNAME: Prijave
     PLURALS:
-      one: Prijava
-      two: '{count} prijavi'
       few: '{count} prijav'
+      one: Prijava
       other: '{count} prijav'
+      two: '{count} prijavi'
     SINGULARNAME: Prijava
