@@ -13,4 +13,4 @@ composer require silverstripe/session-manager
 
 ## Documentation
 
-See [Managing Sessions](https://docs.silverstripe.org/en/developer_guides/cookies_and_sessions/managing-sessions/) on [docs.silverstripe.org](https://docs.silverstripe.org).
+See [Managing Sessions](https://docs.silverstripe.org/en/developer_guides/cookies_and_sessions/managing_sessions/) on [docs.silverstripe.org](https://docs.silverstripe.org).
