@@ -8,6 +8,9 @@ use SilverStripe\Core\Injector\Injector;
 use SilverStripe\SessionManager\Models\LoginSession;
 use SilverStripe\SessionManager\Security\LogInAuthenticationHandler;
 
+/**
+ * @method LoginSession LoginSession()
+ */
 class RememberLoginHashExtension extends Extension
 {
     /**
