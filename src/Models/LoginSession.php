@@ -27,6 +27,7 @@ use SilverStripe\Control\Util\IPUtils;
  * @property string $UserAgent
  * @property bool $Persistent
  * @property integer $MemberID
+ * @method RememberLoginHash LoginHash()
  * @method Member Member()
  */
 class LoginSession extends DataObject
