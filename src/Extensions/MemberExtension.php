@@ -10,8 +10,7 @@ use SilverStripe\SessionManager\Models\LoginSession;
 
 /**
  * Augment `Member` to allow relationship to the LoginSession DataObject
- * @method LoginSession[]|DataList LoginSessions()
- * @method Member getOwner()
+ * @method SilverStripe\ORM\HasManyList<LoginSession> LoginSessions()
  */
 class MemberExtension extends DataExtension
 {
