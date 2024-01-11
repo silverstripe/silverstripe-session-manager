@@ -102,7 +102,6 @@ class SessionManagerField extends FormField
         if (!$this->value && $this->getForm() && $this->getForm()->getRecord() instanceof Member) {
             $member = $this->getForm()->getRecord();
         } else {
-            /** @var Member $member */
             $member = DataObject::get_by_id(Member::class, $this->value);
         }
 
@@ -122,7 +121,6 @@ class SessionManagerField extends FormField
         $logOutEndpoint = LoginSessionController::singleton()->Link();
 
         $loginSessions = [];
-        /** @var LoginSession $loginSession */
         foreach (LoginSession::getCurrentSessions($member) as $loginSession) {
             if (!$loginSession->canView()) {
                 continue;
