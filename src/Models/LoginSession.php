@@ -292,7 +292,7 @@ class LoginSession extends DataObject
 
     /**
      * @param Member $member
-     * @return DataList|LoginSession[]
+     * @return DataList<LoginSession>
      */
     public static function getCurrentSessions(Member $member)
     {
