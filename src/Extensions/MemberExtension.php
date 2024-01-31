@@ -4,6 +4,7 @@ namespace SilverStripe\SessionManager\Extensions;
 
 use SilverStripe\Forms\FieldList;
 use SilverStripe\ORM\DataExtension;
+use SilverStripe\ORM\HasManyList;
 use SilverStripe\Security\Member;
 use SilverStripe\SessionManager\FormFields\SessionManagerField;
 use SilverStripe\SessionManager\Models\LoginSession;
@@ -11,7 +12,7 @@ use SilverStripe\SessionManager\Models\LoginSession;
 /**
  * Augment `Member` to allow relationship to the LoginSession DataObject
  *
- * @method SilverStripe\ORM\HasManyList<LoginSession> LoginSessions()
+ * @method HasManyList<LoginSession> LoginSessions()
  *
  * @extends DataExtension<Member>
  */
