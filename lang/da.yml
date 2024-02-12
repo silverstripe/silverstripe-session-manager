@@ -6,4 +6,3 @@ da:
     TITLE: 'Session manager affaldsindsamling'
   SilverStripe\SessionManager\Models\LoginSession:
     PLURALNAME: 'Login sessioner'
-    SINGULARNAME: 'Login Session'
