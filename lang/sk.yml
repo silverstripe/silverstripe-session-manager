@@ -1,0 +1,29 @@
+sk:
+  SilverStripe\SessionManager\Controllers\LoginSessionController:
+    INVALID_REQUEST: 'Neplatná požiadavka'
+    REMOVE_SUCCESS: 'Relácia bola úspešne odstránená.'
+    SESSION_COULD_NOT_BE_FOUND_OR_NO_LONGER_ACTIVE: 'Táto relácia sa nenašla alebo už nie je aktívna.'
+    YOUR_SESSION_HAS_EXPIRED: 'Platnosť vašej relácie vypršala'
+  SilverStripe\SessionManager\Extensions\MemberExtension:
+    LEARN_MORE: 'Zistiť viac'
+    LOGIN_SESSIONS: 'Relácie prihlásenia'
+    has_many_LoginSessions: 'Relácie prihlásenia'
+  SilverStripe\SessionManager\Extensions\RememberLoginHashExtension:
+    has_one_LoginSession: 'Relácia prihlásenia'
+  SilverStripe\SessionManager\Jobs\GarbageCollectionJob:
+    TITLE: 'Zber odpadu správcu relácie'
+  SilverStripe\SessionManager\Models\LoginSession:
+    BROWSER_ON_OS: '{browser} na {os}.'
+    PLURALNAME: 'Relácie prihlásenia'
+    PLURALS:
+      few: '{count} relácie prihlásenia'
+      many: '{count} relácií prihlásenia'
+      one: 'Relácia prihlásenia'
+      other: '{count} relácií prihlásenia'
+    SINGULARNAME: 'Relácia prihlásenia'
+    belongs_to_LoginHash: 'Hash prihlásenia'
+    db_IPAddress: 'IP adresa'
+    db_LastAccessed: 'Posledný prístup'
+    db_Persistent: Trvalý
+    db_UserAgent: Prehliadač
+    has_one_Member: Člen
