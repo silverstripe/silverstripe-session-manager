@@ -13,10 +13,10 @@
     "css": "WEBPACK_CHILD=css npm run build",
     "test": "jest",
     "coverage": "jest --coverage",
-    "lint": "eslint client/src && sass-lint client/src",
+    "lint": "eslint client/src && yarn lint-sass",
     "lint-js": "eslint client/src",
     "lint-js-fix": "eslint client/src --fix",
-    "lint-sass": "sass-lint client/src"
+    "lint-sass": "stylelint client/src"
   },
   "dependencies": {
     "babel-polyfill": "^6.26.0",
@@ -32,8 +32,8 @@
   },
   "devDependencies": {
     "@babel/runtime": "^7.20.1",
-    "@silverstripe/eslint-config": "^1.1.0",
-    "@silverstripe/webpack-config": "^2.0.0",
+    "@silverstripe/eslint-config": "^1.2.1",
+    "@silverstripe/webpack-config": "^2.1.0",
     "@testing-library/react": "^14.0.0",
     "babel-jest": "^29.3.0",
     "babel-plugin-transform-runtime": "^6.23.0",
