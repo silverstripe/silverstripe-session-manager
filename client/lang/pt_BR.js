@@ -5,15 +5,5 @@ if (typeof(ss) === 'undefined' || typeof(ss.i18n) === 'undefined') {
     console.error('Class ss.i18n not defined');  // eslint-disable-line no-console
   }
 } else {
-  ss.i18n.addDictionary('pt_BR', {
-    "SessionManager.ACTIVITY_TOOLTIP_TEXT": "Signed in {signedIn}, Last active {lastActive}",
-    "SessionManager.AUTHENTICATED": "authenticated {createdElapsed}...",
-    "SessionManager.CONFIRMATION_TITLE": "Are you sure?",
-    "SessionManager.COULD_NOT_LOGOUT": "Could not log out of session. Try again later.",
-    "SessionManager.CURRENT": "Current",
-    "SessionManager.DELETE_CONFIRMATION_BUTTON": "Remove login session",
-    "SessionManager.LAST_ACTIVE": "last active {lastAccessedElapsed}...",
-    "SessionManager.LOGGING_OUT": "Logging out...",
-    "SessionManager.LOG_OUT": "Log out"
-});
+  ss.i18n.addDictionary('pt_BR', []);
 }
