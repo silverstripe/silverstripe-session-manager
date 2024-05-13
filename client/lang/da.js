@@ -9,7 +9,6 @@ if (typeof(ss) === 'undefined' || typeof(ss.i18n) === 'undefined') {
     "SessionManager.ACTIVITY_TOOLTIP_TEXT": "Loggede på {signedIn}, Senest aktiv {lastActive}",
     "SessionManager.AUTHENTICATED": "autentificeret {createdElapsed}...",
     "SessionManager.CONFIRMATION_TITLE": "Er du sikker?",
-    "SessionManager.COULD_NOT_LOGOUT": "Could not log out of session. Try again later.",
     "SessionManager.CURRENT": "Nuværende",
     "SessionManager.DELETE_CONFIRMATION_BUTTON": "Fjern login-session",
     "SessionManager.LAST_ACTIVE": "senest aktiv {lastAccessedElapsed}...",
