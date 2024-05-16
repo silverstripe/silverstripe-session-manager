@@ -36,7 +36,7 @@ class MemberExtension extends DataExtension
     /**
      * @param FieldList $fields
      */
-    public function updateCMSFields(FieldList $fields)
+    protected function updateCMSFields(FieldList $fields)
     {
         $fields->removeByName('LoginSessions');
 
