@@ -26,7 +26,7 @@ class RememberLoginHashExtension extends Extension
     /**
      * @return void
      */
-    public function onAfterGenerateToken(): void
+    protected function onAfterGenerateToken(): void
     {
         $loginHandler = Injector::inst()->get(LogInAuthenticationHandler::class);
         $loginHandler->setRememberLoginHash($this->owner);
@@ -35,7 +35,7 @@ class RememberLoginHashExtension extends Extension
     /**
      * @return void
      */
-    public function onAfterRenewToken(): void
+    protected function onAfterRenewToken(): void
     {
         $loginHandler = Injector::inst()->get(LogInAuthenticationHandler::class);
         $request = Injector::inst()->get(HTTPRequest::class);
