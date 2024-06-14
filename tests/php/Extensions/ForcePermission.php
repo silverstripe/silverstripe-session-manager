@@ -16,31 +16,31 @@ class ForcePermission extends DataExtension implements TestOnly
 
     public static function forceCanView($val)
     {
-        self::$canView = $val;
+        ForcePermission::$canView = $val;
     }
 
     public static function forceCanDelete($val)
     {
-        self::$canDelete = $val;
+        ForcePermission::$canDelete = $val;
     }
 
     public static function reset()
     {
-        self::$canView = null;
-        self::$canDelete = null;
+        ForcePermission::$canView = null;
+        ForcePermission::$canDelete = null;
     }
 
     public function canView($member)
     {
-        if (self::$canView !== null) {
-            return self::$canView;
+        if (ForcePermission::$canView !== null) {
+            return ForcePermission::$canView;
         }
     }
 
     public function canDelete($member)
     {
-        if (self::$canDelete !== null) {
-            return self::$canDelete;
+        if (ForcePermission::$canDelete !== null) {
+            return ForcePermission::$canDelete;
         }
     }
 }

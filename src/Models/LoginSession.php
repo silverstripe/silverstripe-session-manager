@@ -256,7 +256,7 @@ class LoginSession extends DataObject
      * @param HTTPRequest|null $request
      * @return LoginSession|null
      */
-    public static function getCurrentLoginSession(?HTTPRequest $request = null): ?self
+    public static function getCurrentLoginSession(?HTTPRequest $request = null): ?LoginSession
     {
         // Fall back to retrieving request from current Controller if available
         if ($request === null) {
