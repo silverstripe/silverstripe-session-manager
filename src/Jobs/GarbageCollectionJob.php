@@ -61,9 +61,9 @@ class GarbageCollectionJob extends AbstractQueuedJob
 
     private function queueNextJob(): void
     {
-        $timestamp = time() + self::config()->get('seconds_between_jobs');
+        $timestamp = time() + static::config()->get('seconds_between_jobs');
         QueuedJobService::singleton()->queueJob(
-            Injector::inst()->create(self::class),
+            Injector::inst()->create(GarbageCollectionJob::class),
             DBDatetime::create()->setValue($timestamp)->Rfc2822()
         );
     }
