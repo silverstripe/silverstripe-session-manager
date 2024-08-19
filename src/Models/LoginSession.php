@@ -15,7 +15,7 @@ use SilverStripe\Core\Injector\Injector;
 use SilverStripe\ORM\FieldType\DBDatetime;
 use SilverStripe\Security\RememberLoginHash;
 use SilverStripe\SessionManager\Security\LogInAuthenticationHandler;
-use SilverStripe\Control\Util\IPUtils;
+use Symfony\Component\HttpFoundation\IpUtils;
 
 /**
  * Tracks a login session for a specific user on a specific device.
