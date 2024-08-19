@@ -23,7 +23,7 @@
         }
     ],
     "require": {
-        "php": "^8.1",
+        "php": "^8.3",
         "silverstripe/admin": "^3",
         "silverstripe/framework": "^6",
         "ua-parser/uap-php": "^3.9.14"
