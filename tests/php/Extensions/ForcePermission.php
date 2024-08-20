@@ -2,14 +2,14 @@
 
 namespace SilverStripe\SessionManager\Tests\Extensions;
 
-use SilverStripe\ORM\DataExtension;
+use SilverStripe\Core\Extension;
 use SilverStripe\Dev\TestOnly;
 
 /**
  * This extension is meant to be applied to LoginSession so we can force permission to scenarios that won't happen
  * natively with a default install of the session manager module.
  */
-class ForcePermission extends DataExtension implements TestOnly
+class ForcePermission extends Extension implements TestOnly
 {
     private static $canView = null;
     private static $canDelete = null;
