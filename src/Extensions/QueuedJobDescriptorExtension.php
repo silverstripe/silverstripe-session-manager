@@ -14,7 +14,7 @@ class QueuedJobDescriptorExtension extends Extension
     /**
      * Called on dev/build by DatabaseAdmin
      */
-    public function onAfterBuild(): void
+    protected function onAfterBuild(): void
     {
         GarbageCollectionJob::singleton()->requireDefaultJob();
     }
