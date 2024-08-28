@@ -3,7 +3,7 @@
 namespace SilverStripe\SessionManager\Extensions;
 
 use SilverStripe\Forms\FieldList;
-use SilverStripe\ORM\DataExtension;
+use SilverStripe\Core\Extension;
 use SilverStripe\ORM\HasManyList;
 use SilverStripe\Security\Member;
 use SilverStripe\SessionManager\FormFields\SessionManagerField;
@@ -14,9 +14,9 @@ use SilverStripe\SessionManager\Models\LoginSession;
  *
  * @method HasManyList<LoginSession> LoginSessions()
  *
- * @extends DataExtension<Member>
+ * @extends Extension<Member>
  */
-class MemberExtension extends DataExtension
+class MemberExtension extends Extension
 {
     /**
      * URL to the user help abot managing session
