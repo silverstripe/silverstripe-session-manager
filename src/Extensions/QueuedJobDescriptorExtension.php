@@ -12,7 +12,7 @@ use Symbiote\QueuedJobs\DataObjects\QueuedJobDescriptor;
 class QueuedJobDescriptorExtension extends Extension
 {
     /**
-     * Called on dev/build by DatabaseAdmin
+     * Called by DbBuild
      */
     protected function onAfterBuild(): void
     {

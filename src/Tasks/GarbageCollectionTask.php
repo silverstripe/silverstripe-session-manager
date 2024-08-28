@@ -3,31 +3,22 @@
 namespace SilverStripe\Tasks;
 
 use SilverStripe\Dev\BuildTask;
+use SilverStripe\PolyExecution\PolyOutput;
 use SilverStripe\SessionManager\Services\GarbageCollectionService;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputInterface;
 
 class GarbageCollectionTask extends BuildTask
 {
-    /**
-     * @var string
-     */
-    private static $segment = 'LoginSessionGarbageCollectionTask';
+    protected static string $commandName = 'LoginSessionGarbageCollectionTask';
 
-    /**
-     * @var string
-     */
-    protected $title = 'Login Session Garbage Collection Task';
+    protected string $title = 'Login Session Garbage Collection Task';
 
-    /**
-     * @var string
-     */
-    protected $description = 'Removes expired login sessions and “remember me” hashes from the database';
+    protected static string $description = 'Removes expired login sessions and "remember me" hashes from the database';
 
-    /**
-     * @param HTTPRequest $request
-     */
-    public function run($request)
+    protected function execute(InputInterface $input, PolyOutput $output): int
     {
         GarbageCollectionService::singleton()->collect();
-        echo "Garbage collection completed successfully\n";
+        return Command::SUCCESS;
     }
 }

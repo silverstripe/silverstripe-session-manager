@@ -2,32 +2,26 @@
 
 namespace SilverStripe\SessionManager\Tasks;
 
-use SilverStripe\Control\HTTPRequest;
 use SilverStripe\Dev\BuildTask;
+use SilverStripe\PolyExecution\PolyOutput;
 use SilverStripe\Security\RememberLoginHash;
 use SilverStripe\SessionManager\Models\LoginSession;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputInterface;
 
 class InvalidateAllSessionsTask extends BuildTask
 {
-    private static string $segment = 'InvalidateAllSessions';
+    protected static string $commandName = 'InvalidateAllSessions';
 
-    /**
-     * @var string
-     */
-    protected $title = 'Invalidate All Login Sessions Task';
+    protected string $title = 'Invalidate All Login Sessions Task';
 
-    /**
-     * @var string
-     */
-    protected $description = 'Removes all login sessions and "remember me" hashes (including yours) from the database';
+    protected static string $description = 'Removes all login sessions and "remember me" hashes'
+                                            . ' (including yours) from the database';
 
-    /**
-     * @param HTTPRequest $request
-     */
-    public function run($request)
+    protected function execute(InputInterface $input, PolyOutput $output): int
     {
         LoginSession::get()->removeAll();
         RememberLoginHash::get()->removeAll();
-        echo "Session removal completed successfully\n";
+        return Command::SUCCESS;
     }
 }

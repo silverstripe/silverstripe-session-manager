@@ -6,6 +6,7 @@ use SilverStripe\Control\Middleware\ConfirmationMiddleware\Url;
 use SilverStripe\Control\Tests\HttpRequestMockBuilder;
 use SilverStripe\Core\Injector\Injector;
 use SilverStripe\Dev\SapphireTest;
+use SilverStripe\PolyExecution\PolyOutput;
 use SilverStripe\ORM\FieldType\DBDatetime;
 use SilverStripe\Security\AuthenticationHandler;
 use SilverStripe\Security\Member;
@@ -15,6 +16,8 @@ use SilverStripe\SessionManager\Extensions\RememberLoginHashExtension;
 use SilverStripe\SessionManager\Middleware\LoginSessionMiddleware;
 use SilverStripe\SessionManager\Models\LoginSession;
 use SilverStripe\SessionManager\Tasks\InvalidateAllSessionsTask;
+use Symfony\Component\Console\Input\ArrayInput;
+use Symfony\Component\Console\Output\BufferedOutput;
 
 class InvalidateAllSessionsTaskTest extends SapphireTest
 {
@@ -46,7 +49,11 @@ class InvalidateAllSessionsTaskTest extends SapphireTest
 
         // Completely invalidate all current sessions and login hashes
         $task = new InvalidateAllSessionsTask();
-        $task->run($request);
+        $buffer = new BufferedOutput();
+        $output = new PolyOutput(PolyOutput::FORMAT_ANSI, wrappedOutput: $buffer);
+        $input = new ArrayInput([]);
+        $input->setInteractive(false);
+        $task->run($input, $output);
 
         // Assert all sessions are removed from the database
         $this->assertSame(0, LoginSession::get()->count(), 'There are no LoginSessions');
