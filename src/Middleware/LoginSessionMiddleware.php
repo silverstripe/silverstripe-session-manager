@@ -31,6 +31,8 @@ class LoginSessionMiddleware implements HTTPMiddleware
         }
 
         try {
+            // Extract the session identifier (when this module is installed, the session identifier is set to the
+            // LoginSession ID rather than the RememberLoginHash ID, to avoid an extra query to get the related model.)
             $loginSessionID = $request->getSession()->get($loginHandler->getSessionVariable());
             $loginSession = LoginSession::get_by_id($loginSessionID);
 
