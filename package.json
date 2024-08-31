@@ -41,7 +41,7 @@
     "jest-environment-jsdom": "^29.3.1",
     "mockdate": "^3.0.5",
     "react-test-renderer": "^18.2.0",
-    "webpack": "^5.74.0",
+    "webpack": "^5.94.0",
     "webpack-cli": "^5.0.0"
   },
   "resolutions": {
