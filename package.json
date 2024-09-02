@@ -33,7 +33,7 @@
   "devDependencies": {
     "@babel/runtime": "^7.20.1",
     "@silverstripe/eslint-config": "^1.3.0",
-    "@silverstripe/webpack-config": "^2.1.0",
+    "@silverstripe/webpack-config": "^3.0.0-alpha1",
     "@testing-library/react": "^14.0.0",
     "babel-jest": "^29.3.0",
     "babel-plugin-transform-runtime": "^6.23.0",
