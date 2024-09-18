@@ -17,6 +17,7 @@ use SilverStripe\Security\SecurityToken;
 use SilverStripe\SessionManager\Control\LoginSessionMiddleware;
 use SilverStripe\SessionManager\Controllers\LoginSessionController;
 use SilverStripe\SessionManager\Models\LoginSession;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class LoginSessionControllerTest extends FunctionalTest
 {
@@ -113,7 +114,7 @@ class LoginSessionControllerTest extends FunctionalTest
         );
     }
 
-    public function badIDs()
+    public static function badIDs()
     {
         return [
             'No ID' => [''],
@@ -123,8 +124,8 @@ class LoginSessionControllerTest extends FunctionalTest
 
     /**
      * @param $id
-     * @dataProvider badIDs
      */
+    #[DataProvider('badIDs')]
     public function testBadID($sessionID)
     {
         $token = SecurityToken::inst()->getValue();
