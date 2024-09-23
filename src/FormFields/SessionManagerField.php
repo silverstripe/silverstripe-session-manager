@@ -8,7 +8,7 @@ use SilverStripe\ORM\DataObject;
 use SilverStripe\Security\Member;
 use SilverStripe\SessionManager\Controllers\LoginSessionController;
 use SilverStripe\SessionManager\Models\LoginSession;
-use SilverStripe\View\ViewableData;
+use SilverStripe\Model\ModelData;
 
 class SessionManagerField extends FormField
 {
@@ -26,7 +26,7 @@ class SessionManagerField extends FormField
      * {@inheritDoc}
      *
      * @param string $name Field name
-     * @param null|string|ViewableData $title Field title
+     * @param null|string|ModelData $title Field title
      * @param mixed $value Member ID to apply this field to
      * @param string $titleLinkText Title link text
      * @param string $titleLinkHref Title link href
