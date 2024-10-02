@@ -87,7 +87,7 @@ class SessionManagerField extends FormField
         return $this;
     }
 
-    public function Field($properties = array())
+    public function renderField($properties = array())
     {
         return $this->renderWith(SessionManagerField::class);
     }
