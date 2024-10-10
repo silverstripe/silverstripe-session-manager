@@ -102,6 +102,12 @@ class LoginSession extends DataObject
     private static bool $anonymize_ip = false;
 
     /**
+     * Ensure there is no risk of reading from an unsynced database replica so
+     * that the login session data is always up to date.
+     */
+    private static bool $must_use_primary_db = true;
+
+    /**
      * The length of time between two updates to the LastAccessed field
      *
      */
