@@ -57,7 +57,7 @@ class LogOutAuthenticationHandler implements AuthenticationHandler
         $loginHandler = Injector::inst()->get(LogInAuthenticationHandler::class);
         $member = Security::getCurrentUser();
 
-        $loginSessionID = $request->getSession()->get($loginHandler->getSessionVariable());
+        $loginSessionID = $request->getSession()->get($loginHandler->getSessionVariable()) ?: 0;
         $loginSession = LoginSession::get()->byID($loginSessionID);
         if ($loginSession && $loginSession->canDelete($member)) {
             $loginSession->delete();
