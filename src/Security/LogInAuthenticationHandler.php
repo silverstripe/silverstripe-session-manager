@@ -100,6 +100,8 @@ class LogInAuthenticationHandler implements AuthenticationHandler
             $rememberLoginHash->write();
         }
 
+        // Overwrite the session identifier, storing the LoginSession ID instead of the RememberLoginHash ID.
+        // This is read by LoginSessionMiddleware, and avoids an extra query to fetch the related model.
         if ($request) {
             $request->getSession()->set($this->getSessionVariable(), $loginSession->ID);
         }
