@@ -1,6 +1,6 @@
 <div id="$HolderID" class="form-group field<% if $extraClass %> $extraClass<% end_if %>">
     <% if $Title %>
-        <label for="$ID" id="title-$ID" class="form__field-label">
+        <label for="$ID" id="title-$ID" class="form-label form__field-label">
             $Title
             <% if $TitleLinkHref && $TitleLinkText %>
                 <br><a href="$TitleLinkHref" target="_blank">$TitleLinkText</a>
