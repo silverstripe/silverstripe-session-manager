@@ -42,7 +42,7 @@ function LoginSession(props) {
       );
 
     return (
-      <span data-toggle="tooltip" data-placement="top" title={activityTooltip}>
+      <span data-bs-toggle="tooltip" data-placement="top" title={activityTooltip}>
         , {lastActiveStr}
       </span>
     );
