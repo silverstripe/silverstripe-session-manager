@@ -266,13 +266,14 @@ class LoginSession extends DataObject
     {
         // Fall back to retrieving request from current Controller if available
         if ($request === null) {
-            if (!Controller::has_curr()) {
+            $controller = Controller::curr();
+            if (!$controller) {
                 throw new InvalidArgumentException(
                     "A HTTPRequest is required to check if this is the currently used LoginSession."
                 );
             }
 
-            $request = Controller::curr()->getRequest();
+            $request = $controller->getRequest();
         }
 
         $loginHandler = Injector::inst()->get(LogInAuthenticationHandler::class);
