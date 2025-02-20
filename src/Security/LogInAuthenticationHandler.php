@@ -79,13 +79,14 @@ class LogInAuthenticationHandler implements AuthenticationHandler
     {
         // Fall back to retrieving request from current Controller if available
         if ($request === null) {
-            if (!Controller::has_curr()) {
+            $controller = Controller::curr();
+            if (!$controller) {
                 throw new InvalidArgumentException(
                     "Authentication with SessionManager enabled requires an active HTTPRequest."
                 );
             }
 
-            $request = Controller::curr()->getRequest();
+            $request = $controller->getRequest();
         }
 
         $loginSession = LoginSession::find($member, $request);
