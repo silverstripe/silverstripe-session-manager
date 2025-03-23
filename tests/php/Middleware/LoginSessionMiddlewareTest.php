@@ -175,7 +175,7 @@ class LoginSessionMiddlewareTest extends SapphireTest
         $middleware->process($request, function () {
             // noop
         });
-        Cookie::set('alc_device', $default);
+        Cookie::set('alc_device', $default ?? '');
 
         $this->assertSame(1, RememberLoginHash::get()->filter($deviceFilter)->count());
         $this->assertSame(
