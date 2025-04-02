@@ -5,6 +5,7 @@ namespace SilverStripe\SessionManager\Extensions;
 use SilverStripe\Control\HTTPRequest;
 use SilverStripe\Core\Extension;
 use SilverStripe\Core\Injector\Injector;
+use SilverStripe\Dev\Deprecation;
 use SilverStripe\Security\RememberLoginHash;
 use SilverStripe\SessionManager\Models\LoginSession;
 use SilverStripe\SessionManager\Security\LogInAuthenticationHandler;
@@ -33,10 +34,11 @@ class RememberLoginHashExtension extends Extension
     }
 
     /**
-     * @return void
+     * @deprecated 2.3.2 Will be renamed to onAfterRenewSession()
      */
     public function onAfterRenewToken(): void
     {
+        Deprecation::noticeWithNoReplacment('2.3.2', 'Will be renamed to onAfterRenewSession()');
         $loginHandler = Injector::inst()->get(LogInAuthenticationHandler::class);
         $request = Injector::inst()->get(HTTPRequest::class);
         $request->getSession()->set($loginHandler->getSessionVariable(), $this->owner->LoginSessionID);
