@@ -38,7 +38,9 @@ class RememberLoginHashExtension extends Extension
      */
     public function onAfterRenewToken(): void
     {
-        Deprecation::noticeWithNoReplacment('2.3.2', 'Will be renamed to onAfterRenewSession()');
+        Deprecation::withNoReplacement(
+            fn () => Deprecation::notice('2.3.2', 'Will be renamed to onAfterRenewSession()')
+        );
         $loginHandler = Injector::inst()->get(LogInAuthenticationHandler::class);
         $request = Injector::inst()->get(HTTPRequest::class);
         $request->getSession()->set($loginHandler->getSessionVariable(), $this->owner->LoginSessionID);
