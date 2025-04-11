@@ -40,7 +40,6 @@ class RememberLoginHashExtension extends Extension
      * overhead of an additional DB query.
      *
      * @see LoginSessionMiddleware
-     * @return void
      */
     protected function onAfterRenewSession(): void
     {
