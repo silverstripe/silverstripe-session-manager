@@ -2,6 +2,7 @@
 
 namespace SilverStripe\SessionManager\Tests\Extensions;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use SilverStripe\Dev\SapphireTest;
 use SilverStripe\SessionManager\Models\LoginSession;
 
@@ -95,5 +96,26 @@ class LoginSessionTest extends SapphireTest
         $this->assertFalse($session->canView(), 'Anonymous can not view');
         $this->assertFalse($session->canEdit(), 'Anonymous can not edit');
         $this->assertFalse($session->canDelete(), 'Anonymous can not delete');
+    }
+
+    public static function provideGetFriendlyUserAgent(): array
+    {
+        return [
+            [
+                'fixtureName' => 'firefox',
+                'expected' => 'Firefox on Linux.',
+            ],
+            [
+                'fixtureName' => 'chrome',
+                'expected' => 'Chrome on Windows.',
+            ],
+        ];
+    }
+
+    #[DataProvider('provideGetFriendlyUserAgent')]
+    public function testGetFriendlyUserAgent(string $fixtureName, string $expected): void
+    {
+        $session = $this->objFromFixture(LoginSession::class, $fixtureName);
+        $this->assertSame($expected, $session->getFriendlyUserAgent());
     }
 }
