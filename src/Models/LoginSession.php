@@ -2,7 +2,6 @@
 
 namespace SilverStripe\SessionManager\Models;
 
-use UAParser\Parser;
 use InvalidArgumentException;
 use SilverStripe\ORM\DataList;
 use SilverStripe\ORM\DataObject;
@@ -16,6 +15,7 @@ use SilverStripe\ORM\FieldType\DBDatetime;
 use SilverStripe\Security\RememberLoginHash;
 use SilverStripe\SessionManager\Security\LogInAuthenticationHandler;
 use Symfony\Component\HttpFoundation\IpUtils;
+use donatj\UserAgent\UserAgentParser;
 
 /**
  * Tracks a login session for a specific user on a specific device.
@@ -247,13 +247,13 @@ class LoginSession extends DataObject
             return '';
         }
 
-        $parser = Parser::create();
+        $parser = Injector::inst()->create(UserAgentParser::class);
         $result = $parser->parse($this->UserAgent);
 
         return _t(
             __CLASS__ . '.BROWSER_ON_OS',
             "{browser} on {os}.",
-            ['browser' => $result->ua->family, 'os' => $result->os->toString()]
+            ['browser' => $result->browser(), 'os' => $result->platform()]
         );
     }
 
