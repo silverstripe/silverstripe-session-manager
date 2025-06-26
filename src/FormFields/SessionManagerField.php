@@ -102,7 +102,7 @@ class SessionManagerField extends FormField
         if (!$this->value && $this->getForm() && $this->getForm()->getRecord() instanceof Member) {
             $member = $this->getForm()->getRecord();
         } else {
-            $member = DataObject::get_by_id(Member::class, $this->value);
+            $member = Member::get()->setUseCache(true)->byID($this->value);
         }
 
         return array_merge($defaults, [
@@ -134,7 +134,7 @@ class SessionManagerField extends FormField
                 'IsCurrent' => $loginSession->isCurrent(),
                 'Persistent' => $loginSession->Persistent,
                 'Member' => [
-                    'Name' => Member::get_by_id($loginSession->MemberID)->Name ?? ''
+                    'Name' => Member::get()->setUseCache(true)->byID($loginSession->MemberID)->Name ?? ''
                 ],
                 'Created' => $this->addUtcOffset($loginSession->Created),
                 'LastAccessed' => $this->addUtcOffset($loginSession->LastAccessed),

@@ -34,7 +34,7 @@ class LoginSessionMiddleware implements HTTPMiddleware
             // Extract the session identifier (when this module is installed, the session identifier is set to the
             // LoginSession ID rather than the RememberLoginHash ID, to avoid an extra query to get the related model.)
             $loginSessionID = $request->getSession()->get($loginHandler->getSessionVariable());
-            $loginSession = LoginSession::get_by_id($loginSessionID);
+            $loginSession = LoginSession::get()->setUseCache(true)->byID($loginSessionID);
 
             // If the session has already been revoked, or we've got a mismatched
             // member / session, log the user out (this also revokes the session)
