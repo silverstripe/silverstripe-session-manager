@@ -48,7 +48,7 @@ class LoginSessionMiddleware implements HTTPMiddleware
             // Update LastAccessed date and IP address if > that threshold
             $date = DBDatetime::now()->Rfc2822();
             $threshold = LoginSession::config()->get('last_accessed_threshold');
-            if (strtotime($date) > strtotime($loginSession->LastAccessed) + $threshold) {
+            if (strtotime($date) > strtotime((string) $loginSession->LastAccessed) + $threshold) {
                 $loginSession->updateLastAccessed($request);
             }
         } catch (DatabaseException $e) {
