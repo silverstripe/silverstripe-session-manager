@@ -59,9 +59,12 @@ class LogOutAuthenticationHandler implements AuthenticationHandler
         $member = Security::getCurrentUser();
 
         $loginSessionID = $request->getSession()->get($loginHandler->getSessionVariable());
-        $loginSession = LoginSession::get()->byID($loginSessionID);
-        if ($loginSession && $loginSession->canDelete($member)) {
-            $loginSession->delete();
+        // Only query when there is an ID, e.g. FunctionalTest::setUp() logs out without a login session
+        if ($loginSessionID) {
+            $loginSession = LoginSession::get()->byID($loginSessionID);
+            if ($loginSession && $loginSession->canDelete($member)) {
+                $loginSession->delete();
+            }
         }
 
         $request->getSession()->clear($loginHandler->getSessionVariable());
