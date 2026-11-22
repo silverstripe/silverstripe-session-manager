@@ -24,14 +24,14 @@
     ],
     "require": {
         "php": "^8.3",
-        "silverstripe/admin": "^3",
-        "silverstripe/framework": "^6.1",
+        "silverstripe/admin": "^4",
+        "silverstripe/framework": "^7",
         "symfony/http-foundation": "^7.0",
         "donatj/phpuseragentparser": "^1.10"
     },
     "require-dev": {
-        "silverstripe/recipe-testing": "^4",
-        "symbiote/silverstripe-queuedjobs": "^6",
+        "silverstripe/recipe-testing": "^5",
+        "symbiote/silverstripe-queuedjobs": "^7",
         "silverstripe/standards": "^1",
         "phpstan/extension-installer": "^1.3"
     },
